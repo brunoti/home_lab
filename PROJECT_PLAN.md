@@ -89,15 +89,13 @@ home_lab/
 1. **PostgreSQL** - Relational database
 2. **Redis** - Caching
 
-### Cloud & Storage (3 services)
+### Cloud & Storage (2 services)
 1. **Nextcloud** (Port 11000) - Cloud storage
-2. **Vaultwarden** (Port 80) - Password manager
-3. **Rclone** (Port 5572) - Cloud backups
+2. **Rclone** (Port 5572) - Cloud backups
 
-### Development & Productivity (3 services)
-1. **Gitea** (Port 3000) - Self-hosted Git
-2. **File Browser** (Port 6060) - Web file manager
-3. **Node-RED** (Port 1880) - Automation workflows
+### Development & Productivity (2 services)
+1. **File Browser** (Port 6060) - Web file manager
+2. **MkDocs** (Port 8001) - Documentation hosting
 
 ### Media Automation (3 services)
 1. **Radarr** (Port 7878) - Movie automation
@@ -148,67 +146,62 @@ Total: 16GB
 - **Task Automation:** Justfile
 - **Configuration:** `.env` files
 
-### Key Justfile Commands
+### Simplified Justfile Commands
 
 **Setup & Installation:**
 ```
-just install
-just setup-mac
-just validate-config
+just setup --target mac          # Setup Mac environment
+just setup --target config       # Validate configuration
+just install                     # Install dependencies
 ```
 
 **Service Management:**
 ```
-just up
-just down
-just restart
-just logs <service>
+just services --action start     # Start all services
+just services --action stop      # Stop all services
+just services --action restart   # Restart all services
+just services --action logs --name <service>  # View logs for a service
+just services --action status    # Check service status
 ```
 
-**Cloud Backups:**
+**Backup & Restore:**
 ```
-just setup-gdrive
-just setup-mega
-just backup-cloud
-just restore-gdrive
-just restore-mega
+just backup --target gdrive      # Backup to Google Drive
+just backup --target mega        # Backup to Mega
+just backup --target local       # Local backup
+just restore --source gdrive     # Restore from Google Drive
+just restore --source mega       # Restore from Mega
+```
+
+**Media Services:**
+```
+just music --action import --service koel      # Import music to Koel
+just music --action sync --service navidrome   # Sync Navidrome library
+just books --action import --service calibre   # Import books to Calibre
+just books --action convert --format epub      # Convert book formats
+just books --action search --service lazylibrarian  # Search for books
 ```
 
 **Monitoring & Health:**
 ```
-just health-check
-just check-ram
-just performance-report
-just jellyfin-monitor
+just monitor --target health     # Run health check
+just monitor --target ram        # Check RAM usage
+just monitor --target performance  # Generate performance report
+just monitor --target service --name jellyfin  # Monitor specific service
 ```
 
-**Book Services:**
+**Documentation:**
 ```
-just calibre-import
-just calibre-convert
-just calibre-status
-just lazylibrarian-search
-just lazylibrarian-import
+just docs --action serve         # Start documentation server
+just docs --action build         # Build documentation
+just docs --action update        # Update documentation
 ```
 
-**Music Services:**
+**Testing:**
 ```
-just koel-import
-just navidrome-sync
-```
-
-**Disaster Recovery:**
-```
-just disaster-recovery-test
-just backup-jellyfin-metadata
-just restore-jellyfin-metadata
-```
-
-**Email & Notifications:**
-```
-just setup-email
-just test-email
-just configure-alerts
+just test --target disaster-recovery  # Test disaster recovery
+just test --target email         # Test email notifications
+just test --target backups       # Test backup procedures
 ```
 
 ## 📧 Email Notifications
@@ -351,10 +344,10 @@ just health-check
 just disaster-recovery-test
 ```
 
-## 📈 Performance Expectations
+### Performance Expectations
 
 ### What Works Great on M4 16GB RAM
-✅ All 33+ services running simultaneously
+✅ All 30 services running simultaneously
 ✅ Jellyfin 1080p streaming with transcoding
 ✅ Multiple concurrent music streams
 ✅ Automated book discovery and imports
@@ -374,7 +367,7 @@ just disaster-recovery-test
 ## 🎯 Summary
 
 **What You Get:**
-- 33+ services in a single, unified system
+- 30 services in a single, unified system
 - Complete media streaming (movies, music, books, audiobooks)
 - Automated book discovery and library management
 - Collaborative notes and knowledge base

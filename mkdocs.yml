@@ -1,0 +1,85 @@
+site_name: Home Lab Documentation
+site_description: Comprehensive documentation for brunoti's Home Lab
+site_author: brunoti
+repo_url: https://github.com/brunoti/home_lab
+repo_name: brunoti/home_lab
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Quick Start: getting-started/quick-start.md
+      - Installation: getting-started/installation.md
+      - Configuration: getting-started/configuration.md
+  - Services:
+      - Media Services: services/media.md
+      - Music Services: services/music.md
+      - Book Services: services/books.md
+      - Notes & Knowledge: services/notes.md
+      - Network & Security: services/network.md
+      - Monitoring: services/monitoring.md
+      - Storage & Cloud: services/storage.md
+      - Media Automation: services/automation.md
+      - Utilities: services/utilities.md
+  - Operations:
+      - Backup & Restore: operations/backup-restore.md
+      - Monitoring & Alerts: operations/monitoring.md
+      - Maintenance: operations/maintenance.md
+      - Troubleshooting: operations/troubleshooting.md
+  - Reference:
+      - Command Reference: reference/commands.md
+      - Environment Variables: reference/environment-variables.md
+      - Network Configuration: reference/network.md
+      - Resource Allocation: reference/resources.md
+      - FAQ: reference/faq.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/brunoti/home_lab
