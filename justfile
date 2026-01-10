@@ -201,7 +201,11 @@ backup target="local" action="backup" service="all" exclude="" verify="false" en
                         .env docker-compose.yml config/ 2>/dev/null || true
                     
                     # Upload to Google Drive
-                    rclone copy "$TEMP_BACKUP" gdrive:homelab_backups/ {{verbose == "true" ? "-v" : ""}}
+                    VERBOSE_FLAG=""
+                    if [ "{{verbose}}" = "true" ]; then
+                        VERBOSE_FLAG="-v"
+                    fi
+                    rclone copy "$TEMP_BACKUP" gdrive:homelab_backups/ $VERBOSE_FLAG
                     rm "$TEMP_BACKUP"
                     
                     echo "✓ Backup uploaded to Google Drive"
@@ -218,7 +222,11 @@ backup target="local" action="backup" service="all" exclude="" verify="false" en
                         --exclude='.git' \
                         .env docker-compose.yml config/ 2>/dev/null || true
                     
-                    rclone copy "$TEMP_BACKUP" mega:homelab_backups/ {{verbose == "true" ? "-v" : ""}}
+                    VERBOSE_FLAG=""
+                    if [ "{{verbose}}" = "true" ]; then
+                        VERBOSE_FLAG="-v"
+                    fi
+                    rclone copy "$TEMP_BACKUP" mega:homelab_backups/ $VERBOSE_FLAG
                     rm "$TEMP_BACKUP"
                     
                     echo "✓ Backup uploaded to Mega"

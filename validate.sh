@@ -20,17 +20,17 @@ error_count=0
 
 check_pass() {
     echo -e "${GREEN}✓${NC} $1"
-    ((success_count++))
+    success_count=$((success_count + 1))
 }
 
 check_warn() {
     echo -e "${YELLOW}⚠${NC} $1"
-    ((warning_count++))
+    warning_count=$((warning_count + 1))
 }
 
 check_fail() {
     echo -e "${RED}✗${NC} $1"
-    ((error_count++))
+    error_count=$((error_count + 1))
 }
 
 echo "1. Checking required files..."
@@ -74,8 +74,10 @@ fi
 
 # Count services in docker-compose.yml
 if [ -f "docker-compose.yml" ]; then
-    service_count=$(grep -c "container_name:" docker-compose.yml || echo 0)
-    if [ "$service_count" -eq 31 ]; then
+    service_count=$(grep -c "container_name:" docker-compose.yml 2>/dev/null || true)
+    if [ -z "$service_count" ] || [ "$service_count" -eq 0 ]; then
+        check_fail "Could not count services in docker-compose.yml"
+    elif [ "$service_count" -eq 31 ]; then
         check_pass "Correct number of services: 31 (30 main + MkDocs)"
     else
         check_warn "Expected 31 services (30 main + MkDocs), found $service_count"
