@@ -75,10 +75,10 @@ fi
 # Count services in docker-compose.yml
 if [ -f "docker-compose.yml" ]; then
     service_count=$(grep -c "container_name:" docker-compose.yml || echo 0)
-    if [ "$service_count" -eq 30 ]; then
-        check_pass "Correct number of services: 30"
+    if [ "$service_count" -eq 31 ]; then
+        check_pass "Correct number of services: 31 (30 main + MkDocs)"
     else
-        check_warn "Expected 30 services, found $service_count"
+        check_warn "Expected 31 services (30 main + MkDocs), found $service_count"
     fi
 fi
 
