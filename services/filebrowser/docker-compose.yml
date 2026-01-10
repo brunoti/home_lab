@@ -1,0 +1,21 @@
+services:
+filebrowser:
+  image: filebrowser/filebrowser:latest
+  container_name: filebrowser
+  restart: unless-stopped
+  environment:
+    - PUID=${JELLYFIN_UID:-1000}
+    - PGID=${JELLYFIN_GID:-1000}
+  volumes:
+    - ../../data:/srv
+    - ../../config/filebrowser/filebrowser.db:/database/filebrowser.db
+  ports:
+    - "6060:80"
+  networks:
+    - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

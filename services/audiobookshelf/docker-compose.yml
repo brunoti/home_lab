@@ -1,0 +1,22 @@
+services:
+audiobookshelf:
+  image: ghcr.io/advplyr/audiobookshelf:latest
+  container_name: audiobookshelf
+  restart: unless-stopped
+  environment:
+    - PUID=${CALIBRE_UID:-1000}
+    - PGID=${CALIBRE_GID:-1000}
+  volumes:
+    - ../../data/audiobookshelf/config:/config
+    - ../../data/audiobookshelf/metadata:/metadata
+    - ../../data/audiobookshelf/audiobooks:/audiobooks
+  ports:
+    - "8000:80"
+  networks:
+    - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

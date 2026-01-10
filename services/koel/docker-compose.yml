@@ -1,0 +1,30 @@
+services:
+koel:
+  image: phanan/koel:latest
+  container_name: koel
+  restart: unless-stopped
+  environment:
+    - APP_KEY=${KOEL_APP_KEY}
+    - DB_CONNECTION=pgsql
+    - DB_HOST=postgres
+    - DB_PORT=5432
+    - DB_DATABASE=koel
+    - DB_USERNAME=postgres
+    - DB_PASSWORD=${POSTGRES_PASSWORD}
+    - ADMIN_EMAIL=${KOEL_ADMIN_EMAIL}
+    - ADMIN_PASSWORD=${KOEL_ADMIN_PASSWORD}
+  volumes:
+    - ../../data/koel/music:/music
+    - ../../data/koel/covers:/var/www/html/public/img/covers
+  ports:
+    - "13000:80"
+  depends_on:
+    - postgres
+  networks:
+    - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

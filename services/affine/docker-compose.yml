@@ -1,0 +1,30 @@
+services:
+affine:
+  image: ghcr.io/toeverything/affine-graphql:stable
+  container_name: affine
+  restart: unless-stopped
+  environment:
+    - NODE_ENV=production
+    - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/affine
+    - REDIS_SERVER_HOST=redis
+    - AFFINE_SERVER_PORT=3010
+    - JWT_SECRET=${AFFINE_JWT_SECRET:-change_me}
+  volumes:
+    - ../../data/affine:/app/.affine/storage
+  ports:
+    - "3010:3010"
+  depends_on:
+    - postgres
+    - redis
+  networks:
+    - homelab
+
+# ============================================
+# NETWORK & SECURITY (3 services)
+# ============================================
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

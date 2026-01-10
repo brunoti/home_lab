@@ -1,0 +1,26 @@
+services:
+rclone:
+  image: rclone/rclone:latest
+  container_name: rclone
+  restart: unless-stopped
+  command: rcd --rc-web-gui --rc-addr :5572 --rc-user admin --rc-pass ${RCLONE_PASSWORD:-change_me}
+  environment:
+    - PUID=${JELLYFIN_UID:-1000}
+    - PGID=${JELLYFIN_GID:-1000}
+  volumes:
+    - ../../config/rclone:/config/rclone
+    - ../../data:/data:ro
+  ports:
+    - "5572:5572"
+  networks:
+    - homelab
+
+# ============================================
+# DEVELOPMENT & PRODUCTIVITY (2 services)
+# ============================================
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab
