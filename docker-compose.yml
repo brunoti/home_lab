@@ -1,0 +1,600 @@
+services:
+  # ============================================
+  # MEDIA & ENTERTAINMENT (5 services)
+  # ============================================
+  
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - PUID=${JELLYFIN_UID:-1000}
+      - PGID=${JELLYFIN_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${JELLYFIN_CONFIG_DIR:-./data/jellyfin/config}:/config
+      - ${JELLYFIN_CACHE_DIR:-./data/jellyfin/cache}:/cache
+      - ${JELLYFIN_DATA_DIR:-./data/jellyfin/media}:/media
+    ports:
+      - "8096:8096"
+    networks:
+      - homelab
+
+  immich:
+    image: ghcr.io/immich-app/immich-server:latest
+    container_name: immich
+    restart: unless-stopped
+    environment:
+      - DB_HOSTNAME=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_DATABASE_NAME=immich
+      - REDIS_HOSTNAME=redis
+    volumes:
+      - ./data/immich/upload:/usr/src/app/upload
+    ports:
+      - "2283:3001"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - homelab
+
+  speedtest-tracker:
+    image: ghcr.io/alexjustesen/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    restart: unless-stopped
+    environment:
+      - PUID=${JELLYFIN_UID:-1000}
+      - PGID=${JELLYFIN_GID:-1000}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=speedtest
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - APP_KEY=${SPEEDTEST_TRACKER_APP_KEY}
+    ports:
+      - "5000:80"
+    depends_on:
+      - postgres
+    networks:
+      - homelab
+
+  koel:
+    image: phanan/koel:latest
+    container_name: koel
+    restart: unless-stopped
+    environment:
+      - APP_KEY=${KOEL_APP_KEY}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=koel
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - ADMIN_EMAIL=${KOEL_ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${KOEL_ADMIN_PASSWORD}
+    volumes:
+      - ./data/koel/music:/music
+      - ./data/koel/covers:/var/www/html/public/img/covers
+    ports:
+      - "13000:80"
+    depends_on:
+      - postgres
+    networks:
+      - homelab
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    environment:
+      - ND_MUSICFOLDER=${NAVIDROME_MUSIC_FOLDER:-/music}
+      - ND_DATAFOLDER=${NAVIDROME_DATA_FOLDER:-/data}
+      - ND_SCANINTERVAL=${NAVIDROME_SCAN_INTERVAL:-1m}
+      - ND_BASEURL=${NAVIDROME_BASEURL:-http://localhost:4533}
+    volumes:
+      - ./data/navidrome:/data
+      - ./data/koel/music:/music:ro
+    ports:
+      - "4533:4533"
+    networks:
+      - homelab
+
+  # ============================================
+  # BOOKS & READING (5 services)
+  # ============================================
+
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    restart: unless-stopped
+    environment:
+      - PUID=${CALIBRE_UID:-1000}
+      - PGID=${CALIBRE_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${CALIBRE_CONFIG_DIR:-./data/calibre/config}:/config
+      - ${CALIBRE_LIBRARY_PATH:-./data/calibre/books}:/books
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - homelab
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    restart: unless-stopped
+    environment:
+      - PUID=${CALIBRE_UID:-1000}
+      - PGID=${CALIBRE_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ./data/calibre-web/config:/config
+      - ${CALIBRE_LIBRARY_PATH:-./data/calibre/books}:/books
+    ports:
+      - "8083:8083"
+    networks:
+      - homelab
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    restart: unless-stopped
+    environment:
+      - PUID=${CALIBRE_UID:-1000}
+      - PGID=${CALIBRE_GID:-1000}
+    volumes:
+      - ./data/audiobookshelf/config:/config
+      - ./data/audiobookshelf/metadata:/metadata
+      - ./data/audiobookshelf/audiobooks:/audiobooks
+    ports:
+      - "8000:80"
+    networks:
+      - homelab
+
+  lazylibrarian:
+    image: lscr.io/linuxserver/lazylibrarian:latest
+    container_name: lazylibrarian
+    restart: unless-stopped
+    environment:
+      - PUID=${LAZYLIBRARIAN_UID:-1000}
+      - PGID=${LAZYLIBRARIAN_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${LAZYLIBRARIAN_CONFIG_DIR:-./data/lazylibrarian/config}:/config
+      - ./data/lazylibrarian/downloads:/downloads
+      - ${CALIBRE_LIBRARY_PATH:-./data/calibre/books}:/books
+    ports:
+      - "8666:5299"
+    networks:
+      - homelab
+
+  bookstore:
+    image: bookstackapp/bookstack:latest
+    container_name: bookstore
+    restart: unless-stopped
+    environment:
+      - APP_URL=http://localhost:3002
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=bookstack
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./data/bookstore:/config
+    ports:
+      - "3002:80"
+    depends_on:
+      - postgres
+    networks:
+      - homelab
+
+  # ============================================
+  # NOTES & KNOWLEDGE (1 service)
+  # ============================================
+
+  affine:
+    image: ghcr.io/toeverything/affine-graphql:stable
+    container_name: affine
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/affine
+      - REDIS_SERVER_HOST=redis
+      - AFFINE_SERVER_PORT=3010
+      - JWT_SECRET=${AFFINE_JWT_SECRET:-change_me}
+    volumes:
+      - ./data/affine:/app/.affine/storage
+    ports:
+      - "3010:3010"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - homelab
+
+  # ============================================
+  # NETWORK & SECURITY (3 services)
+  # ============================================
+
+  headscale:
+    image: headscale/headscale:latest
+    container_name: headscale
+    restart: unless-stopped
+    command: serve
+    environment:
+      - TZ=UTC
+    volumes:
+      - ${HEADSCALE_CONFIG_DIR:-./config/headscale}:/etc/headscale
+      - ${HEADSCALE_DATA_DIR:-./data/headscale}:/var/lib/headscale
+    ports:
+      - "8085:8080"
+    networks:
+      - homelab
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+    environment:
+      - TZ=${PIHOLE_TZ:-UTC}
+      - WEBPASSWORD=${PIHOLE_WEBPASSWORD}
+      - PIHOLE_DNS_=${PIHOLE_DNS1:-8.8.8.8};${PIHOLE_DNS2:-8.8.4.4}
+    volumes:
+      - ./data/pihole/etc:/etc/pihole
+      - ./data/pihole/dnsmasq:/etc/dnsmasq.d
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8053:80/tcp"
+    networks:
+      - homelab
+
+  authelia:
+    image: authelia/authelia:latest
+    container_name: authelia
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+      - AUTHELIA_JWT_SECRET=${AUTHELIA_JWT_SECRET:-change_me}
+      - AUTHELIA_SESSION_SECRET=${AUTHELIA_SESSION_SECRET:-change_me}
+      - AUTHELIA_STORAGE_POSTGRES_HOST=postgres
+      - AUTHELIA_STORAGE_POSTGRES_PORT=5432
+      - AUTHELIA_STORAGE_POSTGRES_DATABASE=authelia
+      - AUTHELIA_STORAGE_POSTGRES_USERNAME=postgres
+      - AUTHELIA_STORAGE_POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./config/authelia:/config
+    ports:
+      - "9091:9091"
+    depends_on:
+      - postgres
+    networks:
+      - homelab
+
+  # ============================================
+  # MONITORING & OBSERVABILITY (5 services)
+  # ============================================
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    networks:
+      - homelab
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-15d}'
+    volumes:
+      - ./config/prometheus:/etc/prometheus
+      - ./data/prometheus:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - homelab
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=postgres:5432
+      - GF_DATABASE_NAME=grafana
+      - GF_DATABASE_USER=postgres
+      - GF_DATABASE_PASSWORD=${POSTGRES_PASSWORD}
+      - GF_INSTALL_PLUGINS=${GRAFANA_INSTALL_PLUGINS:-}
+    volumes:
+      - ./config/grafana:/etc/grafana/provisioning
+      - ./data/grafana:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres
+      - prometheus
+    networks:
+      - homelab
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./config/loki:/etc/loki
+      - ./data/loki:/loki
+    ports:
+      - "3100:3100"
+    networks:
+      - homelab
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - ./data/uptime-kuma:/app/data
+    ports:
+      - "3003:3001"
+    networks:
+      - homelab
+
+  # ============================================
+  # REVERSE PROXY & DASHBOARD (2 services)
+  # ============================================
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    environment:
+      - DB_MYSQL_HOST=postgres
+      - DB_MYSQL_PORT=5432
+      - DB_MYSQL_USER=postgres
+      - DB_MYSQL_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_MYSQL_NAME=nginx_proxy
+    volumes:
+      - ./data/nginx-proxy-manager/data:/data
+      - ./data/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    depends_on:
+      - postgres
+    networks:
+      - homelab
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    environment:
+      - PUID=${HOMEPAGE_UID:-1000}
+      - PGID=${HOMEPAGE_GID:-1000}
+    volumes:
+      - ./config/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "3000:3000"
+    networks:
+      - homelab
+
+  # ============================================
+  # DATABASES & CACHING (2 services)
+  # ============================================
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./scripts/init-databases.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - homelab
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - homelab
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # CLOUD & STORAGE (2 services)
+  # ============================================
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_HOST_PASSWORD=${REDIS_PASSWORD}
+    volumes:
+      - ./data/nextcloud:/var/www/html
+    ports:
+      - "11000:80"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - homelab
+
+  rclone:
+    image: rclone/rclone:latest
+    container_name: rclone
+    restart: unless-stopped
+    command: rcd --rc-web-gui --rc-addr :5572 --rc-user admin --rc-pass ${RCLONE_PASSWORD:-change_me}
+    environment:
+      - PUID=${JELLYFIN_UID:-1000}
+      - PGID=${JELLYFIN_GID:-1000}
+    volumes:
+      - ./config/rclone:/config/rclone
+      - ./data:/data:ro
+    ports:
+      - "5572:5572"
+    networks:
+      - homelab
+
+  # ============================================
+  # DEVELOPMENT & PRODUCTIVITY (2 services)
+  # ============================================
+
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: unless-stopped
+    environment:
+      - PUID=${JELLYFIN_UID:-1000}
+      - PGID=${JELLYFIN_GID:-1000}
+    volumes:
+      - ./data:/srv
+      - ./config/filebrowser/filebrowser.db:/database/filebrowser.db
+    ports:
+      - "6060:80"
+    networks:
+      - homelab
+
+  mkdocs:
+    image: squidfunk/mkdocs-material:latest
+    container_name: mkdocs
+    restart: unless-stopped
+    command: serve --dev-addr=0.0.0.0:8001
+    volumes:
+      - .:/docs
+    ports:
+      - "${MKDOCS_PORT:-8001}:8001"
+    networks:
+      - homelab
+
+  # ============================================
+  # MEDIA AUTOMATION (3 services)
+  # ============================================
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    environment:
+      - PUID=${RADARR_UID:-1000}
+      - PGID=${RADARR_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${RADARR_CONFIG_DIR:-./data/radarr/config}:/config
+      - ${RADARR_MOVIES_DIR:-./data/radarr/movies}:/movies
+      - ./data/transmission/downloads:/downloads
+    ports:
+      - "7878:7878"
+    networks:
+      - homelab
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    environment:
+      - PUID=${SONARR_UID:-1000}
+      - PGID=${SONARR_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${SONARR_CONFIG_DIR:-./data/sonarr/config}:/config
+      - ${SONARR_TV_DIR:-./data/sonarr/tv}:/tv
+      - ./data/transmission/downloads:/downloads
+    ports:
+      - "8989:8989"
+    networks:
+      - homelab
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    environment:
+      - PUID=${RADARR_UID:-1000}
+      - PGID=${RADARR_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ./data/prowlarr/config:/config
+    ports:
+      - "9696:9696"
+    networks:
+      - homelab
+
+  # ============================================
+  # DOWNLOAD CLIENT (1 service)
+  # ============================================
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    restart: unless-stopped
+    environment:
+      - PUID=${TRANSMISSION_UID:-1000}
+      - PGID=${TRANSMISSION_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${TRANSMISSION_CONFIG_DIR:-./data/transmission/config}:/config
+      - ${TRANSMISSION_DOWNLOAD_DIR:-./data/transmission/downloads}:/downloads
+    ports:
+      - "6969:9091"
+      - "6881:51413"
+      - "6881:51413/udp"
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    driver: bridge
+    name: homelab
+
+volumes:
+  postgres_data:
+  redis_data:
