@@ -8,6 +8,10 @@ Welcome to the comprehensive documentation for brunoti's Home Lab. This document
 - [Quick Start Guide](getting-started/quick-start.md) - Get up and running quickly
 - [Installation Guide](getting-started/installation.md) - Detailed installation instructions
 - [Configuration Guide](getting-started/configuration.md) - Environment setup and configuration
+- [Migration Guide](getting-started/migration.md) - Migrate from monolithic to modular architecture
+
+### Architecture
+- [Modular Services](architecture/modular-services.md) - Understanding the new modular service architecture
 
 ### Services
 - [Media Services](services/media.md) - Jellyfin, Immich, Speedtest Tracker

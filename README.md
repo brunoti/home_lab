@@ -33,12 +33,43 @@ just docs --action serve
 ## 📋 Features
 
 - **30 Containerized Services** - Media, books, music, monitoring, and more
+- **Modular Architecture** - Each service in its own directory under `services/`
 - **Simplified Commands** - Argument-based `just` commands for easy management
+- **Individual Service Control** - Start, stop, or manage services independently
 - **Comprehensive Documentation** - Built-in MkDocs documentation server
 - **Automated Backups** - Google Drive and Mega cloud backups with email notifications
 - **Monitoring Stack** - Prometheus, Grafana, Loki for complete observability
 - **M4 Optimized** - Configured for Mac mini M4 with 16GB RAM
 - **Secure Access** - VPN-only external access via Headscale
+
+## 📁 Repository Structure
+
+```
+home_lab/
+├── services/                  # Modular service definitions
+│   ├── jellyfin/
+│   │   ├── docker-compose.yml
+│   │   └── README.md
+│   ├── postgres/
+│   │   ├── docker-compose.yml
+│   │   └── README.md
+│   └── ...                    # 31 services total
+├── config/                    # Service configurations
+│   ├── prometheus/
+│   ├── loki/
+│   └── ...
+├── scripts/                   # Helper scripts
+├── docs/                      # Documentation
+├── justfile                   # Task automation
+├── .env.example              # Environment variables template
+└── README.md
+```
+
+Each service is self-contained with its own `docker-compose.yml` file, making it easy to:
+- Start/stop services individually
+- Understand service dependencies
+- Customize service configurations
+- Add or remove services without affecting others
 
 ## 🏗️ Architecture
 
@@ -137,11 +168,20 @@ just setup --target config
 ### Service Management
 
 ```bash
+# List all available services
+just services --action list
+
 # Start all services
 just services --action start
 
+# Start a specific service
+just services --action start --name jellyfin
+
 # Stop all services
 just services --action stop
+
+# Stop a specific service
+just services --action stop --name jellyfin
 
 # Restart specific service
 just services --action restart --name jellyfin
@@ -151,6 +191,9 @@ just services --action logs --name jellyfin --follow
 
 # Check service status
 just services --action status
+
+# Check detailed status with resource usage
+just services --action status --detailed
 ```
 
 ### Backups & Restore
