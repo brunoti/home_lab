@@ -19,11 +19,6 @@ affine:
   networks:
     - homelab
 
-# ============================================
-# NETWORK & SECURITY (3 services)
-# ============================================
-
-
 networks:
   homelab:
     external: true

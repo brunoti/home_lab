@@ -14,11 +14,6 @@ homepage:
   networks:
     - homelab
 
-# ============================================
-# DATABASES & CACHING (2 services)
-# ============================================
-
-
 networks:
   homelab:
     external: true

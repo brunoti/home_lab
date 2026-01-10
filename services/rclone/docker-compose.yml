@@ -15,11 +15,6 @@ rclone:
   networks:
     - homelab
 
-# ============================================
-# DEVELOPMENT & PRODUCTIVITY (2 services)
-# ============================================
-
-
 networks:
   homelab:
     external: true

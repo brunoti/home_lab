@@ -16,11 +16,6 @@ navidrome:
   networks:
     - homelab
 
-# ============================================
-# BOOKS & READING (5 services)
-# ============================================
-
-
 networks:
   homelab:
     external: true

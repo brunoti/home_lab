@@ -21,11 +21,6 @@ authelia:
   networks:
     - homelab
 
-# ============================================
-# MONITORING & OBSERVABILITY (5 services)
-# ============================================
-
-
 networks:
   homelab:
     external: true

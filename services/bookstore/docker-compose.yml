@@ -19,11 +19,6 @@ bookstore:
   networks:
     - homelab
 
-# ============================================
-# NOTES & KNOWLEDGE (1 service)
-# ============================================
-
-
 networks:
   homelab:
     external: true

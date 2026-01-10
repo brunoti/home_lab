@@ -14,11 +14,6 @@ prowlarr:
   networks:
     - homelab
 
-# ============================================
-# DOWNLOAD CLIENT (1 service)
-# ============================================
-
-
 networks:
   homelab:
     external: true
