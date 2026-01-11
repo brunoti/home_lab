@@ -1,0 +1,24 @@
+services:
+  retrom:
+    image: ghcr.io/jmberesford/retrom-service:latest
+    container_name: retrom
+    restart: unless-stopped
+    environment:
+      - PUID=${RETROM_UID:-1000}
+      - PGID=${RETROM_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${RETROM_CONFIG_DIR:-../../data/retrom/config}:/app/config
+      - ${RETROM_DATA_DIR:-../../data/retrom/data}:/app/data
+      - ${RETROM_LIBRARY_DIR:-../../data/retrom/library}:/app/library
+    ports:
+      - "${RETROM_PORT:-5101}:5101"
+      - "${RETROM_WEB_PORT:-3000}:3000"
+    networks:
+      - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

@@ -1,6 +1,6 @@
 # Home Lab
 
-A comprehensive, self-hosted home lab running 30 containerized services on Mac mini M4. Features media streaming, book management, music servers, monitoring, backups, and more.
+A comprehensive, self-hosted home lab running 31 containerized services on Mac mini M4. Features media streaming, game library management, book management, music servers, monitoring, backups, and more.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](https://docs.docker.com/compose/)
@@ -32,7 +32,7 @@ just docs --action serve
 
 ## 📋 Features
 
-- **30 Containerized Services** - Media, books, music, monitoring, and more
+- **31 Containerized Services** - Media, books, music, gaming, monitoring, and more
 - **Modular Architecture** - Each service in its own directory under `services/`
 - **Simplified Commands** - Argument-based `just` commands for easy management
 - **Individual Service Control** - Start, stop, or manage services independently
@@ -53,7 +53,7 @@ home_lab/
 │   ├── postgres/
 │   │   ├── docker-compose.yml
 │   │   └── README.md
-│   └── ...                    # 31 services total
+│   └── ...                    # 32 services total
 ├── config/                    # Service configurations
 │   ├── prometheus/
 │   ├── loki/
@@ -79,9 +79,10 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 ├─────────────────────────────────────────────┤
 │  Colima (Docker) - 8GB RAM allocated        │
 │                                              │
-│  ├── Media & Entertainment (5 services)     │
+│  ├── Media & Entertainment (6 services)     │
 │  │   ├── Jellyfin - Media streaming         │
 │  │   ├── Immich - Photo management          │
+│  │   ├── Retrom - Game library              │
 │  │   ├── Speedtest Tracker                  │
 │  │   └── ...                                │
 │  │                                           │
@@ -99,18 +100,19 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 │  │   ├── Grafana - Dashboards               │
 │  │   └── ...                                │
 │  │                                           │
-│  └── And 13 more services...                │
+│  └── And 12 more services...                │
 └─────────────────────────────────────────────┘
 ```
 
 ## 📦 Services
 
-### Media & Entertainment (5)
+### Media & Entertainment (6)
 - **Jellyfin** (Port 8096) - Movies, TV shows, music streaming
 - **Koel** (Port 13000) - Modern music server
 - **Navidrome** (Port 4533) - Subsonic-compatible music
 - **Speedtest Tracker** (Port 5000) - Internet speed monitoring
 - **Immich** (Port 2283) - Photo management
+- **Retrom** (Port 5101, 3000) - Game library & emulation management
 
 ### Books & Reading (5)
 - **Calibre** (Port 8080) - Library management
@@ -436,9 +438,10 @@ See [Troubleshooting Guide](docs/operations/troubleshooting.md) for more solutio
 ## 📈 Performance
 
 **What Works Great:**
-- ✅ All 30 services running simultaneously
+- ✅ All 31 services running simultaneously
 - ✅ Jellyfin 1080p streaming with transcoding
 - ✅ Multiple concurrent music streams
+- ✅ Game library management with Retrom
 - ✅ Automated book discovery and imports
 - ✅ Full monitoring with Prometheus + Grafana
 - ✅ VPN access via Headscale
