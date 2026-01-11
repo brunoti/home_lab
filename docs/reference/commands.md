@@ -18,18 +18,18 @@ just <category> --<flag> <value>
 just install
 
 # Install specific dependency
-just install --package colima
+just install --package orbstack
 just install --package docker
 ```
 
 ### Mac Setup
 
 ```bash
-# Complete Mac environment setup
+# Complete Mac environment setup (installs OrbStack if needed)
 just setup --target mac
 
-# Setup Colima only
-just setup --target colima
+# Setup OrbStack only
+just setup --target orbstack
 
 # Configure system preferences
 just setup --target system

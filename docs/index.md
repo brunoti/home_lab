@@ -51,7 +51,7 @@ This home lab runs on a Mac mini M4 with 16GB RAM and 256GB SSD, hosting 30 cont
 ┌─────────────────────────────────────────────┐
 │           Mac mini M4 (16GB RAM)            │
 ├─────────────────────────────────────────────┤
-│  Colima (Docker Runtime) - 8GB allocated    │
+│  OrbStack (Docker Runtime) - Dynamic alloc. │
 │  ├── Media Services (5)                     │
 │  ├── Books & Reading (5)                    │
 │  ├── Music Streaming (2)                    │

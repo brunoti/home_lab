@@ -13,7 +13,8 @@ install package="all":
     if [ "{{package}}" = "all" ]; then
         echo "Installing all dependencies..."
         command -v brew >/dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        brew install colima docker docker-compose || true
+        brew install --cask orbstack
+        brew install docker docker-compose || true
         echo "✓ Dependencies installed"
     else
         echo "Installing {{package}}..."
@@ -33,17 +34,23 @@ setup target="mac" service="all":
                 echo "Homebrew not found. Please run: just install"
                 exit 1
             fi
-            # Start Colima if not running
-            if ! colima status &> /dev/null; then
-                echo "Starting Colima..."
-                colima start --cpu 8 --memory 8 --disk 100 --arch aarch64 --vm-type vz --mount-type virtiofs || true
+            # OrbStack starts automatically after installation
+            # Verify Docker is available
+            if ! docker info &> /dev/null; then
+                echo "Docker not available. Please ensure OrbStack is installed and running."
+                echo "You can install it with: brew install --cask orbstack"
+                exit 1
             fi
             echo "✓ Mac setup complete"
             ;;
-        colima)
-            echo "Setting up Colima..."
-            colima start --cpu 8 --memory 8 --disk 100 --arch aarch64 --vm-type vz --mount-type virtiofs
-            echo "✓ Colima started"
+        orbstack)
+            echo "Setting up OrbStack..."
+            if ! command -v brew &> /dev/null; then
+                echo "Homebrew not found. Please install it first."
+                exit 1
+            fi
+            brew install --cask orbstack
+            echo "✓ OrbStack installed. It will start automatically."
             ;;
         config)
             echo "Validating configuration..."
@@ -73,7 +80,7 @@ setup target="mac" service="all":
             ;;
         *)
             echo "Unknown target: {{target}}"
-            echo "Valid targets: mac, colima, config, system, alerts"
+            echo "Valid targets: mac, orbstack, config, system, alerts"
             exit 1
             ;;
     esac

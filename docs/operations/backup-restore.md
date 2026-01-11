@@ -143,7 +143,8 @@ In case of complete system loss:
 
 ```bash
 # 1. Install dependencies (see Installation Guide)
-brew install just colima docker docker-compose
+brew install just
+brew install --cask orbstack
 
 # 2. Clone repository
 git clone https://github.com/brunoti/home_lab.git

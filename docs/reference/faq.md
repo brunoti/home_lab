@@ -20,7 +20,7 @@ Common questions and answers about the home lab setup.
 ### Can I run this on non-Mac hardware?
 
 Yes, but you'll need to adjust:
-- Use Docker Desktop or native Docker instead of Colima
+- Use Docker Desktop, Colima, or native Docker instead of OrbStack
 - May need to adjust image architectures (ARM vs x86)
 - Resource allocation settings will differ
 
@@ -46,14 +46,17 @@ Absolutely! Edit `docker-compose.yml` and comment out services you don't need:
 
 ### Do I need to install Docker Desktop?
 
-No, we use Colima which is lighter and free. But Docker Desktop also works if you prefer it.
+No, we use OrbStack which is faster, more efficient, and has a better macOS integration. But Docker Desktop also works if you prefer it.
 
-### Why Colima instead of Docker Desktop?
+### Why OrbStack instead of Docker Desktop?
 
-- Free and open source
-- Lighter resource usage
-- No licensing requirements
-- Better macOS integration
+- Fast and lightweight
+- Optimized for Apple Silicon (M1/M2/M4)
+- Dynamic resource allocation
+- Better battery life
+- Native macOS integration
+- Automatic file sharing with VirtioFS
+- Free for personal use
 
 ### The installation fails, what should I do?
 
@@ -133,7 +136,7 @@ Some heat is normal, but excessive heat means:
 ### Can I run this 24/7?
 
 Yes! The setup is designed for continuous operation. Recommendations:
-- Enable Colima auto-start
+- OrbStack starts automatically on boot
 - Setup monitoring alerts
 - Schedule maintenance weekly
 - Monitor temperatures
@@ -218,7 +221,7 @@ Check:
 1. Service running: `just services --action status`
 2. Port correct: `just network --action ports`
 3. No firewall blocking
-4. Colima running: `colima status`
+4. Docker running: `docker info`
 
 ## Troubleshooting
 
@@ -258,9 +261,9 @@ just monitor --target ram
 # Stop non-essential services
 just services --action stop --name service-name
 
-# Restart Colima with more RAM
-colima stop
-colima start --cpu 8 --memory 12 --disk 100
+# OrbStack manages memory dynamically
+# Check overall system resources
+vm_stat
 ```
 
 ## Updates & Maintenance

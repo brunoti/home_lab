@@ -47,15 +47,21 @@ lsof -i :PORT_NUMBER
 
 **Solutions:**
 
-1. Check Colima status:
+1. Check OrbStack status:
 ```bash
-colima status
+# Check if Docker is available
+docker info
+
+# Check if OrbStack is running (via GUI or ps)
+ps aux | grep -i orbstack
 ```
 
-2. Restart Colima if needed:
+2. Restart OrbStack if needed:
 ```bash
-colima stop
-colima start --cpu 8 --memory 8 --disk 100
+# Use the OrbStack GUI menu to quit and restart
+# Or from command line:
+# Quit: osascript -e 'quit app "OrbStack"'
+# Start: open -a OrbStack
 ```
 
 3. Check Docker:
@@ -93,10 +99,14 @@ docker stats
 just services --action stop --name service-name
 ```
 
-4. Increase Colima memory:
+4. Check OrbStack resource usage:
 ```bash
-colima stop
-colima start --cpu 8 --memory 12 --disk 100
+# View Docker stats
+docker stats
+
+# OrbStack manages memory dynamically, but you can
+# check overall system memory with:
+vm_stat
 ```
 
 ## Performance Issues
@@ -534,8 +544,11 @@ just backup --target local --action clean
 
 **Solution:**
 ```bash
-colima status
-colima start --cpu 8 --memory 8 --disk 100
+# Check if OrbStack/Docker is running
+docker info
+
+# If not running, start OrbStack from Applications
+# Or restart it from the menu bar
 ```
 
 ### "permission denied"

@@ -12,7 +12,7 @@ Comprehensive installation instructions for setting up your home lab environment
 
 ### Software
 - **OS**: macOS Ventura or later
-- **Docker**: Via Colima (Docker Desktop also supported)
+- **Docker**: Via OrbStack (Docker Desktop also supported)
 - **Package Manager**: Homebrew
 
 ## Step 1: Install Homebrew
@@ -32,32 +32,38 @@ Follow the post-installation instructions to add Homebrew to your PATH.
 brew install just
 
 # Install container runtime
-brew install colima docker docker-compose
+brew install --cask orbstack
+
+# Install Docker CLI tools (if not already included)
+brew install docker docker-compose
 
 # Install optional utilities
 brew install git curl wget jq
 ```
 
-## Step 3: Configure Colima
+## Step 3: Configure OrbStack
 
-Start Colima with proper resource allocation:
-
-```bash
-# For 16GB RAM Mac
-colima start --cpu 8 --memory 8 --disk 100 --arch aarch64 --vm-type vz --mount-type virtiofs
-
-# Set Docker context
-docker context use colima
-```
-
-### Colima Auto-Start (Optional)
-
-To start Colima automatically on boot:
+OrbStack starts automatically after installation and manages resources dynamically. Verify it's running:
 
 ```bash
-# Create launch agent
-brew services start colima
+# Check Docker context
+docker info
+
+# Verify OrbStack is running
+docker ps
 ```
+
+### OrbStack Auto-Start
+
+OrbStack automatically starts on boot by default. No additional configuration is needed.
+
+### Resource Management
+
+OrbStack dynamically allocates resources based on workload. It automatically:
+- Adjusts memory allocation as needed
+- Uses efficient file sharing with VirtioFS
+- Optimizes for Apple Silicon architecture
+- Provides fast container startup times
 
 ## Step 4: Clone Repository
 
@@ -258,12 +264,14 @@ just books --action import --service calibre
 
 ## Troubleshooting
 
-### Colima Won't Start
+### OrbStack Won't Start
 ```bash
-# Reset Colima
-colima stop
-colima delete
-colima start --cpu 8 --memory 8 --disk 100
+# Check OrbStack status via GUI or
+docker info
+
+# Restart OrbStack
+# Use the OrbStack app menu: OrbStack > Quit
+# Then relaunch OrbStack from Applications
 ```
 
 ### Services Won't Start
