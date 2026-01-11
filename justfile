@@ -10,14 +10,14 @@ default:
 up service='all':
     #!/usr/bin/env bash
     set -euo pipefail
-    
+
     # Ensure network exists
     if ! docker network inspect homelab &>/dev/null; then
         echo "Creating homelab network..."
         docker network create homelab
     fi
-    
-    if [ "{{service}}" = "all" ]; then
+
+    if [ "{{ service }}" = "all" ]; then
         echo "Starting all services..."
         for service_dir in services/*/; do
             if [ -f "${service_dir}docker-compose.yml" ]; then
@@ -28,27 +28,27 @@ up service='all':
         done
         echo "✓ All services started"
     else
-        service_dir="services/{{service}}"
+        service_dir="services/{{ service }}"
         if [ ! -d "$service_dir" ]; then
-            echo "ERROR: Service '{{service}}' does not exist"
+            echo "ERROR: Service '{{ service }}' does not exist"
             echo "Run 'just services list' to see available services"
             exit 1
         fi
         if [ ! -f "${service_dir}/docker-compose.yml" ]; then
-            echo "ERROR: docker-compose.yml not found for service '{{service}}'"
+            echo "ERROR: docker-compose.yml not found for service '{{ service }}'"
             exit 1
         fi
-        echo "Starting {{service}}..."
+        echo "Starting {{ service }}..."
         (cd "$service_dir" && docker compose up -d)
-        echo "✓ {{service}} started"
+        echo "✓ {{ service }} started"
     fi
 
 # Stop all services or a specific service
 stop service='all':
     #!/usr/bin/env bash
     set -euo pipefail
-    
-    if [ "{{service}}" = "all" ]; then
+
+    if [ "{{ service }}" = "all" ]; then
         echo "Stopping all services..."
         for service_dir in services/*/; do
             if [ -f "${service_dir}docker-compose.yml" ]; then
@@ -59,19 +59,19 @@ stop service='all':
         done
         echo "✓ All services stopped"
     else
-        service_dir="services/{{service}}"
+        service_dir="services/{{ service }}"
         if [ ! -d "$service_dir" ]; then
-            echo "ERROR: Service '{{service}}' does not exist"
+            echo "ERROR: Service '{{ service }}' does not exist"
             echo "Run 'just services list' to see available services"
             exit 1
         fi
         if [ ! -f "${service_dir}/docker-compose.yml" ]; then
-            echo "ERROR: docker-compose.yml not found for service '{{service}}'"
+            echo "ERROR: docker-compose.yml not found for service '{{ service }}'"
             exit 1
         fi
-        echo "Stopping {{service}}..."
+        echo "Stopping {{ service }}..."
         (cd "$service_dir" && docker compose down)
-        echo "✓ {{service}} stopped"
+        echo "✓ {{ service }} stopped"
     fi
 
 # Display help information
@@ -82,27 +82,27 @@ help:
 install package="all":
     #!/usr/bin/env bash
     set -euo pipefail
-    if [ "{{package}}" = "all" ]; then
+    if [ "{{ package }}" = "all" ]; then
         echo "Installing all dependencies..."
         command -v brew >/dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         brew install --cask orbstack
         brew install docker docker-compose || true
         echo "✓ Dependencies installed"
     else
-        echo "Installing {{package}}..."
-        if [ "{{package}}" = "orbstack" ]; then
-            brew install --cask {{package}}
+        echo "Installing {{ package }}..."
+        if [ "{{ package }}" = "orbstack" ]; then
+            brew install --cask {{ package }}
         else
-            brew install {{package}}
+            brew install {{ package }}
         fi
-        echo "✓ {{package}} installed"
+        echo "✓ {{ package }} installed"
     fi
 
 # Setup commands
 setup target="mac" service="all":
     #!/usr/bin/env bash
     set -euo pipefail
-    case "{{target}}" in
+    case "{{ target }}" in
         mac)
             echo "Setting up Mac environment..."
             # Check for Homebrew
@@ -155,7 +155,7 @@ setup target="mac" service="all":
             echo "Visit: http://localhost:3000"
             ;;
         *)
-            echo "Unknown target: {{target}}"
+            echo "Unknown target: {{ target }}"
             echo "Valid targets: mac, orbstack, config, system, alerts"
             exit 1
             ;;
@@ -165,17 +165,17 @@ setup target="mac" service="all":
 services action="status" name="all" category="all" timeout="30" follow="false" lines="100" timestamps="false" detailed="false" force="false":
     #!/usr/bin/env bash
     set -euo pipefail
-    
+
     # Ensure network exists
     if ! docker network inspect homelab &>/dev/null; then
         echo "Creating homelab network..."
         docker network create homelab
     fi
-    
-    case "{{action}}" in
+
+    case "{{ action }}" in
         status)
             echo "Checking homelab service status..."
-            docker ps --format "table {{'{{'}}.Names{{'}}'}}\t{{'{{'}}.Status{{'}}'}}\t{{'{{'}}.Ports{{'}}'}}" | grep -E "^NAMES|homelab" || docker ps
+            docker ps --format "table {{ '{{' }}.Names{{ '}}' }}\t{{ '{{' }}.Status{{ '}}' }}\t{{ '{{' }}.Ports{{ '}}' }}" | grep -E "^NAMES|homelab" || docker ps
             ;;
         list)
             echo "Available services:"
@@ -187,7 +187,7 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
             done
             ;;
         *)
-            echo "Action {{action}} not yet implemented"
+            echo "Action {{ action }} not yet implemented"
             exit 1
             ;;
     esac
