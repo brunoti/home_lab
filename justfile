@@ -191,3 +191,151 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
             exit 1
             ;;
     esac
+
+# Generate secure passwords for all database and secret variables
+password:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    
+    echo "🔐 Generating secure passwords for database services"
+    echo "===================================================="
+    echo ""
+    
+    # Check if .env exists
+    if [ ! -f .env ]; then
+        echo "Creating .env from .env.example..."
+        cp .env.example .env
+    fi
+    
+    # Function to generate a strong 64-character password
+    generate_password() {
+        openssl rand -hex 32
+    }
+    
+    # List of variables that need strong passwords
+    # Database passwords
+    declare -a PASSWORD_VARS=(
+        "POSTGRES_PASSWORD"
+        "REDIS_PASSWORD"
+        "AUTHELIA_STORAGE_POSTGRES_PASSWORD"
+        "GF_DATABASE_PASSWORD"
+        "KOEL_DB_PASSWORD"
+        "SPEEDTEST_TRACKER_DB_PASSWORD"
+    )
+    
+    # Admin passwords
+    declare -a ADMIN_PASSWORD_VARS=(
+        "GRAFANA_ADMIN_PASSWORD"
+        "GRAFANA_SECURITY_ADMIN_PASSWORD"
+        "KOEL_ADMIN_PASSWORD"
+        "PIHOLE_WEBPASSWORD"
+        "PORTAINER_ADMIN_PASSWORD"
+        "TRANSMISSION_RPC_PASSWORD"
+    )
+    
+    # Secrets and keys (JWT, session, app keys)
+    declare -a SECRET_VARS=(
+        "AFFINE_JWT_SECRET"
+        "AUTHELIA_JWT_SECRET"
+        "AUTHELIA_SESSION_SECRET"
+        "KOEL_APP_KEY"
+        "SPEEDTEST_TRACKER_APP_KEY"
+    )
+    
+    # API keys
+    declare -a API_KEY_VARS=(
+        "RADARR_API_KEY"
+        "SONARR_API_KEY"
+    )
+    
+    echo "Generating database passwords..."
+    for var in "${PASSWORD_VARS[@]}"; do
+        password=$(generate_password)
+        if grep -q "^${var}=" .env; then
+            # Check if variable is empty or has placeholder
+            current_value=$(grep "^${var}=" .env | cut -d= -f2-)
+            if [ -z "$current_value" ] || [ "$current_value" = "password" ] || [ "$current_value" = "changeme" ]; then
+                sed -i.bak "s|^${var}=.*|${var}=${password}|" .env
+                echo "  ✓ ${var}"
+            else
+                echo "  ⊘ ${var} (already set, skipping)"
+            fi
+        else
+            echo "${var}=${password}" >> .env
+            echo "  ✓ ${var}"
+        fi
+    done
+    
+    echo ""
+    echo "Generating admin passwords..."
+    for var in "${ADMIN_PASSWORD_VARS[@]}"; do
+        password=$(generate_password)
+        if grep -q "^${var}=" .env; then
+            current_value=$(grep "^${var}=" .env | cut -d= -f2-)
+            if [ -z "$current_value" ] || [ "$current_value" = "password" ] || [ "$current_value" = "changeme" ]; then
+                sed -i.bak "s|^${var}=.*|${var}=${password}|" .env
+                echo "  ✓ ${var}"
+            else
+                echo "  ⊘ ${var} (already set, skipping)"
+            fi
+        else
+            echo "${var}=${password}" >> .env
+            echo "  ✓ ${var}"
+        fi
+    done
+    
+    echo ""
+    echo "Generating secrets and keys..."
+    for var in "${SECRET_VARS[@]}"; do
+        secret=$(generate_password)
+        if grep -q "^${var}=" .env; then
+            current_value=$(grep "^${var}=" .env | cut -d= -f2-)
+            if [ -z "$current_value" ] || [ "$current_value" = "secret" ] || [ "$current_value" = "changeme" ]; then
+                sed -i.bak "s|^${var}=.*|${var}=${secret}|" .env
+                echo "  ✓ ${var}"
+            else
+                echo "  ⊘ ${var} (already set, skipping)"
+            fi
+        else
+            echo "${var}=${secret}" >> .env
+            echo "  ✓ ${var}"
+        fi
+    done
+    
+    echo ""
+    echo "Generating API keys..."
+    for var in "${API_KEY_VARS[@]}"; do
+        # Generate a shorter 32-char key for API keys
+        api_key=$(openssl rand -hex 16)
+        if grep -q "^${var}=" .env; then
+            current_value=$(grep "^${var}=" .env | cut -d= -f2-)
+            if [ -z "$current_value" ]; then
+                sed -i.bak "s|^${var}=.*|${var}=${api_key}|" .env
+                echo "  ✓ ${var}"
+            else
+                echo "  ⊘ ${var} (already set, skipping)"
+            fi
+        else
+            echo "${var}=${api_key}" >> .env
+            echo "  ✓ ${var}"
+        fi
+    done
+    
+    # Clean up backup files
+    rm -f .env.bak
+    
+    echo ""
+    echo "===================================================="
+    echo "✅ Password generation complete!"
+    echo ""
+    echo "All database passwords, admin passwords, secrets, and API keys"
+    echo "have been generated and saved to .env file."
+    echo ""
+    echo "⚠️  IMPORTANT:"
+    echo "  - Keep your .env file secure and never commit it to git"
+    echo "  - Backup your .env file in a secure location"
+    echo "  - Variables that already had values were skipped"
+    echo ""
+    echo "To regenerate a specific password, delete it from .env and run:"
+    echo "  just password"
+    echo ""
