@@ -90,16 +90,17 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 │  │   ├── Audiobookshelf - Audiobooks        │
 │  │   └── ...                                │
 │  │                                           │
-│  ├── Music (2 services)                     │
+│  ├── Music (3 services)                     │
 │  │   ├── Koel - Modern music server         │
-│  │   └── Navidrome - Subsonic compatible    │
+│  │   ├── Navidrome - Subsonic compatible    │
+│  │   └── Lidarr - Music automation          │
 │  │                                           │
 │  ├── Monitoring (5 services)                │
 │  │   ├── Prometheus - Metrics               │
 │  │   ├── Grafana - Dashboards               │
 │  │   └── ...                                │
 │  │                                           │
-│  └── And 14 more services...                │
+│  └── And 13 more services...                │
 └─────────────────────────────────────────────┘
 ```
 
