@@ -18,7 +18,11 @@ install package="all":
         echo "✓ Dependencies installed"
     else
         echo "Installing {{package}}..."
-        brew install {{package}}
+        if [ "{{package}}" = "orbstack" ]; then
+            brew install --cask {{package}}
+        else
+            brew install {{package}}
+        fi
         echo "✓ {{package}} installed"
     fi
 
