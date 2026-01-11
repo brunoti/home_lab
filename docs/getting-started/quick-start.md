@@ -16,7 +16,8 @@ Get your home lab up and running in minutes!
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install required tools
-brew install just colima docker docker-compose
+brew install just
+brew install --cask orbstack
 ```
 
 ## 2. Clone Repository
@@ -42,11 +43,12 @@ nano .env  # or use your preferred editor
 - API keys (Radarr, Sonarr)
 - Email configuration (for notifications)
 
-## 4. Start Colima
+## 4. Verify Docker
 
 ```bash
-# Start Colima with proper resource allocation
-colima start --cpu 8 --memory 8 --disk 100
+# OrbStack starts automatically
+# Verify Docker is running
+docker info
 ```
 
 ## 5. Launch Services
@@ -109,7 +111,8 @@ If you encounter issues:
 1. Check service logs: `just services --action logs --name <service>`
 2. Verify configuration: `just setup --target config`
 3. Check RAM usage: `just monitor --target ram`
-4. Review [Troubleshooting Guide](../operations/troubleshooting.md)
+4. Ensure Docker is running: `docker info`
+5. Review [Troubleshooting Guide](../operations/troubleshooting.md)
 
 ## Getting Help
 

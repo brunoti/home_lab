@@ -13,7 +13,7 @@ A self-hosted home lab running on Mac mini M4 with 16GB RAM and 256GB SSD. All s
 - **Device:** Mac mini M4
 - **RAM:** 16GB
 - **Storage:** 256GB internal SSD
-- **Container Runtime:** Docker (via Colima)
+- **Container Runtime:** Docker (via OrbStack)
 - **OS:** macOS
 
 ### Network
@@ -31,10 +31,10 @@ A self-hosted home lab running on Mac mini M4 with 16GB RAM and 256GB SSD. All s
 - **Disaster Recovery:** Complete recovery procedures documented
 - **Metadata:** Jellyfin metadata stored locally, included in backups
 
-### Colima Configuration
-- **CPU Allocation:** 8 cores (from M4's efficiency cores)
-- **RAM Allocation:** 8GB (leaving 8GB for macOS)
-- **Auto-start:** Configured on boot
+### OrbStack Configuration
+- **Resource Allocation:** Dynamic (automatically managed by OrbStack)
+- **Typical RAM Usage:** ~8GB for containers
+- **Auto-start:** Enabled by default (starts on boot automatically)
 
 ## 📁 Repository Structure
 
@@ -109,7 +109,7 @@ home_lab/
 
 ```
 Total: 16GB
-├── Colima (Docker): 8GB
+├── OrbStack (Docker): Dynamic (~8GB typical)
 │   ├── Jellyfin: 2GB
 │   ├── Affine: 1GB
 │   ├── Calibre: 1GB
@@ -122,7 +122,7 @@ Total: 16GB
 │   ├── Other services: 256MB
 │   └── Headroom/Buffer: 128MB
 │
-└── macOS + System: 8GB
+└── macOS + System: Remaining (~8GB)
 ```
 
 ## 💾 Storage Breakdown (256GB SSD)
@@ -140,7 +140,7 @@ Total: 16GB
 ## 🚀 Setup & Configuration
 
 ### Technology Stack
-- **Container Runtime:** Docker (via Colima)
+- **Container Runtime:** Docker (via OrbStack)
 - **Orchestration:** Docker Compose
 - **Scripting:** Bun (TypeScript runtime)
 - **Task Automation:** Justfile

@@ -4,7 +4,7 @@ A comprehensive, self-hosted home lab running 30 containerized services on Mac m
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](https://docs.docker.com/compose/)
-[![Colima](https://img.shields.io/badge/runtime-colima-green.svg)](https://github.com/abiosoft/colima)
+[![OrbStack](https://img.shields.io/badge/runtime-orbstack-green.svg)](https://orbstack.dev)
 
 ## 🚀 Quick Start
 
@@ -20,8 +20,9 @@ just install
 cp .env.example .env
 # Edit .env with your settings
 
-# Setup Mac and Colima
-just setup --target mac
+# OrbStack will start automatically after installation
+# Optionally verify it's running:
+docker info
 
 # Start all services
 just services --action start
@@ -77,7 +78,7 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 ┌─────────────────────────────────────────────┐
 │        Mac mini M4 (16GB RAM, 256GB SSD)    │
 ├─────────────────────────────────────────────┤
-│  Colima (Docker) - 8GB RAM allocated        │
+│  OrbStack (Docker) - Dynamic RAM allocation │
 │                                              │
 │  ├── Media & Entertainment (5 services)     │
 │  │   ├── Jellyfin - Media streaming         │
@@ -157,9 +158,6 @@ The home lab uses simplified, argument-based commands via `just`:
 ```bash
 # Install all dependencies
 just install
-
-# Setup Mac environment with Colima
-just setup --target mac
 
 # Validate configuration
 just setup --target config
@@ -320,12 +318,12 @@ Or browse the documentation in the `docs/` directory:
 
 ```
 Total RAM: 16GB
-├── Colima (Docker): 8GB
+├── OrbStack (Docker): Dynamic allocation (~8GB typical)
 │   ├── Jellyfin: 2GB
 │   ├── Databases: 1.5GB
 │   ├── Monitoring: 1GB
 │   └── Other services: 3.5GB
-└── macOS: 8GB
+└── macOS: Remaining (~8GB)
 ```
 
 ### Environment Variables
