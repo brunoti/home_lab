@@ -4,6 +4,7 @@ docker-compose.override.yml
 .env
 .env.local
 .env.*.local
+data/
 
 # macOS
 .DS_Store
