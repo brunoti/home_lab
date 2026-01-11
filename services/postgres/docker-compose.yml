@@ -3,6 +3,8 @@ services:
     image: postgres:16-alpine
     container_name: postgres
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
     env_file:
       - ../../.env
     environment:
