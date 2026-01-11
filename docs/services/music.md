@@ -4,12 +4,127 @@ Documentation for music streaming services in the home lab.
 
 ## Overview
 
-The home lab includes two complementary music servers:
+The home lab includes three complementary music services:
 
 1. **Koel**: Modern, beautiful web interface for desktop use
 2. **Navidrome**: Subsonic-compatible for mobile apps
+3. **Lidarr**: Automated music management and acquisition
 
-Both services share the same music library with independent metadata caches.
+Koel and Navidrome share the same music library with independent metadata caches, while Lidarr automates the download and organization of music.
+
+## Lidarr - Music Automation
+
+**Port**: 8686  
+**Purpose**: Automated music management and acquisition
+
+### Features
+
+- **Automated Downloads**: Automatically download music releases
+- **Quality Management**: Set preferred quality profiles
+- **Artist Monitoring**: Track your favorite artists
+- **Release Calendar**: See upcoming releases
+- **Metadata Management**: Automatic tagging and organization
+- **Integration**: Works with Transmission, Prowlarr
+- **Notifications**: Get notified of new releases
+- **Import Lists**: Import artists from Spotify, Last.fm
+
+### Setup
+
+1. Start Lidarr:
+```bash
+just services --action start --name lidarr
+```
+
+2. Access: http://localhost:8686
+
+3. Initial Configuration:
+   - Complete setup wizard
+   - Set root music folder: `/music`
+   - Configure download client (Transmission)
+   - Connect to Prowlarr for indexers
+
+4. Configure Quality Profiles:
+   - Settings → Profiles
+   - Choose preferred formats (FLAC, MP3)
+   - Set quality cutoffs
+
+### Integration with Other Services
+
+**Prowlarr (Indexers):**
+1. In Prowlarr, go to Settings → Apps
+2. Add Lidarr
+3. Use API key from Lidarr Settings → General
+4. Test connection
+
+**Transmission (Download Client):**
+1. Settings → Download Clients → Add
+2. Select Transmission
+3. Host: `transmission`
+4. Port: `6969`
+5. Category: `lidarr`
+
+**Music Library:**
+- Lidarr organizes downloads into `/music`
+- Koel and Navidrome automatically scan new music
+- Manual rescan: `just music --action import`
+
+### Adding Artists
+
+**Manual:**
+1. Search for artist name
+2. Click artist to view details
+3. Select "Add Artist"
+4. Choose root folder and quality profile
+5. Enable monitoring
+
+**Import Lists:**
+- Settings → Import Lists
+- Add Spotify Artists
+- Add Last.fm Loved Tracks
+- Configure API keys
+
+### Usage
+
+**Monitor Artists:**
+- Add artists to track new releases
+- Set monitoring options:
+  - All albums
+  - Future albums only
+  - Specific albums
+
+**Search for Music:**
+- Automatic: Lidarr searches on schedule
+- Manual: Click magnifying glass icon
+- Interactive Search: Choose specific release
+
+**Quality Profiles:**
+- FLAC: Lossless quality
+- MP3 320kbps: High quality lossy
+- Custom profiles for specific needs
+
+**Release Calendar:**
+- View upcoming releases
+- See recently added albums
+- Track wanted albums
+
+### Configuration
+
+**Root Folders:**
+- Settings → Media Management → Root Folders
+- Add `/music` as root folder
+- Enable rename, organize options
+
+**Metadata:**
+- Settings → Metadata
+- Enable metadata providers
+- Configure file naming
+- Embed album art
+
+**Download Client:**
+- Settings → Download Clients
+- Configure Transmission
+- Set completed download handling
+- Enable import automation
 
 ## Koel - Modern Music Server
 
@@ -407,7 +522,7 @@ just services --action restart --name navidrome
 
 ## Tips
 
-1. **Choose Service**: Koel for desktop, Navidrome for mobile
+1. **Choose Service**: Koel for desktop, Navidrome for mobile, Lidarr for automation
 2. **Organize First**: Good structure saves time
 3. **Tag Music**: Proper metadata crucial
 4. **Use Lossless**: FLAC when possible
@@ -415,3 +530,4 @@ just services --action restart --name navidrome
 6. **Monitor Storage**: Track disk usage
 7. **Update Services**: Keep software current
 8. **Test Apps**: Try different mobile clients
+9. **Automate Wisely**: Configure Lidarr quality profiles carefully

@@ -1,0 +1,23 @@
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    restart: unless-stopped
+    environment:
+      - PUID=${LIDARR_UID:-1000}
+      - PGID=${LIDARR_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${LIDARR_CONFIG_DIR:-../../data/lidarr/config}:/config
+      - ${LIDARR_MUSIC_DIR:-../../data/lidarr/music}:/music
+      - ../../data/transmission/downloads:/downloads
+    ports:
+      - "8686:8686"
+    networks:
+      - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

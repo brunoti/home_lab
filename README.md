@@ -1,6 +1,6 @@
 # Home Lab
 
-A comprehensive, self-hosted home lab running 30 containerized services on Mac mini M4. Features media streaming, book management, music servers, monitoring, backups, and more.
+A comprehensive, self-hosted home lab running 31 containerized services on Mac mini M4. Features media streaming, book management, music servers, monitoring, backups, and more.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](https://docs.docker.com/compose/)
@@ -32,7 +32,7 @@ just docs --action serve
 
 ## 📋 Features
 
-- **30 Containerized Services** - Media, books, music, monitoring, and more
+- **31 Containerized Services** - Media, books, music, monitoring, and more
 - **Modular Architecture** - Each service in its own directory under `services/`
 - **Simplified Commands** - Argument-based `just` commands for easy management
 - **Individual Service Control** - Start, stop, or manage services independently
@@ -53,7 +53,7 @@ home_lab/
 │   ├── postgres/
 │   │   ├── docker-compose.yml
 │   │   └── README.md
-│   └── ...                    # 31 services total
+│   └── ...                    # 32 services total
 ├── config/                    # Service configurations
 │   ├── prometheus/
 │   ├── loki/
@@ -99,7 +99,7 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 │  │   ├── Grafana - Dashboards               │
 │  │   └── ...                                │
 │  │                                           │
-│  └── And 13 more services...                │
+│  └── And 14 more services...                │
 └─────────────────────────────────────────────┘
 ```
 
@@ -135,7 +135,7 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 - **Nextcloud** (Port 11000) - Cloud storage
 - **Rclone** (Port 5572) - Cloud backups
 
-### Utilities & Infrastructure (10)
+### Utilities & Infrastructure (11)
 - **Homepage** (Port 3000) - Dashboard
 - **Nginx Proxy Manager** (Port 81, 443) - Reverse proxy
 - **File Browser** (Port 6060) - Web file manager
@@ -144,6 +144,7 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 - **Redis** - Caching
 - **Radarr** (Port 7878) - Movie automation
 - **Sonarr** (Port 8989) - TV automation
+- **Lidarr** (Port 8686) - Music automation
 - **Prowlarr** (Port 9696) - Indexer manager
 - **Transmission** (Port 6969) - Torrent client
 - **Affine** (Port 3001) - Notes & wiki
