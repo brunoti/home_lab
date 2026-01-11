@@ -1,0 +1,22 @@
+services:
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr
+    restart: unless-stopped
+    environment:
+      - PUID=${DISPATCHARR_UID:-1000}
+      - PGID=${DISPATCHARR_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${DISPATCHARR_CONFIG_DIR:-../../data/dispatcharr/config}:/config
+      - ${DISPATCHARR_DATA_DIR:-../../data/dispatcharr/data}:/data
+    ports:
+      - "${DISPATCHARR_PORT:-9191}:9191"
+    networks:
+      - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab
