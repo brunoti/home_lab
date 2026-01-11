@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
-# Validation script for docker-compose.yml YAML syntax
-# This script validates YAML syntax and structure of all docker-compose files
+# Validation script for docker-compose.yml files
+# This script validates:
+#   1. YAML syntax (using Python PyYAML)
+#   2. Services key presence and structure
+#   3. Service name indentation
+#   4. Docker Compose configuration (using docker compose config)
+#
+# Note: In modular setups, service dependencies across different compose files
+# are expected and will be resolved at runtime via shared networks.
 
 set -uo pipefail
 
-echo "🔍 Validating Docker Compose YAML Files"
+echo "🔍 Validating Docker Compose Files"
 echo "=========================================="
 echo ""
 
@@ -90,6 +97,66 @@ check_services_mapping() {
     fi
 }
 
+# Function to validate Docker Compose configuration
+check_compose_config() {
+    local file="$1"
+    local service_name=$(basename $(dirname "$file"))
+    local service_dir=$(dirname "$file")
+    
+    # Check if docker compose is available
+    if ! command -v docker &>/dev/null || ! docker compose version &>/dev/null 2>&1; then
+        echo -e "${YELLOW}⚠${NC} $service_name: Docker Compose not available, skipping config validation"
+        WARNINGS=$((WARNINGS + 1))
+        return 0
+    fi
+    
+    # Validate docker-compose configuration
+    # Capture both stdout and stderr, suppress warnings about undefined variables
+    local output
+    output=$(cd "$service_dir" && docker compose config --quiet 2>&1)
+    local exit_code=$?
+    
+    # Filter out common warnings/errors that are not actual configuration issues
+    # - "variable is not set" warnings are expected without .env
+    # - "depends on undefined service" is expected in modular setup
+    local filtered_output=$(echo "$output" | \
+        grep -v "variable is not set" | \
+        grep -v "Defaulting to a blank string" | \
+        grep -v "depends on undefined service" | \
+        grep -v "invalid compose project" | \
+        grep -v "^$")
+    
+    if [ $exit_code -eq 0 ]; then
+        # Config is valid
+        echo -e "${GREEN}✓${NC} $service_name: Valid Docker Compose config"
+        PASSED=$((PASSED + 1))
+        return 0
+    else
+        # Check if the only errors are dependency-related (expected in modular setup)
+        local has_real_errors=$(echo "$output" | \
+            grep -v "variable is not set" | \
+            grep -v "Defaulting to a blank string" | \
+            grep -v "depends on undefined service" | \
+            grep -v "invalid compose project" | \
+            grep -v "^$" | wc -l)
+        
+        if [ "$has_real_errors" -eq 0 ]; then
+            # Only dependency errors, which are expected in modular setup
+            echo -e "${GREEN}✓${NC} $service_name: Valid Docker Compose config (modular)"
+            PASSED=$((PASSED + 1))
+            return 0
+        else
+            # Config has real errors
+            echo -e "${RED}✗${NC} $service_name: Invalid Docker Compose config"
+            echo "$filtered_output" | head -5 | while IFS= read -r line; do
+                [ -n "$line" ] && echo -e "${RED}  └─${NC} $line"
+            done
+            FAILED=$((FAILED + 1))
+            return 1
+        fi
+    fi
+}
+
 echo "1. Checking YAML Syntax"
 echo "----------------------"
 for compose_file in services/*/docker-compose.yml; do
@@ -113,6 +180,15 @@ echo "-----------------------------------"
 for compose_file in services/*/docker-compose.yml; do
     if [ -f "$compose_file" ]; then
         check_services_indentation "$compose_file"
+    fi
+done
+
+echo ""
+echo "4. Validating Docker Compose Configuration"
+echo "-----------------------------------------"
+for compose_file in services/*/docker-compose.yml; do
+    if [ -f "$compose_file" ]; then
+        check_compose_config "$compose_file"
     fi
 done
 
