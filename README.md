@@ -25,7 +25,7 @@ cp .env.example .env
 docker info
 
 # Start all services
-just services --action start
+just up
 
 # Access documentation
 just docs --action serve
@@ -166,32 +166,30 @@ just setup --target config
 ### Service Management
 
 ```bash
+# Display all available just commands
+just help
+
 # List all available services
-just services --action list
+just services list
 
 # Start all services
-just services --action start
+just up
 
 # Start a specific service
-just services --action start --name jellyfin
+just up jellyfin
 
 # Stop all services
-just services --action stop
+just stop
 
 # Stop a specific service
-just services --action stop --name jellyfin
+just stop jellyfin
 
-# Restart specific service
-just services --action restart --name jellyfin
-
-# View service logs
-just services --action logs --name jellyfin --follow
-
+# Alternative: Advanced service management with legacy commands
 # Check service status
-just services --action status
+just services status
 
 # Check detailed status with resource usage
-just services --action status --detailed
+just services status --detailed
 ```
 
 ### Backups & Restore

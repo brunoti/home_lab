@@ -6,6 +6,78 @@
 default:
     @just --list
 
+# Start all services or a specific service
+up service='all':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    
+    # Ensure network exists
+    if ! docker network inspect homelab &>/dev/null; then
+        echo "Creating homelab network..."
+        docker network create homelab
+    fi
+    
+    if [ "{{service}}" = "all" ]; then
+        echo "Starting all services..."
+        for service_dir in services/*/; do
+            if [ -f "${service_dir}docker-compose.yml" ]; then
+                service_name=$(basename "$service_dir")
+                echo "Starting $service_name..."
+                (cd "$service_dir" && docker compose up -d)
+            fi
+        done
+        echo "✓ All services started"
+    else
+        service_dir="services/{{service}}"
+        if [ ! -d "$service_dir" ]; then
+            echo "ERROR: Service '{{service}}' does not exist"
+            echo "Run 'just services list' to see available services"
+            exit 1
+        fi
+        if [ ! -f "${service_dir}/docker-compose.yml" ]; then
+            echo "ERROR: docker-compose.yml not found for service '{{service}}'"
+            exit 1
+        fi
+        echo "Starting {{service}}..."
+        (cd "$service_dir" && docker compose up -d)
+        echo "✓ {{service}} started"
+    fi
+
+# Stop all services or a specific service
+stop service='all':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    
+    if [ "{{service}}" = "all" ]; then
+        echo "Stopping all services..."
+        for service_dir in services/*/; do
+            if [ -f "${service_dir}docker-compose.yml" ]; then
+                service_name=$(basename "$service_dir")
+                echo "Stopping $service_name..."
+                (cd "$service_dir" && docker compose down)
+            fi
+        done
+        echo "✓ All services stopped"
+    else
+        service_dir="services/{{service}}"
+        if [ ! -d "$service_dir" ]; then
+            echo "ERROR: Service '{{service}}' does not exist"
+            echo "Run 'just services list' to see available services"
+            exit 1
+        fi
+        if [ ! -f "${service_dir}/docker-compose.yml" ]; then
+            echo "ERROR: docker-compose.yml not found for service '{{service}}'"
+            exit 1
+        fi
+        echo "Stopping {{service}}..."
+        (cd "$service_dir" && docker compose down)
+        echo "✓ {{service}} stopped"
+    fi
+
+# Display help information
+help:
+    @just --list
+
 # Install dependencies
 install package="all":
     #!/usr/bin/env bash
@@ -104,6 +176,15 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
         status)
             echo "Checking homelab service status..."
             docker ps --format "table {{'{{'}}.Names{{'}}'}}\t{{'{{'}}.Status{{'}}'}}\t{{'{{'}}.Ports{{'}}'}}" | grep -E "^NAMES|homelab" || docker ps
+            ;;
+        list)
+            echo "Available services:"
+            for service_dir in services/*/; do
+                if [ -f "${service_dir}docker-compose.yml" ]; then
+                    service_name=$(basename "$service_dir")
+                    echo "  - $service_name"
+                fi
+            done
             ;;
         *)
             echo "Action {{action}} not yet implemented"
