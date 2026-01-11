@@ -88,3 +88,14 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
         echo "Creating homelab network..."
         docker network create homelab
     fi
+    
+    case "{{action}}" in
+        status)
+            echo "Checking homelab service status..."
+            docker ps --format "table {{'{{'}}.Names{{'}}'}}\t{{'{{'}}.Status{{'}}'}}\t{{'{{'}}.Ports{{'}}'}}" | grep -E "^NAMES|homelab" || docker ps
+            ;;
+        *)
+            echo "Action {{action}} not yet implemented"
+            exit 1
+            ;;
+    esac
