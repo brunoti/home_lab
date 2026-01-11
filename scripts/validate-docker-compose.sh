@@ -97,11 +97,21 @@ check_services_mapping() {
     fi
 }
 
+# Function to filter docker-compose output
+filter_compose_output() {
+    local output="$1"
+    echo "$output" | \
+        grep -v "variable is not set" | \
+        grep -v "Defaulting to a blank string" | \
+        grep -v "depends on undefined service" | \
+        grep -v "invalid compose project" | \
+        grep -v "^$"
+}
+
 # Function to validate Docker Compose configuration
 check_compose_config() {
     local file="$1"
     local service_name=$(basename $(dirname "$file"))
-    local service_dir=$(dirname "$file")
     
     # Check if docker compose is available
     if ! command -v docker &>/dev/null || ! docker compose version &>/dev/null 2>&1; then
@@ -110,21 +120,15 @@ check_compose_config() {
         return 0
     fi
     
-    # Validate docker-compose configuration
-    # Capture both stdout and stderr, suppress warnings about undefined variables
+    # Validate docker-compose configuration using -f to avoid directory changes
     local output
-    output=$(cd "$service_dir" && docker compose config --quiet 2>&1)
+    output=$(docker compose -f "$file" config --quiet 2>&1)
     local exit_code=$?
     
     # Filter out common warnings/errors that are not actual configuration issues
     # - "variable is not set" warnings are expected without .env
     # - "depends on undefined service" is expected in modular setup
-    local filtered_output=$(echo "$output" | \
-        grep -v "variable is not set" | \
-        grep -v "Defaulting to a blank string" | \
-        grep -v "depends on undefined service" | \
-        grep -v "invalid compose project" | \
-        grep -v "^$")
+    local filtered_output=$(filter_compose_output "$output")
     
     if [ $exit_code -eq 0 ]; then
         # Config is valid
@@ -133,12 +137,7 @@ check_compose_config() {
         return 0
     else
         # Check if the only errors are dependency-related (expected in modular setup)
-        local has_real_errors=$(echo "$output" | \
-            grep -v "variable is not set" | \
-            grep -v "Defaulting to a blank string" | \
-            grep -v "depends on undefined service" | \
-            grep -v "invalid compose project" | \
-            grep -v "^$" | wc -l)
+        local has_real_errors=$(filter_compose_output "$output" | wc -l)
         
         if [ "$has_real_errors" -eq 0 ]; then
             # Only dependency errors, which are expected in modular setup
@@ -148,9 +147,9 @@ check_compose_config() {
         else
             # Config has real errors
             echo -e "${RED}✗${NC} $service_name: Invalid Docker Compose config"
-            echo "$filtered_output" | head -5 | while IFS= read -r line; do
+            while IFS= read -r line; do
                 [ -n "$line" ] && echo -e "${RED}  └─${NC} $line"
-            done
+            done <<< "$(echo "$filtered_output" | head -5)"
             FAILED=$((FAILED + 1))
             return 1
         fi
