@@ -1,21 +1,21 @@
 services:
-navidrome:
-  image: deluan/navidrome:latest
-  container_name: navidrome
-  restart: unless-stopped
-  environment:
-    - ND_MUSICFOLDER=${NAVIDROME_MUSIC_FOLDER:-/music}
-    - ND_DATAFOLDER=${NAVIDROME_DATA_FOLDER:-/data}
-    - ND_SCANINTERVAL=${NAVIDROME_SCAN_INTERVAL:-1m}
-    - ND_BASEURL=${NAVIDROME_BASEURL:-http://localhost:4533}
-  volumes:
-    - ../../data/navidrome:/data
-    - ../../data/koel/music:/music:ro
-  ports:
-    - "4533:4533"
-  networks:
-    - homelab
-
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    environment:
+      - ND_MUSICFOLDER=${NAVIDROME_MUSIC_FOLDER:-/music}
+      - ND_DATAFOLDER=${NAVIDROME_DATA_FOLDER:-/data}
+      - ND_SCANINTERVAL=${NAVIDROME_SCAN_INTERVAL:-1m}
+      - ND_BASEURL=${NAVIDROME_BASEURL:-http://localhost:4533}
+    volumes:
+      - ../../data/navidrome:/data
+      - ../../data/koel/music:/music:ro
+    ports:
+      - "4533:4533"
+    networks:
+      - homelab
+  
 networks:
   homelab:
     external: true

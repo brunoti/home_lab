@@ -1,23 +1,23 @@
 services:
-transmission:
-  image: lscr.io/linuxserver/transmission:latest
-  container_name: transmission
-  restart: unless-stopped
-  environment:
-    - PUID=${TRANSMISSION_UID:-1000}
-    - PGID=${TRANSMISSION_GID:-1000}
-    - TZ=UTC
-  volumes:
-    - ${TRANSMISSION_CONFIG_DIR:-../../data/transmission/config}:/config
-    - ${TRANSMISSION_DOWNLOAD_DIR:-../../data/transmission/downloads}:/downloads
-  ports:
-    - "6969:9091"
-    - "6881:51413"
-    - "6881:51413/udp"
-  networks:
-    - homelab
-
-
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    restart: unless-stopped
+    environment:
+      - PUID=${TRANSMISSION_UID:-1000}
+      - PGID=${TRANSMISSION_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${TRANSMISSION_CONFIG_DIR:-../../data/transmission/config}:/config
+      - ${TRANSMISSION_DOWNLOAD_DIR:-../../data/transmission/downloads}:/downloads
+    ports:
+      - "6969:9091"
+      - "6881:51413"
+      - "6881:51413/udp"
+    networks:
+      - homelab
+  
+  
 networks:
   homelab:
     external: true

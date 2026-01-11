@@ -1,21 +1,21 @@
 services:
-redis:
-  image: redis:7-alpine
-  container_name: redis
-  restart: unless-stopped
-  command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
-  volumes:
-    - ../../data/redis:/data
-  ports:
-    - "6379:6379"
-  networks:
-    - homelab
-  healthcheck:
-    test: ["CMD", "redis-cli", "ping"]
-    interval: 10s
-    timeout: 5s
-    retries: 5
-
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - ../../data/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - homelab
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
 networks:
   homelab:
     external: true

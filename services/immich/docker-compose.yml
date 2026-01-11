@@ -1,26 +1,26 @@
 services:
-immich:
-  image: ghcr.io/immich-app/immich-server:latest
-  container_name: immich
-  restart: unless-stopped
-  environment:
-    - DB_HOSTNAME=postgres
-    - DB_PORT=5432
-    - DB_USERNAME=postgres
-    - DB_PASSWORD=${POSTGRES_PASSWORD}
-    - DB_DATABASE_NAME=immich
-    - REDIS_HOSTNAME=redis
-  volumes:
-    - ../../data/immich/upload:/usr/src/app/upload
-  ports:
-    - "2283:3001"
-  depends_on:
-    - postgres
-    - redis
-  networks:
-    - homelab
-
-
+  immich:
+    image: ghcr.io/immich-app/immich-server:latest
+    container_name: immich
+    restart: unless-stopped
+    environment:
+      - DB_HOSTNAME=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_DATABASE_NAME=immich
+      - REDIS_HOSTNAME=redis
+    volumes:
+      - ../../data/immich/upload:/usr/src/app/upload
+    ports:
+      - "2283:3001"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - homelab
+  
+  
 networks:
   homelab:
     external: true
