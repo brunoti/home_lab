@@ -16,9 +16,14 @@ cd home_lab
 # Install dependencies
 just install
 
-# Setup environment
+# Setup environment - IMPORTANT: This must be done before starting services
 cp .env.example .env
-# Edit .env with your settings
+
+# Generate secure passwords for all services (recommended)
+just password
+
+# OR manually edit .env with your settings
+# nano .env
 
 # OrbStack will start automatically after installation
 # Optionally verify it's running:
@@ -30,6 +35,8 @@ just up
 # Access documentation
 just docs --action serve
 ```
+
+**Note:** The `.env` file must be created in the repository root directory before starting any services. It contains critical configuration including database passwords and API keys. Use `just password` to automatically generate secure passwords for all services.
 
 ## 📋 Features
 
@@ -326,13 +333,31 @@ Total RAM: 16GB
 
 ### Environment Variables
 
-Copy `.env.example` to `.env` and configure:
+The `.env` file must be created in the repository root directory and is required before starting any services.
+
+**Quick Setup:**
+```bash
+# Copy template
+cp .env.example .env
+
+# Generate secure passwords automatically (recommended)
+just password
+
+# Verify configuration
+just setup --target config
+```
 
 **Essential Variables:**
 - Database passwords (PostgreSQL, Redis)
 - Admin passwords (Grafana, PiHole, Portainer)
 - Email configuration (SMTP settings)
 - API keys (Radarr, Sonarr)
+
+**Important Notes:**
+- The `.env` file is located in the repository root and is shared by all services
+- Never commit the `.env` file to version control (it's in `.gitignore`)
+- Use `just password` to automatically generate secure passwords for empty variables
+- Backup your `.env` file securely
 
 See [Environment Variables Reference](docs/reference/environment-variables.md) for complete list.
 
