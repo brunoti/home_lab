@@ -1,0 +1,21 @@
+services:
+headscale:
+  image: headscale/headscale:latest
+  container_name: headscale
+  restart: unless-stopped
+  command: serve
+  environment:
+    - TZ=UTC
+  volumes:
+    - ${HEADSCALE_CONFIG_DIR:-../../config/headscale}:/etc/headscale
+    - ${HEADSCALE_DATA_DIR:-../../data/headscale}:/var/lib/headscale
+  ports:
+    - "8085:8080"
+  networks:
+    - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

@@ -1,0 +1,20 @@
+services:
+homepage:
+  image: ghcr.io/gethomepage/homepage:latest
+  container_name: homepage
+  restart: unless-stopped
+  environment:
+    - PUID=${HOMEPAGE_UID:-1000}
+    - PGID=${HOMEPAGE_GID:-1000}
+  volumes:
+    - ../../config/homepage:/app/config
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  ports:
+    - "3000:3000"
+  networks:
+    - homelab
+
+networks:
+  homelab:
+    external: true
+    name: homelab

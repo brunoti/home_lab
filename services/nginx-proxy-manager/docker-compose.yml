@@ -1,0 +1,28 @@
+services:
+nginx-proxy-manager:
+  image: jc21/nginx-proxy-manager:latest
+  container_name: nginx-proxy-manager
+  restart: unless-stopped
+  environment:
+    - DB_MYSQL_HOST=postgres
+    - DB_MYSQL_PORT=5432
+    - DB_MYSQL_USER=postgres
+    - DB_MYSQL_PASSWORD=${POSTGRES_PASSWORD}
+    - DB_MYSQL_NAME=nginx_proxy
+  volumes:
+    - ../../data/nginx-proxy-manager/data:/data
+    - ../../data/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+  ports:
+    - "80:80"
+    - "81:81"
+    - "443:443"
+  depends_on:
+    - postgres
+  networks:
+    - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab

@@ -36,6 +36,9 @@ nav:
       - Quick Start: getting-started/quick-start.md
       - Installation: getting-started/installation.md
       - Configuration: getting-started/configuration.md
+      - Migration Guide: getting-started/migration.md
+  - Architecture:
+      - Modular Services: architecture/modular-services.md
   - Services:
       - Media Services: services/media.md
       - Music Services: services/music.md

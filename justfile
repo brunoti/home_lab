@@ -78,34 +78,63 @@ setup target="mac" service="all":
             ;;
     esac
 
-# Service management
+# Service management - works with new modular structure
 services action="status" name="all" category="all" timeout="30" follow="false" lines="100" timestamps="false" detailed="false" force="false":
     #!/usr/bin/env bash
     set -euo pipefail
     
-    NAME_FILTER=""
-    if [ "{{name}}" != "all" ]; then
-        NAME_FILTER="{{name}}"
+    # Ensure network exists
+    if ! docker network inspect homelab &>/dev/null; then
+        echo "Creating homelab network..."
+        docker network create homelab
     fi
     
     case "{{action}}" in
         start)
             echo "Starting services..."
             if [ "{{name}}" = "all" ]; then
-                docker-compose up -d
+                # Start all services
+                for service_dir in services/*/; do
+                    service=$(basename "$service_dir")
+                    if [ -f "services/$service/docker-compose.yml" ]; then
+                        echo "  Starting $service..."
+                        docker-compose -f "services/$service/docker-compose.yml" up -d
+                    fi
+                done
+                echo "✓ All services started"
             else
-                docker-compose up -d {{name}}
+                # Start specific service
+                if [ -f "services/{{name}}/docker-compose.yml" ]; then
+                    docker-compose -f "services/{{name}}/docker-compose.yml" up -d
+                    echo "✓ Service {{name}} started"
+                else
+                    echo "ERROR: Service {{name}} not found in services/ directory"
+                    exit 1
+                fi
             fi
-            echo "✓ Services started"
             ;;
         stop)
             echo "Stopping services..."
             if [ "{{name}}" = "all" ]; then
-                docker-compose down --timeout {{timeout}}
+                # Stop all services
+                for service_dir in services/*/; do
+                    service=$(basename "$service_dir")
+                    if [ -f "services/$service/docker-compose.yml" ]; then
+                        echo "  Stopping $service..."
+                        docker-compose -f "services/$service/docker-compose.yml" down --timeout {{timeout}}
+                    fi
+                done
+                echo "✓ All services stopped"
             else
-                docker-compose stop -t {{timeout}} {{name}}
+                # Stop specific service
+                if [ -f "services/{{name}}/docker-compose.yml" ]; then
+                    docker-compose -f "services/{{name}}/docker-compose.yml" down --timeout {{timeout}}
+                    echo "✓ Service {{name}} stopped"
+                else
+                    echo "ERROR: Service {{name}} not found"
+                    exit 1
+                fi
             fi
-            echo "✓ Services stopped"
             ;;
         restart)
             echo "Restarting services..."
@@ -115,22 +144,43 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
                 just services --action start --name {{name}}
             else
                 if [ "{{name}}" = "all" ]; then
-                    docker-compose restart -t {{timeout}}
+                    # Restart all services
+                    for service_dir in services/*/; do
+                        service=$(basename "$service_dir")
+                        if [ -f "services/$service/docker-compose.yml" ]; then
+                            echo "  Restarting $service..."
+                            docker-compose -f "services/$service/docker-compose.yml" restart -t {{timeout}}
+                        fi
+                    done
+                    echo "✓ All services restarted"
                 else
-                    docker-compose restart -t {{timeout}} {{name}}
+                    # Restart specific service
+                    if [ -f "services/{{name}}/docker-compose.yml" ]; then
+                        docker-compose -f "services/{{name}}/docker-compose.yml" restart -t {{timeout}}
+                        echo "✓ Service {{name}} restarted"
+                    else
+                        echo "ERROR: Service {{name}} not found"
+                        exit 1
+                    fi
                 fi
             fi
-            echo "✓ Services restarted"
             ;;
         status)
             echo "Service status:"
+            if [ "{{name}}" = "all" ]; then
+                docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "^NAMES|homelab" || docker ps
+            else
+                docker ps --filter "name={{name}}" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            fi
+            
             if [ "{{detailed}}" = "true" ]; then
-                docker-compose ps -a
                 echo ""
                 echo "Resource usage:"
-                docker stats --no-stream
-            else
-                docker-compose ps
+                if [ "{{name}}" = "all" ]; then
+                    docker stats --no-stream
+                else
+                    docker stats --no-stream {{name}}
+                fi
             fi
             ;;
         logs)
@@ -139,7 +189,7 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
                 exit 1
             fi
             
-            LOG_CMD="docker-compose logs"
+            LOG_CMD="docker logs"
             if [ "{{follow}}" = "true" ]; then
                 LOG_CMD="$LOG_CMD -f"
             fi
@@ -150,9 +200,23 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
             
             eval $LOG_CMD
             ;;
+        list)
+            echo "Available services:"
+            for service_dir in services/*/; do
+                service=$(basename "$service_dir")
+                if [ -f "services/$service/docker-compose.yml" ]; then
+                    # Check if service is running
+                    if docker ps --filter "name=$service" --format "{{.Names}}" | grep -q "$service"; then
+                        echo "  ✓ $service (running)"
+                    else
+                        echo "    $service (stopped)"
+                    fi
+                fi
+            done
+            ;;
         *)
             echo "Unknown action: {{action}}"
-            echo "Valid actions: start, stop, restart, status, logs"
+            echo "Valid actions: start, stop, restart, status, logs, list"
             exit 1
             ;;
     esac
@@ -175,12 +239,12 @@ backup target="local" action="backup" service="all" exclude="" verify="false" en
                     BACKUP_FILE="$BACKUP_DIR/homelab_backup_${BACKUP_DATE}.tar.gz"
                     echo "Creating local backup: $BACKUP_FILE"
                     
-                    # Backup configuration
+                    # Backup configuration and services
                     tar -czf "$BACKUP_FILE" \
                         --exclude='.git' \
                         --exclude='node_modules' \
                         --exclude='*.log' \
-                        .env docker-compose.yml config/ 2>/dev/null || true
+                        .env services/ config/ scripts/ 2>/dev/null || true
                     
                     echo "✓ Local backup created: $BACKUP_FILE"
                     
@@ -198,7 +262,7 @@ backup target="local" action="backup" service="all" exclude="" verify="false" en
                     TEMP_BACKUP="/tmp/homelab_backup_${BACKUP_DATE}.tar.gz"
                     tar -czf "$TEMP_BACKUP" \
                         --exclude='.git' \
-                        .env docker-compose.yml config/ 2>/dev/null || true
+                        .env services/ config/ scripts/ 2>/dev/null || true
                     
                     # Upload to Google Drive
                     VERBOSE_FLAG=""
@@ -220,7 +284,7 @@ backup target="local" action="backup" service="all" exclude="" verify="false" en
                     TEMP_BACKUP="/tmp/homelab_backup_${BACKUP_DATE}.tar.gz"
                     tar -czf "$TEMP_BACKUP" \
                         --exclude='.git' \
-                        .env docker-compose.yml config/ 2>/dev/null || true
+                        .env services/ config/ scripts/ 2>/dev/null || true
                     
                     VERBOSE_FLAG=""
                     if [ "{{verbose}}" = "true" ]; then

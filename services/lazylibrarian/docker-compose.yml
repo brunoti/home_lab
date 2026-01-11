@@ -1,0 +1,23 @@
+services:
+lazylibrarian:
+  image: lscr.io/linuxserver/lazylibrarian:latest
+  container_name: lazylibrarian
+  restart: unless-stopped
+  environment:
+    - PUID=${LAZYLIBRARIAN_UID:-1000}
+    - PGID=${LAZYLIBRARIAN_GID:-1000}
+    - TZ=UTC
+  volumes:
+    - ${LAZYLIBRARIAN_CONFIG_DIR:-../../data/lazylibrarian/config}:/config
+    - ../../data/lazylibrarian/downloads:/downloads
+    - ${CALIBRE_LIBRARY_PATH:-../../data/calibre/books}:/books
+  ports:
+    - "8666:5299"
+  networks:
+    - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab
