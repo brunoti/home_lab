@@ -1,0 +1,21 @@
+services:
+  wingfit:
+    image: ghcr.io/itskovacs/wingfit:latest
+    container_name: wingfit
+    restart: unless-stopped
+    environment:
+      - PUID=${WINGFIT_UID:-1000}
+      - PGID=${WINGFIT_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ${WINGFIT_STORAGE_DIR:-../../data/wingfit/storage}:/app/storage
+    ports:
+      - "${WINGFIT_PORT:-8080}:8000"
+    networks:
+      - homelab
+
+
+networks:
+  homelab:
+    external: true
+    name: homelab
