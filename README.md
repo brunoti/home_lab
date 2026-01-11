@@ -53,7 +53,7 @@ home_lab/
 │   ├── postgres/
 │   │   ├── docker-compose.yml
 │   │   └── README.md
-│   └── ...                    # 32 services total
+│   └── ...                    # 31 services total
 ├── config/                    # Service configurations
 │   ├── prometheus/
 │   ├── loki/
