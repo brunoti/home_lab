@@ -51,7 +51,7 @@ No, we use OrbStack which is faster, more efficient, and has a better macOS inte
 ### Why OrbStack instead of Docker Desktop?
 
 - Fast and lightweight
-- Optimized for Apple Silicon (M1/M2/M4)
+- Optimized for Apple Silicon (M1/M2/M3/M4)
 - Dynamic resource allocation
 - Better battery life
 - Native macOS integration
