@@ -1,21 +1,21 @@
 services:
-calibre-web:
-  image: lscr.io/linuxserver/calibre-web:latest
-  container_name: calibre-web
-  restart: unless-stopped
-  environment:
-    - PUID=${CALIBRE_UID:-1000}
-    - PGID=${CALIBRE_GID:-1000}
-    - TZ=UTC
-  volumes:
-    - ../../data/calibre-web/config:/config
-    - ${CALIBRE_LIBRARY_PATH:-../../data/calibre/books}:/books
-  ports:
-    - "8083:8083"
-  networks:
-    - homelab
-
-
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    restart: unless-stopped
+    environment:
+      - PUID=${CALIBRE_UID:-1000}
+      - PGID=${CALIBRE_GID:-1000}
+      - TZ=UTC
+    volumes:
+      - ../../data/calibre-web/config:/config
+      - ${CALIBRE_LIBRARY_PATH:-../../data/calibre/books}:/books
+    ports:
+      - "8083:8083"
+    networks:
+      - homelab
+  
+  
 networks:
   homelab:
     external: true
