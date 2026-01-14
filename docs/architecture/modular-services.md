@@ -67,7 +67,7 @@ just services --action logs --name jellyfin --follow
 Some services require others to be running first:
 
 **Database-dependent services** (require postgres):
-- immich, speedtest-tracker, koel, bookstore, affine, authelia, grafana, nginx-proxy-manager, nextcloud
+- immich, speedtest-tracker, koel, affine, authelia, grafana, nginx-proxy-manager, nextcloud
 
 **Redis-dependent services** (require redis):
 - immich, affine, nextcloud

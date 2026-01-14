@@ -244,50 +244,6 @@ Or via web interface:
 just books --action import-from-lazy
 ```
 
-## BookStack - Book Organization
-
-**Port**: 3002  
-**Purpose**: Organize notes, guides, documentation
-
-### Features
-
-- **Shelves**: Top-level organization
-- **Books**: Collections of chapters
-- **Chapters**: Groups of pages
-- **Pages**: Individual documents
-- **Search**: Full-text search
-- **WYSIWYG Editor**: Easy editing
-- **Markdown Support**: Write in Markdown
-- **Attachments**: Upload files
-- **Permissions**: Control access
-
-### Setup
-
-1. Start BookStack:
-```bash
-just services --action start --name bookstore
-```
-
-2. Access: http://localhost:3002
-
-3. Login:
-   - Email: `admin@admin.com`
-   - Password: `password`
-   - Change password immediately
-
-4. Create content:
-   - New Shelf → New Book → New Chapter → New Page
-
-### Usage
-
-**For:**
-- Book notes and reviews
-- Reading lists
-- Book club materials
-- Author information
-- Series tracking
-- Personal book wiki
-
 ## Complete Workflow
 
 ### Adding New Books

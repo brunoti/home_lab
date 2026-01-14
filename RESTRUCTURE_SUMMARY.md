@@ -16,7 +16,7 @@ Successfully restructured the `home_lab` repository from a monolithic architectu
 
 **Services organized by category:**
 - Media (5): jellyfin, immich, speedtest-tracker, koel, navidrome
-- Books (5): calibre, calibre-web, audiobookshelf, lazylibrarian, bookstore  
+- Books (4): calibre, calibre-web, audiobookshelf, lazylibrarian  
 - Notes (1): affine
 - Network (3): headscale, pihole, authelia
 - Monitoring (5): portainer, prometheus, grafana, loki, uptime-kuma
