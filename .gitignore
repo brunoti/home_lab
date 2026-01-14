@@ -15,7 +15,6 @@ data/
 *.swo
 *~
 .idea/
-.vscode/
 *.sublime-workspace
 *.sublime-project
 
@@ -53,7 +52,6 @@ venv.bak/
 .venv
 
 # IDEs
-.vscode/
 .idea/
 *.swp
 *.swo

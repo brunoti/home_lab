@@ -1,0 +1,88 @@
+{
+	"servers": {
+		"github-mcp-server": {
+			"type": "stdio",
+			"command": "docker",
+			"args": [
+				"run",
+				"-i",
+				"--rm",
+				"-e",
+				"GITHUB_PERSONAL_ACCESS_TOKEN",
+				"ghcr.io/github/github-mcp-server:0.28.1"
+			],
+		},
+		"playwright-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			],
+		},
+		"chrome-devtools-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"chrome-devtools-mcp@0.13.0"
+			],
+		},
+		"clear-thought": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@waldzellai/clear-thought-onepointfive"
+			],
+		},
+		"calculator": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@wrtnlabs/calculator-mcp@latest"
+			],
+		},
+		"filesystem": {
+			"type": "stdio",
+			"command": "docker",
+			"args": [
+				"run",
+				"-i",
+				"--rm",
+				"-v",
+				"/Users/bruno/home_lab/:/workspace",
+				"-w",
+				"/workspace",
+				"node:20",
+				"npx",
+				"-y",
+				"@modelcontextprotocol/server-filesystem",
+				"/workspace"
+			],
+		},
+		"js-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"js-mcp"
+			],
+		},
+		"smart_thinking": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"smart-thinking-mcp"
+			],
+		},
+		"sequential_thinking": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-sequential-thinking"
+			],
+		}
+	}
+}
