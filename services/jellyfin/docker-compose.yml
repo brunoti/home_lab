@@ -3,6 +3,10 @@ services:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - PUID=${JELLYFIN_UID:-1000}
       - PGID=${JELLYFIN_GID:-1000}

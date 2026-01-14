@@ -3,6 +3,10 @@ services:
     image: phanan/koel:latest
     container_name: koel
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - APP_KEY=${KOEL_APP_KEY}
       - DB_CONNECTION=pgsql

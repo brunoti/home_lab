@@ -23,7 +23,7 @@ up service='all':
             if [ -f "${service_dir}docker-compose.yml" ]; then
                 service_name=$(basename "$service_dir")
                 echo "Starting $service_name..."
-                (cd "$service_dir" && docker compose up -d)
+                (cd "$service_dir" && docker compose --env-file ../../.env up -d)
             fi
         done
         echo "✓ All services started"
@@ -39,7 +39,7 @@ up service='all':
             exit 1
         fi
         echo "Starting {{ service }}..."
-        (cd "$service_dir" && docker compose up -d)
+        (cd "$service_dir" && docker compose --env-file ../../.env up -d)
         echo "✓ {{ service }} started"
     fi
 
@@ -54,7 +54,7 @@ stop service='all':
             if [ -f "${service_dir}docker-compose.yml" ]; then
                 service_name=$(basename "$service_dir")
                 echo "Stopping $service_name..."
-                (cd "$service_dir" && docker compose down)
+                (cd "$service_dir" && docker compose --env-file ../../.env down)
             fi
         done
         echo "✓ All services stopped"
@@ -70,7 +70,7 @@ stop service='all':
             exit 1
         fi
         echo "Stopping {{ service }}..."
-        (cd "$service_dir" && docker compose down)
+        (cd "$service_dir" && docker compose --env-file ../../.env down)
         echo "✓ {{ service }} stopped"
     fi
 
