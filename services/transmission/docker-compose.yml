@@ -3,6 +3,10 @@ services:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - PUID=${TRANSMISSION_UID:-1000}
       - PGID=${TRANSMISSION_GID:-1000}

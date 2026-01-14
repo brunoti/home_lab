@@ -3,6 +3,10 @@ services:
     image: authelia/authelia:latest
     container_name: authelia
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - TZ=UTC
       - AUTHELIA_JWT_SECRET=${AUTHELIA_JWT_SECRET:-change_me}

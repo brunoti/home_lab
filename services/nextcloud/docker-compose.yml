@@ -3,6 +3,10 @@ services:
     image: nextcloud:latest
     container_name: nextcloud
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_DB=nextcloud

@@ -3,6 +3,10 @@ services:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - PUID=${RADARR_UID:-1000}
       - PGID=${RADARR_GID:-1000}

@@ -3,6 +3,10 @@ services:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy-manager
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - DB_MYSQL_HOST=postgres
       - DB_MYSQL_PORT=5432

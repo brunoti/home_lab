@@ -3,6 +3,10 @@ services:
     image: lscr.io/linuxserver/lazylibrarian:latest
     container_name: lazylibrarian
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - PUID=${LAZYLIBRARIAN_UID:-1000}
       - PGID=${LAZYLIBRARIAN_GID:-1000}

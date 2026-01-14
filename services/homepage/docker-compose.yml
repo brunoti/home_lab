@@ -3,6 +3,10 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - PUID=${HOMEPAGE_UID:-1000}
       - PGID=${HOMEPAGE_GID:-1000}

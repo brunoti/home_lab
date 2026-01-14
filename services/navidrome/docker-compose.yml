@@ -3,6 +3,10 @@ services:
     image: deluan/navidrome:latest
     container_name: navidrome
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - ND_MUSICFOLDER=${NAVIDROME_MUSIC_FOLDER:-/music}
       - ND_DATAFOLDER=${NAVIDROME_DATA_FOLDER:-/data}

@@ -3,6 +3,10 @@ services:
     image: pihole/pihole:latest
     container_name: pihole
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - TZ=${PIHOLE_TZ:-UTC}
       - WEBPASSWORD=${PIHOLE_WEBPASSWORD}

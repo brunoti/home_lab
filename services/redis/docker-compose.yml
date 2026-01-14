@@ -3,6 +3,10 @@ services:
     image: redis:7-alpine
     container_name: redis
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     volumes:
       - ../../data/redis:/data

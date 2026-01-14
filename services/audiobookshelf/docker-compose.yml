@@ -3,6 +3,10 @@ services:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
     restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
     environment:
       - PUID=${CALIBRE_UID:-1000}
       - PGID=${CALIBRE_GID:-1000}
