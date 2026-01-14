@@ -16,7 +16,7 @@ Welcome to the comprehensive documentation for brunoti's Home Lab. This document
 ### Services
 - [Media Services](services/media.md) - Jellyfin, Immich, Speedtest Tracker
 - [Music Services](services/music.md) - Koel, Navidrome
-- [Book Services](services/books.md) - Calibre, Calibre Web, Audiobookshelf, Lazylibrarian, Bookstore
+- [Book Services](services/books.md) - Calibre, Calibre Web, Audiobookshelf, Lazylibrarian
 - [Notes & Knowledge](services/notes.md) - Affine
 - [Network & Security](services/network.md) - Headscale, PiHole, Authelia
 - [Monitoring](services/monitoring.md) - Prometheus, Grafana, Loki, Portainer, Uptime Kuma
