@@ -13,6 +13,7 @@ services:
       - ../../data/affine:/app/.affine/storage
     ports:
       - "3010:3010"
+    # External service dependencies (defined in services/postgres and services/redis docker-compose files)
     depends_on:
       - postgres
       - redis

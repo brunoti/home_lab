@@ -14,6 +14,7 @@ services:
       - ../../data/nextcloud:/var/www/html
     ports:
       - "11000:80"
+    # External service dependencies (defined in services/postgres and services/redis docker-compose files)
     depends_on:
       - postgres
       - redis

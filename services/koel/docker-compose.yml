@@ -18,6 +18,7 @@ services:
       - ../../data/koel/covers:/var/www/html/public/img/covers
     ports:
       - "13000:80"
+    # External service dependency (defined in services/postgres/docker-compose.yml)
     depends_on:
       - postgres
     networks:

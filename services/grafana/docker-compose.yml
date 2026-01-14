@@ -17,6 +17,7 @@ services:
       - ../../data/grafana:/var/lib/grafana
     ports:
       - "3001:3000"
+    # External service dependencies (defined in services/postgres and services/prometheus docker-compose files)
     depends_on:
       - postgres
       - prometheus

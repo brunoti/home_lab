@@ -16,6 +16,7 @@ services:
       - ../../config/authelia:/config
     ports:
       - "9091:9091"
+    # External service dependency (defined in services/postgres/docker-compose.yml)
     depends_on:
       - postgres
     networks:

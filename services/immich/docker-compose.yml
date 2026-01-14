@@ -14,6 +14,7 @@ services:
       - ../../data/immich/upload:/usr/src/app/upload
     ports:
       - "2283:3001"
+    # External service dependencies (defined in services/postgres and services/redis docker-compose files)
     depends_on:
       - postgres
       - redis
