@@ -59,12 +59,11 @@ home_lab/
 4. **Speedtest Tracker** (Port 5000) - Internet speed monitoring
 5. **Immich** (Port 2283) - Photo management
 
-### Books & Reading (5 services)
+### Books & Reading (4 services)
 1. **Calibre** (Port 8080) - Library management
 2. **Calibre Web** (Port 8083) - Web reader interface
-3. **Bookstore** (Port 3000) - Book discovery
-4. **Audiobookshelf** (Port 8000) - Audiobooks
-5. **Lazylibrarian** (Port 8666) - Automated ebook discovery
+3. **Audiobookshelf** (Port 8000) - Audiobooks
+4. **Lazylibrarian** (Port 8666) - Automated ebook discovery
 
 ### Notes & Knowledge (1 service)
 1. **Affine** (Port 3001) - Collaborative notes & wiki
@@ -115,7 +114,6 @@ Total: 16GB
 │   ├── Calibre: 1GB
 │   ├── Lazylibrarian: 768MB
 │   ├── Koel: 512MB
-│   ├── Bookstore: 512MB
 │   ├── Navidrome: 256MB
 │   ├── PostgreSQL: 1.5GB
 │   ├── Prometheus: 512MB
@@ -273,7 +271,6 @@ Lazylibrarian (Automation)
 Calibre (Management)
   ↓ Shared library
 ├── Calibre Web (Reading)
-├── Bookstore (Discovery)
 └── Audiobookshelf (Audiobooks)
 ```
 

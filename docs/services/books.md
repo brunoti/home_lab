@@ -10,7 +10,6 @@ The home lab provides a complete book ecosystem:
 2. **Calibre Web**: Web reader interface
 3. **Audiobookshelf**: Audiobook streaming
 4. **Lazylibrarian**: Automated ebook discovery
-5. **Bookstore** (BookStack): Book organization and documentation
 
 All services share the same book library when configured.
 
@@ -244,50 +243,6 @@ Or via web interface:
 just books --action import-from-lazy
 ```
 
-## BookStack - Book Organization
-
-**Port**: 3002  
-**Purpose**: Organize notes, guides, documentation
-
-### Features
-
-- **Shelves**: Top-level organization
-- **Books**: Collections of chapters
-- **Chapters**: Groups of pages
-- **Pages**: Individual documents
-- **Search**: Full-text search
-- **WYSIWYG Editor**: Easy editing
-- **Markdown Support**: Write in Markdown
-- **Attachments**: Upload files
-- **Permissions**: Control access
-
-### Setup
-
-1. Start BookStack:
-```bash
-just services --action start --name bookstore
-```
-
-2. Access: http://localhost:3002
-
-3. Login:
-   - Email: `admin@admin.com`
-   - Password: `password`
-   - Change password immediately
-
-4. Create content:
-   - New Shelf → New Book → New Chapter → New Page
-
-### Usage
-
-**For:**
-- Book notes and reviews
-- Reading lists
-- Book club materials
-- Author information
-- Series tracking
-- Personal book wiki
-
 ## Complete Workflow
 
 ### Adding New Books
@@ -471,7 +426,6 @@ Use OPDS catalog from Calibre Web:
 7. **Calibre Web for Access**: Easy remote reading
 8. **Lazylibrarian for Discovery**: Find new books
 9. **Audiobookshelf for Audio**: Great mobile experience
-10. **BookStack for Notes**: Document your reading
 
 ## Resources
 
@@ -479,4 +433,3 @@ Use OPDS catalog from Calibre Web:
 - Calibre Web wiki
 - Audiobookshelf docs
 - Lazylibrarian wiki
-- BookStack documentation
