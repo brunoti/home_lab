@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      - PUID=${DB_USER_ID:-1000}
+      - PGID=${DB_GROUP_ID:-1000}
+      - TZ=${TZ:-UTC}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-booklore}
+      - MYSQL_USER=${DB_USER:-booklore}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ../../data/mariadb/config:/config
+    ports:
+      - "3306:3306"
+    networks:
+      - homelab
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  
+networks:
+  homelab:
+    external: true
+    name: homelab

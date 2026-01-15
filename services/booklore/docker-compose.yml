@@ -1,0 +1,35 @@
+services:
+  booklore:
+    image: booklore/booklore:latest
+    container_name: booklore
+    restart: unless-stopped
+    environment:
+      - USER_ID=${APP_USER_ID:-0}
+      - GROUP_ID=${APP_GROUP_ID:-0}
+      - TZ=${TZ:-UTC}
+      - DATABASE_URL=jdbc:mariadb://mariadb:3306/${MYSQL_DATABASE:-booklore}
+      - DATABASE_USERNAME=${DB_USER:-booklore}
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - BOOKLORE_PORT=${BOOKLORE_PORT:-6060}
+    volumes:
+      - ../../data/booklore/data:/app/data
+      - ../../data/booklore/books:/books
+      - ../../data/booklore/bookdrop:/bookdrop
+    ports:
+      - "${BOOKLORE_PORT:-6060}:${BOOKLORE_PORT:-6060}"
+    # External service dependencies (defined in services/mariadb docker-compose file)
+    depends_on:
+      - mariadb
+    networks:
+      - homelab
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:${BOOKLORE_PORT:-6060}/api/v1/healthcheck"]
+      interval: 60s
+      retries: 5
+      start_period: 60s
+      timeout: 10s
+  
+networks:
+  homelab:
+    external: true
+    name: homelab
