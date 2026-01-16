@@ -1,6 +1,6 @@
 # Home Lab
 
-A comprehensive, self-hosted home lab running 31 containerized services on Mac mini M4. Features media streaming, game library management, book management, music servers, monitoring, backups, and more.
+A comprehensive, self-hosted home lab running 32 containerized services on Mac mini M4. Features media streaming, game library management, book management, music servers, monitoring, backups, and more.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](https://docs.docker.com/compose/)
@@ -32,7 +32,7 @@ just docs --action serve
 
 ## 📋 Features
 
-- **31 Containerized Services** - Media, books, music, gaming, monitoring, and more
+- **32 Containerized Services** - Media, books, music, gaming, monitoring, and more
 - **Modular Architecture** - Each service in its own directory under `services/`
 - **Simplified Commands** - Argument-based `just` commands for easy management
 - **Individual Service Control** - Start, stop, or manage services independently
@@ -53,7 +53,7 @@ home_lab/
 │   ├── postgres/
 │   │   ├── docker-compose.yml
 │   │   └── README.md
-│   └── ...                    # 31 services total
+│   └── ...                    # 32 services total
 ├── config/                    # Service configurations
 │   ├── prometheus/
 │   ├── loki/
@@ -438,7 +438,7 @@ See [Troubleshooting Guide](docs/operations/troubleshooting.md) for more solutio
 ## 📈 Performance
 
 **What Works Great:**
-- ✅ All 31 services running simultaneously
+- ✅ All 32 services running simultaneously
 - ✅ Jellyfin 1080p streaming with transcoding
 - ✅ Multiple concurrent music streams
 - ✅ Game library management with Retrom
