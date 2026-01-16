@@ -17,9 +17,8 @@ services:
       - ../../data/booklore/bookdrop:/bookdrop
     ports:
       - "${BOOKLORE_PORT:-6060}:${BOOKLORE_PORT:-6060}"
-    # External service dependencies (defined in services/mariadb docker-compose file)
-    depends_on:
-      - mariadb
+    # Note: MariaDB service must be started separately before this service
+    # depends_on only works for services within the same docker-compose file
     networks:
       - homelab
     healthcheck:
