@@ -4,7 +4,7 @@ Documentation for fitness and health tracking services in the home lab.
 
 ## Wingfit - Fitness Tracker
 
-**Port**: 8080  
+**Port**: 8082  
 **Purpose**: Minimalist fitness app for planning workouts and tracking records
 
 ### Features
@@ -23,7 +23,7 @@ Documentation for fitness and health tracking services in the home lab.
 just services --action start --name wingfit
 ```
 
-2. Access web interface: http://localhost:8080
+2. Access web interface: http://localhost:8082
 
 3. Create your account and start tracking:
    - Set up your profile
@@ -39,7 +39,7 @@ Configure Wingfit in your `.env` file:
 ```bash
 WINGFIT_UID=1000              # User ID for file permissions
 WINGFIT_GID=1000              # Group ID for file permissions
-WINGFIT_PORT=8080             # Port to access Wingfit
+WINGFIT_PORT=8082             # Port to access Wingfit
 WINGFIT_STORAGE_DIR=/path     # Path for SQLite database and data
 ```
 
@@ -107,9 +107,9 @@ just services --action restart --name wingfit
 
 #### Cannot Access Web Interface
 
-- **Check port mapping**: Verify port 8080 is not in use
+- **Check port mapping**: Verify port 8082 is not in use
 - **Check network**: Ensure homelab network exists
-- **Firewall**: Verify local firewall allows port 8080
+- **Firewall**: Verify local firewall allows port 8082
 
 #### Database Issues
 
@@ -178,7 +178,7 @@ just services --action restart --name wingfit
 
 Wingfit can be monitored through:
 - **Portainer**: Container management
-- **Uptime Kuma**: Uptime monitoring on http://localhost:8080
+- **Uptime Kuma**: Uptime monitoring on http://localhost:8082
 - **Prometheus**: Export metrics (if available)
 
 #### With Homepage Dashboard
@@ -188,7 +188,7 @@ Add Wingfit to your Homepage dashboard:
 - Fitness:
     - Wingfit:
         icon: fitness-center.png
-        href: http://localhost:8080
+        href: http://localhost:8082
         description: Fitness tracking
 ```
 

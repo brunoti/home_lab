@@ -32,7 +32,7 @@ Configuration for this service is managed through:
 
 ## Ports
 
-See `docker-compose.yml` for port mappings. Default: 8080
+See `docker-compose.yml` for port mappings. Default: 8082
 
 ## Dependencies
 
@@ -50,4 +50,4 @@ Check `depends_on` in `docker-compose.yml` for service dependencies.
 
 ## Access
 
-Once started, access Wingfit at: http://localhost:8080
+Once started, access Wingfit at: http://localhost:8082
