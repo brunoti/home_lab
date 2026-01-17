@@ -1,10 +1,45 @@
-# Lazylibrarian
+# LazyLibrarian
 
-Category: Books
+**Official Repository**: [lazylibrarian/LazyLibrarian](https://github.com/lazylibrarian/LazyLibrarian)  
+**Category**: Books  
+**Port**: 8666  
+**Docker Image**: `linuxserver/lazylibrarian:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+LazyLibrarian is an automated e-book and audiobook manager. It searches for books you want and downloads them automatically, managing your digital library with minimal effort.
+
+## Key Features
+
+- 📚 **Automated Downloads** - Auto-download wanted books
+- 🔍 **Multiple Sources** - Search across many sources
+- 📖 **Author Tracking** - Follow favorite authors
+- 🎧 **Audiobook Support** - Manage audiobooks too
+- 🔄 **Format Conversion** - Convert to preferred formats
+- 📊 **Goodreads Integration** - Import wishlists and ratings
+- 🔗 **Calibre Integration** - Import to Calibre library
+- 📅 **Release Tracking** - Monitor upcoming releases
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up lazylibrarian
+   ```
+
+2. **Access the web interface**: http://localhost:8666
+
+3. **Initial Setup**:
+   - Complete initial setup wizard
+   - Configure download sources and indexers
+   - Set up download client integration
+   - Add authors or books to watchlist
+   - Configure Calibre integration (optional)
+   - Set up automatic processing rules
+
+## Ports
+
+- **8666** - Web interface
 
 ## Usage
 

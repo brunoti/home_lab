@@ -1,10 +1,44 @@
 # Grafana
 
-Category: Monitoring
+**Official Repository**: [grafana/grafana](https://github.com/grafana/grafana)  
+**Category**: Monitoring  
+**Port**: 3001  
+**Docker Image**: `grafana/grafana:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+Grafana is the open-source platform for monitoring and observability. It allows you to query, visualize, alert on, and explore your metrics, logs, and traces from any data source.
+
+## Key Features
+
+- 📊 **Beautiful Dashboards** - Create stunning visualizations
+- 🔌 **Multiple Data Sources** - Prometheus, Loki, InfluxDB, and more
+- 📱 **Responsive Design** - Works on desktop and mobile
+- 🚨 **Alerting** - Set up alerts and notifications
+- 👥 **Team Collaboration** - Share dashboards with teams
+- 🎨 **Customizable** - Extensive plugin ecosystem
+- 📈 **Time Series Analysis** - Advanced query capabilities
+- 🔐 **Authentication** - Multiple auth methods
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up grafana
+   ```
+
+2. **Access the web interface**: http://localhost:3001
+
+3. **Initial Setup**:
+   - Login with default credentials: `admin` / `admin`
+   - Change default password
+   - Add data sources (Prometheus, Loki)
+   - Import or create dashboards
+   - Configure alerts (optional)
+
+## Ports
+
+- **3001** - Web interface
 
 ## Usage
 

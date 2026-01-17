@@ -1,10 +1,45 @@
-# Postgres
+# PostgreSQL
 
-Category: Databases
+**Official Repository**: [postgres/postgres](https://github.com/postgres/postgres)  
+**Category**: Database  
+**Port**: 5432  
+**Docker Image**: `postgres:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup and provides PostgreSQL database functionality for multiple services.
+PostgreSQL is a powerful, open-source object-relational database system with a strong reputation for reliability, feature robustness, and performance. It serves as the primary database for multiple services in this home lab.
+
+## Key Features
+
+- 🗄️ **ACID Compliant** - Reliable transactions and data integrity
+- 🔍 **Advanced Queries** - Complex SQL queries and indexing
+- 📊 **JSON Support** - Native JSON and JSONB data types
+- 🔐 **Security** - Role-based access control
+- 🚀 **Performance** - Efficient query planning and execution
+- 🔄 **Replication** - Streaming and logical replication
+- 🧩 **Extensions** - Rich ecosystem of extensions
+- 📈 **Scalability** - Handles large datasets efficiently
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up postgres
+   ```
+
+2. **Access the database**:
+   ```bash
+   docker exec -it postgres psql -U postgres
+   ```
+
+3. **Initial Setup**:
+   - Ensure `POSTGRES_PASSWORD` is set in `.env` file
+   - Database is ready when logs show "database system is ready to accept connections"
+   - Services depending on PostgreSQL will auto-connect
+
+## Ports
+
+- **5432** - PostgreSQL server
 
 ## Prerequisites
 
