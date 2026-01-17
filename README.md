@@ -1,6 +1,6 @@
 # Home Lab
 
-A comprehensive, self-hosted home lab running 30 containerized services on Mac mini M4. Features media streaming, book management, music servers, monitoring, backups, and more.
+A comprehensive, self-hosted home lab running 32 containerized services on Mac mini M4. Features media streaming, book management, music servers, fitness tracking, monitoring, backups, and more.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/docker-compose-blue.svg)](https://docs.docker.com/compose/)
@@ -40,7 +40,7 @@ just docs --action serve
 
 ## 📋 Features
 
-- **30 Containerized Services** - Media, books, music, monitoring, and more
+- **32 Containerized Services** - Media, books, music, fitness, monitoring, and more
 - **Modular Architecture** - Each service in its own directory under `services/`
 - **Simplified Commands** - Argument-based `just` commands for easy management
 - **Individual Service Control** - Start, stop, or manage services independently
@@ -61,7 +61,7 @@ home_lab/
 │   ├── postgres/
 │   │   ├── docker-compose.yml
 │   │   └── README.md
-│   └── ...                    # 31 services total
+│   └── ...                    # 32 services total
 ├── config/                    # Service configurations
 │   ├── prometheus/
 │   ├── loki/
@@ -102,6 +102,9 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 │  │   ├── Koel - Modern music server         │
 │  │   └── Navidrome - Subsonic compatible    │
 │  │                                           │
+│  ├── Fitness (1 service)                    │
+│  │   └── Wingfit - Fitness tracking         │
+│  │                                           │
 │  ├── Monitoring (5 services)                │
 │  │   ├── Prometheus - Metrics               │
 │  │   ├── Grafana - Dashboards               │
@@ -126,6 +129,9 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 - **Bookstore** (Port 3000) - Book discovery
 - **Audiobookshelf** (Port 8000) - Audiobooks
 - **Lazylibrarian** (Port 8666) - Automated ebook discovery
+
+### Fitness & Health (1)
+- **Wingfit** (Port 8082) - Workout planning and fitness tracking
 
 ### Network & Security (3)
 - **Headscale** (Port 8085) - VPN server
