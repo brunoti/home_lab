@@ -23,17 +23,20 @@ Retrom is a centralized game library/collection management service focused heavi
 
 Start this service:
 ```bash
-just services --action start --name retrom
+cd services/retrom
+docker compose up -d
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name retrom
+cd services/retrom
+docker compose down
 ```
 
 View logs:
 ```bash
-just services --action logs --name retrom
+cd services/retrom
+docker compose logs -f
 ```
 
 ## Configuration
@@ -45,7 +48,11 @@ Configuration for this service is managed through:
 
 ### Initial Setup
 
-1. Start the service: `just services --action start --name retrom`
+1. Start the service: 
+   ```bash
+   cd services/retrom
+   docker compose up -d
+   ```
 2. Access the web interface at `http://localhost:3000`
 3. Download the desktop client from: https://github.com/JMBeresford/retrom/releases/latest
 4. Configure your game library directory in `RETROM_LIBRARY_DIR`
