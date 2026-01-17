@@ -1,10 +1,44 @@
-# Uptime-Kuma
+# Uptime Kuma
 
-Category: Monitoring
+**Official Repository**: [louislam/uptime-kuma](https://github.com/louislam/uptime-kuma)  
+**Category**: Monitoring  
+**Port**: 3003  
+**Docker Image**: `louislam/uptime-kuma:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+Uptime Kuma is a fancy self-hosted monitoring tool. It's a modern, beautiful, and easy-to-use uptime monitoring solution that looks great and provides comprehensive monitoring capabilities.
+
+## Key Features
+
+- 📊 **Service Monitoring** - HTTP, TCP, ping, DNS, and more
+- 🚨 **Multi-Channel Alerts** - Email, Slack, Discord, Telegram, etc.
+- 📱 **Beautiful UI** - Modern and intuitive interface
+- 📈 **Status Pages** - Public status pages for services
+- 🔔 **Notifications** - 90+ notification services
+- 📊 **Charts & History** - Visual uptime history
+- 🌐 **Multi-Language** - Supports 20+ languages
+- 🔐 **Authentication** - Secure login system
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up uptime-kuma
+   ```
+
+2. **Access the web interface**: http://localhost:3003
+
+3. **Initial Setup**:
+   - Create admin account on first access
+   - Add monitors for your services
+   - Configure notification channels
+   - Set up status pages (optional)
+   - Configure check intervals and retry settings
+
+## Ports
+
+- **3003** - Web interface
 
 ## Usage
 
