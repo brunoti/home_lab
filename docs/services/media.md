@@ -257,7 +257,8 @@ just services --action logs --name jellyfin --follow
 
 1. Start Dispatcharr:
 ```bash
-just services --action start --name dispatcharr
+cd services/dispatcharr
+docker compose up -d
 ```
 
 2. Access web interface: http://localhost:9191
@@ -311,10 +312,11 @@ Similar process - use the proxy URLs from Dispatcharr:
 
 ```bash
 # View logs
-just services --action logs --name dispatcharr --follow
+cd services/dispatcharr
+docker compose logs -f
 
 # Restart after configuration changes
-just services --action restart --name dispatcharr
+docker compose restart
 ```
 
 #### Channel Organization

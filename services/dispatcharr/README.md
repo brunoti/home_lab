@@ -19,17 +19,26 @@ Dispatcharr is an IPTV management and proxy solution that acts as a powerful IPT
 
 Start this service:
 ```bash
-just services --action start --name dispatcharr
+cd services/dispatcharr
+docker compose up -d
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name dispatcharr
+cd services/dispatcharr
+docker compose down
 ```
 
 View logs:
 ```bash
-just services --action logs --name dispatcharr
+cd services/dispatcharr
+docker compose logs -f
+```
+
+Restart this service:
+```bash
+cd services/dispatcharr
+docker compose restart
 ```
 
 ## Configuration
