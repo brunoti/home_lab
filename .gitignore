@@ -89,3 +89,6 @@ Thumbs.db
 htmlcov/
 .tox/
 .hypothesis/
+
+# Service data directories
+data/
