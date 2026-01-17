@@ -10,17 +10,17 @@ This service is part of the Home Lab setup.
 
 Start this service:
 ```bash
-just services --action start --name lidarr
+cd services/lidarr && docker compose up -d
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name lidarr
+cd services/lidarr && docker compose down
 ```
 
 View logs:
 ```bash
-just services --action logs --name lidarr
+cd services/lidarr && docker compose logs -f
 ```
 
 ## Configuration
