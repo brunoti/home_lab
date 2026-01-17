@@ -10,17 +10,20 @@ Wingfit is a minimalist fitness app for planning workouts, tracking records, and
 
 Start this service:
 ```bash
-just services --action start --name wingfit
+cd services/wingfit
+docker compose up -d
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name wingfit
+cd services/wingfit
+docker compose down
 ```
 
 View logs:
 ```bash
-just services --action logs --name wingfit
+cd services/wingfit
+docker compose logs -f
 ```
 
 ## Configuration

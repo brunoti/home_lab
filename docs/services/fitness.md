@@ -20,7 +20,8 @@ Documentation for fitness and health tracking services in the home lab.
 
 1. Start Wingfit:
 ```bash
-just services --action start --name wingfit
+cd services/wingfit
+docker compose up -d
 ```
 
 2. Access web interface: http://localhost:8082
@@ -80,11 +81,9 @@ If your smartwatch supports data export:
 ### Monitoring
 
 ```bash
-# Check status
-just monitor --target service --name wingfit
-
 # View logs
-just services --action logs --name wingfit --follow
+cd services/wingfit
+docker compose logs -f
 
 # Check resource usage
 docker stats wingfit
@@ -96,13 +95,14 @@ docker stats wingfit
 
 ```bash
 # Check logs for errors
-just services --action logs --name wingfit
+cd services/wingfit
+docker compose logs
 
 # Verify storage directory permissions
 ls -la /path/to/wingfit/storage
 
 # Restart service
-just services --action restart --name wingfit
+docker compose restart
 ```
 
 #### Cannot Access Web Interface
@@ -123,7 +123,8 @@ just services --action restart --name wingfit
 
 1. **Regular Backups**: Backup the storage directory regularly
    ```bash
-   just backup --target gdrive --service wingfit
+   # Backup entire storage directory
+   cp -r /path/to/wingfit/storage /path/to/backup/
    ```
 
 2. **Storage Cleanup**: Monitor storage size as workout history grows
@@ -149,9 +150,6 @@ Wingfit data is stored in the storage directory. To backup:
 ```bash
 # Backup entire storage directory
 cp -r /path/to/wingfit/storage /path/to/backup/
-
-# Or use the built-in backup command
-just backup --target local --service wingfit
 ```
 
 **What to backup:**
@@ -164,12 +162,10 @@ just backup --target local --service wingfit
 Update Wingfit to the latest version:
 
 ```bash
-# Pull latest image
+# Pull latest image and restart
 cd services/wingfit
-docker-compose pull
-
-# Restart service
-just services --action restart --name wingfit
+docker compose pull
+docker compose up -d
 ```
 
 ### Integration
