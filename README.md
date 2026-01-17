@@ -114,47 +114,47 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 ## 📦 Services
 
 ### Media & Entertainment (5)
-- **Jellyfin** (Port 8096) - Movies, TV shows, music streaming
-- **Koel** (Port 13000) - Modern music server
-- **Navidrome** (Port 4533) - Subsonic-compatible music
-- **Speedtest Tracker** (Port 5000) - Internet speed monitoring
-- **Immich** (Port 2283) - Photo management
+- **[Jellyfin](https://github.com/jellyfin/jellyfin)** (Port 8096) - Movies, TV shows, music streaming
+- **[Koel](https://github.com/koel/koel)** (Port 13000) - Modern music server
+- **[Navidrome](https://github.com/navidrome/navidrome)** (Port 4533) - Subsonic-compatible music
+- **[Speedtest Tracker](https://github.com/alexjustesen/speedtest-tracker)** (Port 5000) - Internet speed monitoring
+- **[Immich](https://github.com/immich-app/immich)** (Port 2283) - Photo management
 
 ### Books & Reading (5)
-- **Calibre** (Port 8080) - Library management
-- **Calibre Web** (Port 8083) - Web reader interface
-- **Bookstore** (Port 3000) - Book discovery
-- **Audiobookshelf** (Port 8000) - Audiobooks
-- **Lazylibrarian** (Port 8666) - Automated ebook discovery
+- **[Calibre](https://github.com/kovidgoyal/calibre)** (Port 8080) - Library management
+- **[Calibre Web](https://github.com/janeczku/calibre-web)** (Port 8083) - Web reader interface
+- **[Bookstore](https://github.com/BookStackApp/BookStack)** (Port 3002) - Book discovery
+- **[Audiobookshelf](https://github.com/advplyr/audiobookshelf)** (Port 8000) - Audiobooks
+- **[Lazylibrarian](https://github.com/lazylibrarian/LazyLibrarian)** (Port 8666) - Automated ebook discovery
 
 ### Network & Security (3)
-- **Headscale** (Port 8085) - VPN server
-- **PiHole** (Port 80, 53) - DNS & ad-blocking
-- **Authelia** (Port 9091) - Authentication server
+- **[Headscale](https://github.com/juanfont/headscale)** (Port 8085) - VPN server
+- **[PiHole](https://github.com/pi-hole/pi-hole)** (Port 8053, 53) - DNS & ad-blocking
+- **[Authelia](https://github.com/authelia/authelia)** (Port 9091) - Authentication server
 
 ### Monitoring & Observability (5)
-- **Portainer** (Port 9000) - Docker management
-- **Prometheus** (Port 9090) - Metrics collection
-- **Grafana** (Port 3000) - Dashboards
-- **Loki** (Port 3100) - Log aggregation
-- **Uptime Kuma** (Port 3001) - Uptime monitoring
+- **[Portainer](https://github.com/portainer/portainer)** (Port 9000) - Docker management
+- **[Prometheus](https://github.com/prometheus/prometheus)** (Port 9090) - Metrics collection
+- **[Grafana](https://github.com/grafana/grafana)** (Port 3001) - Dashboards
+- **[Loki](https://github.com/grafana/loki)** (Port 3100) - Log aggregation
+- **[Uptime Kuma](https://github.com/louislam/uptime-kuma)** (Port 3003) - Uptime monitoring
 
 ### Storage & Cloud (2)
-- **Nextcloud** (Port 11000) - Cloud storage
-- **Rclone** (Port 5572) - Cloud backups
+- **[Nextcloud](https://github.com/nextcloud/server)** (Port 11000) - Cloud storage
+- **[Rclone](https://github.com/rclone/rclone)** (Port 5572) - Cloud backups
 
 ### Utilities & Infrastructure (10)
-- **Homepage** (Port 3000) - Dashboard
-- **Nginx Proxy Manager** (Port 81, 443) - Reverse proxy
-- **File Browser** (Port 6060) - Web file manager
-- **MkDocs** (Port 8001) - Documentation
-- **PostgreSQL** - Database
-- **Redis** - Caching
-- **Radarr** (Port 7878) - Movie automation
-- **Sonarr** (Port 8989) - TV automation
-- **Prowlarr** (Port 9696) - Indexer manager
-- **Transmission** (Port 6969) - Torrent client
-- **Affine** (Port 3001) - Notes & wiki
+- **[Homepage](https://github.com/gethomepage/homepage)** (Port 3000) - Dashboard
+- **[Nginx Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager)** (Port 81, 443) - Reverse proxy
+- **[File Browser](https://github.com/filebrowser/filebrowser)** (Port 6060) - Web file manager
+- **[MkDocs](https://github.com/squidfunk/mkdocs-material)** (Port 8001) - Documentation
+- **[PostgreSQL](https://github.com/postgres/postgres)** - Database
+- **[Redis](https://github.com/redis/redis)** - Caching
+- **[Radarr](https://github.com/Radarr/Radarr)** (Port 7878) - Movie automation
+- **[Sonarr](https://github.com/Sonarr/Sonarr)** (Port 8989) - TV automation
+- **[Prowlarr](https://github.com/Prowlarr/Prowlarr)** (Port 9696) - Indexer manager
+- **[Transmission](https://github.com/transmission/transmission)** (Port 6969) - Torrent client
+- **[Affine](https://github.com/toeverything/AFFiNE)** (Port 3010) - Notes & wiki
 
 ## 🛠️ Command Reference
 
@@ -303,7 +303,8 @@ just docs --action serve
 
 Or browse the documentation in the `docs/` directory:
 
-- [Quick Start Guide](docs/getting-started/quick-start.md)
+- **[Quick Start Guide](docs/QUICK_START.md)** - Get started in 15 minutes
+- **[Service Directory](docs/SERVICES.md)** - Complete service list with official GitHub links
 - [Installation Guide](docs/getting-started/installation.md)
 - [Service Documentation](docs/services/)
 - [Backup & Restore](docs/operations/backup-restore.md)
