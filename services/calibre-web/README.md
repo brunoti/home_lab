@@ -45,17 +45,17 @@ Calibre-Web is a web application providing a clean interface for browsing, readi
 
 Start this service:
 ```bash
-just services --action start --name calibre-web
+just up calibre-web
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name calibre-web
+just stop calibre-web
 ```
 
 View logs:
 ```bash
-just services --action logs --name calibre-web
+docker compose -f services/calibre-web/docker-compose.yml logs -f
 ```
 
 ## Configuration

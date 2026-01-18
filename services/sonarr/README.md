@@ -45,17 +45,17 @@ Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS fee
 
 Start this service:
 ```bash
-just services --action start --name sonarr
+just up sonarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name sonarr
+just stop sonarr
 ```
 
 View logs:
 ```bash
-just services --action logs --name sonarr
+docker compose -f services/sonarr/docker-compose.yml logs -f
 ```
 
 ## Configuration

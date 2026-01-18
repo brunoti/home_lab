@@ -43,17 +43,17 @@ Prometheus is an open-source systems monitoring and alerting toolkit. It collect
 
 Start this service:
 ```bash
-just services --action start --name prometheus
+just up prometheus
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name prometheus
+just stop prometheus
 ```
 
 View logs:
 ```bash
-just services --action logs --name prometheus
+docker compose -f services/prometheus/docker-compose.yml logs -f
 ```
 
 ## Configuration

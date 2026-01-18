@@ -46,17 +46,17 @@ Calibre is a powerful and easy-to-use e-book manager. It provides a complete e-b
 
 Start this service:
 ```bash
-just services --action start --name calibre
+just up calibre
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name calibre
+just stop calibre
 ```
 
 View logs:
 ```bash
-just services --action logs --name calibre
+docker compose -f services/calibre/docker-compose.yml logs -f
 ```
 
 ## Configuration

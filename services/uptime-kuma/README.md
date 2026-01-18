@@ -44,17 +44,17 @@ Uptime Kuma is a fancy self-hosted monitoring tool. It's a modern, beautiful, an
 
 Start this service:
 ```bash
-just services --action start --name uptime-kuma
+just up uptime-kuma
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name uptime-kuma
+just stop uptime-kuma
 ```
 
 View logs:
 ```bash
-just services --action logs --name uptime-kuma
+docker compose -f services/uptime-kuma/docker-compose.yml logs -f
 ```
 
 ## Configuration

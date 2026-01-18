@@ -45,17 +45,17 @@ Portainer is a lightweight management UI which allows you to easily manage your 
 
 Start this service:
 ```bash
-just services --action start --name portainer
+just up portainer
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name portainer
+just stop portainer
 ```
 
 View logs:
 ```bash
-just services --action logs --name portainer
+docker compose -f services/portainer/docker-compose.yml logs -f
 ```
 
 ## Configuration

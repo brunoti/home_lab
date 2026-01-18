@@ -45,17 +45,17 @@ Prowlarr is an indexer manager/proxy built on the popular *arr .net/reactjs base
 
 Start this service:
 ```bash
-just services --action start --name prowlarr
+just up prowlarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name prowlarr
+just stop prowlarr
 ```
 
 View logs:
 ```bash
-just services --action logs --name prowlarr
+docker compose -f services/prowlarr/docker-compose.yml logs -f
 ```
 
 ## Configuration

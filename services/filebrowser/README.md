@@ -45,17 +45,17 @@ File Browser is a create-your-own-cloud-kind of software where you can install i
 
 Start this service:
 ```bash
-just services --action start --name filebrowser
+just up filebrowser
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name filebrowser
+just stop filebrowser
 ```
 
 View logs:
 ```bash
-just services --action logs --name filebrowser
+docker compose -f services/filebrowser/docker-compose.yml logs -f
 ```
 
 ## Configuration

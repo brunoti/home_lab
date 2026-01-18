@@ -44,17 +44,17 @@ Authelia is an open-source authentication and authorization server providing sin
 
 Start this service:
 ```bash
-just services --action start --name authelia
+just up authelia
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name authelia
+just stop authelia
 ```
 
 View logs:
 ```bash
-just services --action logs --name authelia
+docker compose -f services/authelia/docker-compose.yml logs -f
 ```
 
 ## Configuration

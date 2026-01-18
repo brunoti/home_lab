@@ -24,8 +24,7 @@ MkDocs Material is a powerful documentation framework based on MkDocs with a bea
 
 1. **Start the documentation server**:
    ```bash
-   just docs --action serve
-   # Or: just up mkdocs
+   just up mkdocs
    ```
 
 2. **Access the documentation**: http://localhost:8001
@@ -33,8 +32,7 @@ MkDocs Material is a powerful documentation framework based on MkDocs with a bea
 3. **Usage**:
    - Browse documentation in your browser
    - Edit markdown files in `docs/` directory
-   - Changes are reflected automatically in dev mode
-   - Build static site with `just docs --action build`
+   - Restart the service to see changes: `just stop mkdocs && just up mkdocs`
 
 ## Ports
 
@@ -44,17 +42,17 @@ MkDocs Material is a powerful documentation framework based on MkDocs with a bea
 
 Start this service:
 ```bash
-just services --action start --name mkdocs
+just up mkdocs
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name mkdocs
+just stop mkdocs
 ```
 
 View logs:
 ```bash
-just services --action logs --name mkdocs
+docker compose -f services/mkdocs/docker-compose.yml logs -f
 ```
 
 ## Configuration

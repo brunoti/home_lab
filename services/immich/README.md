@@ -44,17 +44,17 @@ Immich is a high-performance self-hosted photo and video backup solution. Direct
 
 Start this service:
 ```bash
-just services --action start --name immich
+just up immich
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name immich
+just stop immich
 ```
 
 View logs:
 ```bash
-just services --action logs --name immich
+docker compose -f services/immich/docker-compose.yml logs -f
 ```
 
 ## Configuration

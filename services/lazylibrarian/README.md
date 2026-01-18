@@ -45,17 +45,17 @@ LazyLibrarian is an automated e-book and audiobook manager. It searches for book
 
 Start this service:
 ```bash
-just services --action start --name lazylibrarian
+just up lazylibrarian
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name lazylibrarian
+just stop lazylibrarian
 ```
 
 View logs:
 ```bash
-just services --action logs --name lazylibrarian
+docker compose -f services/lazylibrarian/docker-compose.yml logs -f
 ```
 
 ## Configuration

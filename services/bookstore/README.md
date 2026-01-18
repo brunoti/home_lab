@@ -45,17 +45,17 @@ BookStack is a simple, self-hosted, easy-to-use platform for organizing and stor
 
 Start this service:
 ```bash
-just services --action start --name bookstore
+just up bookstore
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name bookstore
+just stop bookstore
 ```
 
 View logs:
 ```bash
-just services --action logs --name bookstore
+docker compose -f services/bookstore/docker-compose.yml logs -f
 ```
 
 ## Configuration

@@ -46,17 +46,17 @@ Nginx Proxy Manager is a simple, powerful reverse proxy management interface pow
 
 Start this service:
 ```bash
-just services --action start --name nginx-proxy-manager
+just up nginx-proxy-manager
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name nginx-proxy-manager
+just stop nginx-proxy-manager
 ```
 
 View logs:
 ```bash
-just services --action logs --name nginx-proxy-manager
+docker compose -f services/nginx-proxy-manager/docker-compose.yml logs -f
 ```
 
 ## Configuration

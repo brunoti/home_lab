@@ -44,17 +44,17 @@ Grafana is the open-source platform for monitoring and observability. It allows 
 
 Start this service:
 ```bash
-just services --action start --name grafana
+just up grafana
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name grafana
+just stop grafana
 ```
 
 View logs:
 ```bash
-just services --action logs --name grafana
+docker compose -f services/grafana/docker-compose.yml logs -f
 ```
 
 ## Configuration

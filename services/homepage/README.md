@@ -44,17 +44,17 @@ Homepage is a modern, fully static, fast, secure, fully customizable application
 
 Start this service:
 ```bash
-just services --action start --name homepage
+just up homepage
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name homepage
+just stop homepage
 ```
 
 View logs:
 ```bash
-just services --action logs --name homepage
+docker compose -f services/homepage/docker-compose.yml logs -f
 ```
 
 ## Configuration

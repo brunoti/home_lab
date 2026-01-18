@@ -44,17 +44,17 @@ Rclone is a command-line program to manage files on cloud storage. It syncs file
 
 Start this service:
 ```bash
-just services --action start --name rclone
+just up rclone
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name rclone
+just stop rclone
 ```
 
 View logs:
 ```bash
-just services --action logs --name rclone
+docker compose -f services/rclone/docker-compose.yml logs -f
 ```
 
 ## Configuration

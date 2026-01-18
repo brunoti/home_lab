@@ -43,17 +43,17 @@ Headscale is an open-source, self-hosted implementation of the Tailscale control
 
 Start this service:
 ```bash
-just services --action start --name headscale
+just up headscale
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name headscale
+just stop headscale
 ```
 
 View logs:
 ```bash
-just services --action logs --name headscale
+docker compose -f services/headscale/docker-compose.yml logs -f
 ```
 
 ## Configuration

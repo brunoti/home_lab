@@ -199,98 +199,14 @@ just services status
 just services status --detailed
 ```
 
-### Backups & Restore
+### Monitoring Services
 
 ```bash
-# Setup cloud backups
-just backup --target gdrive --action setup
-just backup --target mega --action setup
+# Check service status
+just services status
 
-# Create backups
-just backup --target gdrive
-just backup --target mega
-just backup --target local
-
-# List available backups
-just backup --target gdrive --action list
-
-# Restore from backup
-just restore --source gdrive --date latest
-just restore --source gdrive --date 2026-01-10
-```
-
-### Music Management
-
-```bash
-# Import music to Koel
-just music --action import --service koel
-
-# Sync Navidrome library
-just music --action sync --service navidrome
-
-# Check music service status
-just music --action status
-```
-
-### Book Management
-
-```bash
-# Import books to Calibre
-just books --action import --service calibre
-
-# Convert book formats
-just books --action convert --format epub --input book.pdf
-
-# Search for books
-just books --action search --service lazylibrarian --query "Book Title"
-```
-
-### Monitoring & Health
-
-```bash
-# Run health check
-just monitor --target health
-
-# Check RAM usage
-just monitor --target ram
-
-# Check disk usage
-just monitor --target disk
-
-# Generate performance report
-just monitor --target performance
-
-# Monitor specific service
-just monitor --target service --name jellyfin
-```
-
-### Documentation
-
-```bash
-# Start documentation server
-just docs --action serve
-
-# Build static documentation
-just docs --action build
-
-# Update documentation dependencies
-just docs --action update
-```
-
-### Testing
-
-```bash
-# Test disaster recovery
-just test --target disaster-recovery
-
-# Test email notifications
-just test --target email
-
-# Test backup procedures
-just test --target backups
-
-# Run integration tests
-just test --target integration
+# List all available services
+just services list
 ```
 
 ## 📚 Documentation
@@ -298,7 +214,8 @@ just test --target integration
 Full documentation is available at http://localhost:8001 when running the documentation server:
 
 ```bash
-just docs --action serve
+# Start MkDocs documentation server
+just up mkdocs
 ```
 
 Or browse the documentation in the `docs/` directory:
@@ -405,11 +322,16 @@ just test --target disaster-recovery
 # Pull latest changes
 git pull origin main
 
-# Update Docker images
-docker-compose pull
+# Update Docker images for all services
+for service_dir in services/*/; do
+    if [ -f "${service_dir}docker-compose.yml" ]; then
+        (cd "$service_dir" && docker compose pull)
+    fi
+done
 
 # Restart services
-just services --action restart
+just stop
+just up
 ```
 
 ## 🐛 Troubleshooting
@@ -417,40 +339,40 @@ just services --action restart
 ### Service Won't Start
 
 ```bash
-# Check logs
-just services --action logs --name <service> --follow
+# Check service status
+just services status
 
-# Check status
-just services --action status --detailed
+# View service logs
+docker compose -f services/<service-name>/docker-compose.yml logs -f
 
-# Restart service
-just services --action restart --name <service> --force
+# Restart a specific service
+just stop <service-name>
+just up <service-name>
 ```
 
 ### High RAM Usage
 
 ```bash
-# Check RAM usage
-just monitor --target ram
-
-# Check resource usage
-just monitor --target resources
+# Check Docker resource usage
+docker stats
 
 # Restart heavy services
-just services --action restart --name jellyfin
+just stop jellyfin
+just up jellyfin
 ```
 
 ### Network Issues
 
 ```bash
-# Diagnose network
-just network --action diagnose
+# Check Docker network
+docker network inspect homelab
 
-# Check port mappings
-just network --action ports
+# Verify container networking
+docker ps
 
-# Test connectivity
-just test --target connectivity
+# Check service ports
+docker compose -f services/<service-name>/docker-compose.yml ps
+```
 ```
 
 See [Troubleshooting Guide](docs/operations/troubleshooting.md) for more solutions.

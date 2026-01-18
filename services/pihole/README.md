@@ -45,17 +45,17 @@ Pi-hole is a network-wide ad blocker that acts as a DNS sinkhole. It blocks ads 
 
 Start this service:
 ```bash
-just services --action start --name pihole
+just up pihole
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name pihole
+just stop pihole
 ```
 
 View logs:
 ```bash
-just services --action logs --name pihole
+docker compose -f services/pihole/docker-compose.yml logs -f
 ```
 
 ## Configuration

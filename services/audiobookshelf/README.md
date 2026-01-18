@@ -45,17 +45,17 @@ Audiobookshelf is a self-hosted audiobook and podcast server. It provides a beau
 
 Start this service:
 ```bash
-just services --action start --name audiobookshelf
+just up audiobookshelf
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name audiobookshelf
+just stop audiobookshelf
 ```
 
 View logs:
 ```bash
-just services --action logs --name audiobookshelf
+docker compose -f services/audiobookshelf/docker-compose.yml logs -f
 ```
 
 ## Configuration

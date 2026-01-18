@@ -44,17 +44,17 @@ Transmission is a fast, easy, and free BitTorrent client. It's designed for easy
 
 Start this service:
 ```bash
-just services --action start --name transmission
+just up transmission
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name transmission
+just stop transmission
 ```
 
 View logs:
 ```bash
-just services --action logs --name transmission
+docker compose -f services/transmission/docker-compose.yml logs -f
 ```
 
 ## Configuration

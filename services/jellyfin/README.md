@@ -23,17 +23,17 @@ Jellyfin is the Free Software Media System that puts you in control of managing 
 
 Start this service:
 ```bash
-just services --action start --name jellyfin
+just up jellyfin
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name jellyfin
+just stop jellyfin
 ```
 
 View logs:
 ```bash
-just services --action logs --name jellyfin
+docker compose -f services/jellyfin/docker-compose.yml logs -f
 ```
 
 ## Configuration

@@ -45,17 +45,17 @@ AFFiNE is a next-generation knowledge base that brings planning, sorting, and cr
 
 Start this service:
 ```bash
-just services --action start --name affine
+just up affine
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name affine
+just stop affine
 ```
 
 View logs:
 ```bash
-just services --action logs --name affine
+docker compose -f services/affine/docker-compose.yml logs -f
 ```
 
 ## Configuration

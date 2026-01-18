@@ -50,17 +50,17 @@ Nextcloud is a suite of client-server software for creating and using file hosti
 
 Start this service:
 ```bash
-just services --action start --name nextcloud
+just up nextcloud
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name nextcloud
+just stop nextcloud
 ```
 
 View logs:
 ```bash
-just services --action logs --name nextcloud
+docker compose -f services/nextcloud/docker-compose.yml logs -f
 ```
 
 ## Configuration

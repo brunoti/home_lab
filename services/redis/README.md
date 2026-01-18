@@ -45,17 +45,17 @@ Redis is an open-source, in-memory data structure store used as a database, cach
 
 Start this service:
 ```bash
-just services --action start --name redis
+just up redis
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name redis
+just stop redis
 ```
 
 View logs:
 ```bash
-just services --action logs --name redis
+docker compose -f services/redis/docker-compose.yml logs -f
 ```
 
 ## Configuration

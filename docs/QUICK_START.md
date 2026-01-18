@@ -279,44 +279,36 @@ For a complete list, see [SERVICES.md](SERVICES.md).
 
 ## Step 9: Configure Backups
 
-Set up automated backups to Google Drive and Mega:
+For automated backups, you'll need to set up Rclone manually:
 
 ```bash
-# Setup Google Drive backups
-just backup --target gdrive --action setup
+# Start Rclone service
+just up rclone
 
-# Setup Mega backups
-just backup --target mega --action setup
+# Access Rclone container to configure remotes
+docker exec -it rclone rclone config
 
-# Run initial backup
-just backup --target gdrive
-just backup --target mega
-
-# Verify backups
-just backup --target gdrive --action list
+# Follow prompts to add Google Drive, Mega, or other cloud storage
 ```
 
-See [Backup & Restore Guide](operations/backup-restore.md) for details.
+See the [Rclone documentation](https://rclone.org/docs/) for detailed configuration instructions.
 
-## Step 10: Test Your Setup
+## Step 10: Verify Your Setup
 
-Run health checks to ensure everything is working:
+Check that everything is working:
 
 ```bash
-# Overall health check
-just monitor --target health
+# Check all service status
+just services status
 
-# Check RAM usage
-just monitor --target ram
+# Check Docker resource usage
+docker stats --no-stream
 
-# Check disk usage
-just monitor --target disk
+# View logs for a specific service
+docker compose -f services/<service-name>/docker-compose.yml logs
 
-# Test email notifications
-just test --target email
-
-# Check service connectivity
-just test --target connectivity
+# Test service connectivity by accessing the web interfaces
+# See the service access table above for URLs
 ```
 
 ## Common First-Time Issues
@@ -325,7 +317,7 @@ just test --target connectivity
 
 ```bash
 # Check service logs
-just services --action logs --name <service-name>
+docker compose -f services/<service-name>/docker-compose.yml logs -f
 
 # Common issues:
 # 1. Port already in use - check with: lsof -i :<port>
@@ -337,10 +329,10 @@ just services --action logs --name <service-name>
 
 ```bash
 # Check resource usage
-just monitor --target resources
+docker stats
 
 # If RAM is maxed out:
-# 1. Stop non-essential services
+# 1. Stop non-essential services with: just stop <service-name>
 # 2. Limit Jellyfin concurrent transcodes
 # 3. Consider upgrading to 32GB RAM
 ```
@@ -355,7 +347,8 @@ just services status
 docker network inspect homelab
 
 # Restart problematic service
-just services --action restart --name <service-name>
+just stop <service-name>
+just up <service-name>
 ```
 
 ### Database Connection Errors
@@ -365,7 +358,7 @@ just services --action restart --name <service-name>
 docker ps | grep postgres
 
 # Check PostgreSQL logs
-just services --action logs --name postgres
+docker compose -f services/postgres/docker-compose.yml logs -f
 
 # Verify .env has correct POSTGRES_PASSWORD
 ```
@@ -394,11 +387,8 @@ just up <service-name>
 # Stop a service
 just stop <service-name>
 
-# Restart a service
-just services --action restart --name <service-name>
-
 # View logs
-just services --action logs --name <service-name> --follow
+docker compose -f services/<service-name>/docker-compose.yml logs -f
 ```
 
 ### Monitoring
@@ -407,35 +397,36 @@ just services --action logs --name <service-name> --follow
 # Check status
 just services status
 
-# Detailed status with resources
-just services status --detailed
+# Check Docker resource usage
+docker stats
 
-# Monitor specific service
-just monitor --target service --name <service-name>
-
-# Performance report
-just monitor --target performance
+# View container details
+docker ps
 ```
 
 ### Updates
 
 ```bash
-# Pull latest Docker images
-docker compose pull
+# Pull latest Docker images for a service
+(cd services/<service-name> && docker compose pull)
 
-# Update and restart all services
-just services --action restart
+# Update and restart a service
+just stop <service-name>
+just up <service-name>
 
-# Update specific service
-docker compose pull <service-name>
-just services --action restart --name <service-name>
+# Update all services
+just stop
+for service_dir in services/*/; do
+    (cd "$service_dir" && docker compose pull)
+done
+just up
 ```
 
 ### Documentation
 
 ```bash
 # Start documentation server
-just docs --action serve
+just up mkdocs
 
 # Access at: http://localhost:8001
 ```

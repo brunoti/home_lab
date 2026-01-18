@@ -65,17 +65,17 @@ The `.env` file must contain at minimum:
 
 Start this service:
 ```bash
-just services --action start --name postgres
+just up postgres
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name postgres
+just stop postgres
 ```
 
 View logs:
 ```bash
-just services --action logs --name postgres
+docker compose -f services/postgres/docker-compose.yml logs -f
 ```
 
 ## Configuration

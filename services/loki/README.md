@@ -44,17 +44,17 @@ Loki is a horizontally scalable, highly available, multi-tenant log aggregation 
 
 Start this service:
 ```bash
-just services --action start --name loki
+just up loki
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name loki
+just stop loki
 ```
 
 View logs:
 ```bash
-just services --action logs --name loki
+docker compose -f services/loki/docker-compose.yml logs -f
 ```
 
 ## Configuration

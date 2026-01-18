@@ -41,17 +41,17 @@ Koel (also styled as koel, with a lowercase k) is a simple web-based personal au
 
 Start this service:
 ```bash
-just services --action start --name koel
+just up koel
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name koel
+just stop koel
 ```
 
 View logs:
 ```bash
-just services --action logs --name koel
+docker compose -f services/koel/docker-compose.yml logs -f
 ```
 
 ## Configuration
@@ -72,10 +72,9 @@ Required in `.env`:
 ### Importing Music
 
 ```bash
-# Import music using the just command
-just music --action import --service koel
-
-# Or manually scan library from Koel settings
+# Add music files to the data/koel/music directory
+# Then scan library from Koel web interface:
+# Settings → Music Library → Scan
 ```
 
 ## Ports

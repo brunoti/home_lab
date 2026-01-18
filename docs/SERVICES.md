@@ -755,10 +755,13 @@ just stop
 just stop <service-name>
 
 # View logs for a service
-just services --action logs --name <service-name>
+docker compose -f services/<service-name>/docker-compose.yml logs -f
 
 # Check service status
 just services status
+
+# List all available services
+just services list
 ```
 
 For detailed command reference, see [Command Reference](reference/commands.md).

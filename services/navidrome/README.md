@@ -43,17 +43,17 @@ Navidrome is a modern Music Server and Streamer compatible with Subsonic/Airsoni
 
 Start this service:
 ```bash
-just services --action start --name navidrome
+just up navidrome
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name navidrome
+just stop navidrome
 ```
 
 View logs:
 ```bash
-just services --action logs --name navidrome
+docker compose -f services/navidrome/docker-compose.yml logs -f
 ```
 
 ## Configuration

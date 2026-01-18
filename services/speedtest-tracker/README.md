@@ -44,17 +44,17 @@ Speedtest Tracker is a self-hosted internet performance tracking application tha
 
 Start this service:
 ```bash
-just services --action start --name speedtest-tracker
+just up speedtest-tracker
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name speedtest-tracker
+just stop speedtest-tracker
 ```
 
 View logs:
 ```bash
-just services --action logs --name speedtest-tracker
+docker compose -f services/speedtest-tracker/docker-compose.yml logs -f
 ```
 
 ## Configuration

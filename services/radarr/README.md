@@ -45,17 +45,17 @@ Radarr is a movie collection manager for Usenet and BitTorrent users. It can mon
 
 Start this service:
 ```bash
-just services --action start --name radarr
+just up radarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name radarr
+just stop radarr
 ```
 
 View logs:
 ```bash
-just services --action logs --name radarr
+docker compose -f services/radarr/docker-compose.yml logs -f
 ```
 
 ## Configuration
