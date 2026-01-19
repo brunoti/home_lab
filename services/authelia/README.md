@@ -1,26 +1,60 @@
 # Authelia
 
-Category: Network
+**Official Repository**: [authelia/authelia](https://github.com/authelia/authelia)  
+**Category**: Network  
+**Port**: 9091  
+**Docker Image**: `authelia/authelia:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+Authelia is an open-source authentication and authorization server providing single sign-on (SSO) and two-factor authentication for your applications via a web portal.
+
+## Key Features
+
+- 🔐 **Single Sign-On** - SSO for all your applications
+- 🔑 **Two-Factor Auth** - TOTP, WebAuthn, Security Keys
+- 🌐 **Reverse Proxy Integration** - Works with nginx, Traefik, Caddy
+- 📧 **Email Notifications** - Account verification and alerts
+- 🔒 **Access Control** - Fine-grained authorization rules
+- 👥 **Multi-Backend** - LDAP, Active Directory, file-based
+- 📱 **Mobile App Support** - TOTP apps like Google Authenticator
+- 🛡️ **Brute Force Protection** - Failed login attempt throttling
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up authelia
+   ```
+
+2. **Access the portal**: http://localhost:9091
+
+3. **Initial Setup**:
+   - Configure users in configuration file
+   - Set up access control rules
+   - Configure email notifications
+   - Integrate with reverse proxy (Nginx Proxy Manager)
+   - Register 2FA devices for users
+
+## Ports
+
+- **9091** - Authentication portal
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name authelia
+just up authelia
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name authelia
+just stop authelia
 ```
 
 View logs:
 ```bash
-just services --action logs --name authelia
+docker compose -f services/authelia/docker-compose.yml logs -f
 ```
 
 ## Configuration

@@ -114,47 +114,47 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 ## 📦 Services
 
 ### Media & Entertainment (5)
-- **Jellyfin** (Port 8096) - Movies, TV shows, music streaming
-- **Koel** (Port 13000) - Modern music server
-- **Navidrome** (Port 4533) - Subsonic-compatible music
-- **Speedtest Tracker** (Port 5000) - Internet speed monitoring
-- **Immich** (Port 2283) - Photo management
+- **[Jellyfin](https://github.com/jellyfin/jellyfin)** (Port 8096) - Movies, TV shows, music streaming
+- **[Koel](https://github.com/koel/koel)** (Port 13000) - Modern music server
+- **[Navidrome](https://github.com/navidrome/navidrome)** (Port 4533) - Subsonic-compatible music
+- **[Speedtest Tracker](https://github.com/alexjustesen/speedtest-tracker)** (Port 5000) - Internet speed monitoring
+- **[Immich](https://github.com/immich-app/immich)** (Port 2283) - Photo management
 
 ### Books & Reading (5)
-- **Calibre** (Port 8080) - Library management
-- **Calibre Web** (Port 8083) - Web reader interface
-- **Bookstore** (Port 3000) - Book discovery
-- **Audiobookshelf** (Port 8000) - Audiobooks
-- **Lazylibrarian** (Port 8666) - Automated ebook discovery
+- **[Calibre](https://github.com/kovidgoyal/calibre)** (Port 8080) - Library management
+- **[Calibre Web](https://github.com/janeczku/calibre-web)** (Port 8083) - Web reader interface
+- **[Bookstore](https://github.com/BookStackApp/BookStack)** (Port 3002) - Book discovery
+- **[Audiobookshelf](https://github.com/advplyr/audiobookshelf)** (Port 8000) - Audiobooks
+- **[Lazylibrarian](https://github.com/lazylibrarian/LazyLibrarian)** (Port 8666) - Automated ebook discovery
 
 ### Network & Security (3)
-- **Headscale** (Port 8085) - VPN server
-- **PiHole** (Port 80, 53) - DNS & ad-blocking
-- **Authelia** (Port 9091) - Authentication server
+- **[Headscale](https://github.com/juanfont/headscale)** (Port 8085) - VPN server
+- **[PiHole](https://github.com/pi-hole/pi-hole)** (Port 8053, 53) - DNS & ad-blocking
+- **[Authelia](https://github.com/authelia/authelia)** (Port 9091) - Authentication server
 
 ### Monitoring & Observability (5)
-- **Portainer** (Port 9000) - Docker management
-- **Prometheus** (Port 9090) - Metrics collection
-- **Grafana** (Port 3000) - Dashboards
-- **Loki** (Port 3100) - Log aggregation
-- **Uptime Kuma** (Port 3001) - Uptime monitoring
+- **[Portainer](https://github.com/portainer/portainer)** (Port 9000) - Docker management
+- **[Prometheus](https://github.com/prometheus/prometheus)** (Port 9090) - Metrics collection
+- **[Grafana](https://github.com/grafana/grafana)** (Port 3001) - Dashboards
+- **[Loki](https://github.com/grafana/loki)** (Port 3100) - Log aggregation
+- **[Uptime Kuma](https://github.com/louislam/uptime-kuma)** (Port 3003) - Uptime monitoring
 
 ### Storage & Cloud (2)
-- **Nextcloud** (Port 11000) - Cloud storage
-- **Rclone** (Port 5572) - Cloud backups
+- **[Nextcloud](https://github.com/nextcloud/server)** (Port 11000) - Cloud storage
+- **[Rclone](https://github.com/rclone/rclone)** (Port 5572) - Cloud backups
 
 ### Utilities & Infrastructure (10)
-- **Homepage** (Port 3000) - Dashboard
-- **Nginx Proxy Manager** (Port 81, 443) - Reverse proxy
-- **File Browser** (Port 6060) - Web file manager
-- **MkDocs** (Port 8001) - Documentation
-- **PostgreSQL** - Database
-- **Redis** - Caching
-- **Radarr** (Port 7878) - Movie automation
-- **Sonarr** (Port 8989) - TV automation
-- **Prowlarr** (Port 9696) - Indexer manager
-- **Transmission** (Port 6969) - Torrent client
-- **Affine** (Port 3001) - Notes & wiki
+- **[Homepage](https://github.com/gethomepage/homepage)** (Port 3000) - Dashboard
+- **[Nginx Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager)** (Port 81, 443) - Reverse proxy
+- **[File Browser](https://github.com/filebrowser/filebrowser)** (Port 6060) - Web file manager
+- **[MkDocs](https://github.com/squidfunk/mkdocs-material)** (Port 8001) - Documentation
+- **[PostgreSQL](https://github.com/postgres/postgres)** - Database
+- **[Redis](https://github.com/redis/redis)** - Caching
+- **[Radarr](https://github.com/Radarr/Radarr)** (Port 7878) - Movie automation
+- **[Sonarr](https://github.com/Sonarr/Sonarr)** (Port 8989) - TV automation
+- **[Prowlarr](https://github.com/Prowlarr/Prowlarr)** (Port 9696) - Indexer manager
+- **[Transmission](https://github.com/transmission/transmission)** (Port 6969) - Torrent client
+- **[Affine](https://github.com/toeverything/AFFiNE)** (Port 3010) - Notes & wiki
 
 ## 🛠️ Command Reference
 
@@ -199,98 +199,14 @@ just services status
 just services status --detailed
 ```
 
-### Backups & Restore
+### Monitoring Services
 
 ```bash
-# Setup cloud backups
-just backup --target gdrive --action setup
-just backup --target mega --action setup
+# Check service status
+just services status
 
-# Create backups
-just backup --target gdrive
-just backup --target mega
-just backup --target local
-
-# List available backups
-just backup --target gdrive --action list
-
-# Restore from backup
-just restore --source gdrive --date latest
-just restore --source gdrive --date 2026-01-10
-```
-
-### Music Management
-
-```bash
-# Import music to Koel
-just music --action import --service koel
-
-# Sync Navidrome library
-just music --action sync --service navidrome
-
-# Check music service status
-just music --action status
-```
-
-### Book Management
-
-```bash
-# Import books to Calibre
-just books --action import --service calibre
-
-# Convert book formats
-just books --action convert --format epub --input book.pdf
-
-# Search for books
-just books --action search --service lazylibrarian --query "Book Title"
-```
-
-### Monitoring & Health
-
-```bash
-# Run health check
-just monitor --target health
-
-# Check RAM usage
-just monitor --target ram
-
-# Check disk usage
-just monitor --target disk
-
-# Generate performance report
-just monitor --target performance
-
-# Monitor specific service
-just monitor --target service --name jellyfin
-```
-
-### Documentation
-
-```bash
-# Start documentation server
-just docs --action serve
-
-# Build static documentation
-just docs --action build
-
-# Update documentation dependencies
-just docs --action update
-```
-
-### Testing
-
-```bash
-# Test disaster recovery
-just test --target disaster-recovery
-
-# Test email notifications
-just test --target email
-
-# Test backup procedures
-just test --target backups
-
-# Run integration tests
-just test --target integration
+# List all available services
+just services list
 ```
 
 ## 📚 Documentation
@@ -298,12 +214,14 @@ just test --target integration
 Full documentation is available at http://localhost:8001 when running the documentation server:
 
 ```bash
-just docs --action serve
+# Start MkDocs documentation server
+just up mkdocs
 ```
 
 Or browse the documentation in the `docs/` directory:
 
-- [Quick Start Guide](docs/getting-started/quick-start.md)
+- **[Quick Start Guide](docs/QUICK_START.md)** - Get started in 15 minutes
+- **[Service Directory](docs/SERVICES.md)** - Complete service list with official GitHub links
 - [Installation Guide](docs/getting-started/installation.md)
 - [Service Documentation](docs/services/)
 - [Backup & Restore](docs/operations/backup-restore.md)
@@ -404,11 +322,16 @@ just test --target disaster-recovery
 # Pull latest changes
 git pull origin main
 
-# Update Docker images
-docker-compose pull
+# Update Docker images for all services
+for service_dir in services/*/; do
+    if [ -f "${service_dir}docker-compose.yml" ]; then
+        (cd "$service_dir" && docker compose pull)
+    fi
+done
 
 # Restart services
-just services --action restart
+just stop
+just up
 ```
 
 ## 🐛 Troubleshooting
@@ -416,40 +339,40 @@ just services --action restart
 ### Service Won't Start
 
 ```bash
-# Check logs
-just services --action logs --name <service> --follow
+# Check service status
+just services status
 
-# Check status
-just services --action status --detailed
+# View service logs
+docker compose -f services/<service-name>/docker-compose.yml logs -f
 
-# Restart service
-just services --action restart --name <service> --force
+# Restart a specific service
+just stop <service-name>
+just up <service-name>
 ```
 
 ### High RAM Usage
 
 ```bash
-# Check RAM usage
-just monitor --target ram
-
-# Check resource usage
-just monitor --target resources
+# Check Docker resource usage
+docker stats
 
 # Restart heavy services
-just services --action restart --name jellyfin
+just stop jellyfin
+just up jellyfin
 ```
 
 ### Network Issues
 
 ```bash
-# Diagnose network
-just network --action diagnose
+# Check Docker network
+docker network inspect homelab
 
-# Check port mappings
-just network --action ports
+# Verify container networking
+docker ps
 
-# Test connectivity
-just test --target connectivity
+# Check service ports
+docker compose -f services/<service-name>/docker-compose.yml ps
+```
 ```
 
 See [Troubleshooting Guide](docs/operations/troubleshooting.md) for more solutions.

@@ -1,26 +1,60 @@
 # Transmission
 
-Category: Download
+**Official Repository**: [transmission/transmission](https://github.com/transmission/transmission)  
+**Category**: Download  
+**Port**: 6969  
+**Docker Image**: `linuxserver/transmission:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+Transmission is a fast, easy, and free BitTorrent client. It's designed for easy, powerful use with minimal resource usage, making it perfect for home server applications.
+
+## Key Features
+
+- 🚀 **Fast & Lightweight** - Minimal resource usage
+- 🌐 **Web Interface** - Browser-based control
+- 📡 **Remote Control** - RPC API for automation
+- 🔐 **Encryption** - Built-in protocol encryption
+- ⚡ **DHT Support** - Decentralized peer discovery
+- 📊 **Statistics** - Detailed transfer stats
+- 🎯 **Selective Downloads** - Choose files within torrents
+- 🔗 ***arr Integration** - Works with Radarr and Sonarr
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up transmission
+   ```
+
+2. **Access the web interface**: http://localhost:6969
+
+3. **Initial Setup**:
+   - Login with credentials from `.env` file
+   - Configure download directories
+   - Set bandwidth limits (optional)
+   - Enable encryption for privacy
+   - Add to Radarr/Sonarr as download client
+
+## Ports
+
+- **6969** - Web interface and RPC
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name transmission
+just up transmission
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name transmission
+just stop transmission
 ```
 
 View logs:
 ```bash
-just services --action logs --name transmission
+docker compose -f services/transmission/docker-compose.yml logs -f
 ```
 
 ## Configuration

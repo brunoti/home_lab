@@ -1,26 +1,60 @@
 # Immich
 
-Category: Media
+**Official Repository**: [immich-app/immich](https://github.com/immich-app/immich)  
+**Category**: Media  
+**Port**: 2283  
+**Docker Image**: `ghcr.io/immich-app/immich-server:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+Immich is a high-performance self-hosted photo and video backup solution. Direct from your mobile phone, it automatically backs up photos and videos to your server with a beautiful mobile and web interface.
+
+## Key Features
+
+- 📱 **Mobile Auto Backup** - iOS and Android apps with background upload
+- 🖼️ **Smart Search** - AI-powered photo search by objects, people, and locations
+- 👥 **Facial Recognition** - Automatic face detection and grouping
+- 📍 **Map View** - View photos on an interactive map
+- 🎬 **Video Support** - Upload and stream videos
+- 📲 **Sharing** - Share albums with family and friends
+- 🔒 **Privacy First** - Full control of your data
+- 🚀 **High Performance** - Fast browsing and searching
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up immich
+   ```
+
+2. **Access the web interface**: http://localhost:2283
+
+3. **Initial Setup**:
+   - Create an admin account
+   - Configure storage settings
+   - Download mobile app (iOS/Android)
+   - Configure mobile app with server URL
+   - Enable auto-backup on mobile devices
+
+## Ports
+
+- **2283** - Web interface and API
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name immich
+just up immich
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name immich
+just stop immich
 ```
 
 View logs:
 ```bash
-just services --action logs --name immich
+docker compose -f services/immich/docker-compose.yml logs -f
 ```
 
 ## Configuration

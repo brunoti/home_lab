@@ -1,26 +1,61 @@
 # Radarr
 
-Category: Automation
+**Official Repository**: [Radarr/Radarr](https://github.com/Radarr/Radarr)  
+**Category**: Automation  
+**Port**: 7878  
+**Docker Image**: `linuxserver/radarr:latest`
 
-## Service Information
+## Overview
 
-This service is part of the Home Lab setup.
+Radarr is a movie collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new movies and will interface with clients and indexers to grab, sort, and rename them.
+
+## Key Features
+
+- 🎬 **Movie Management** - Automated movie downloads
+- 📅 **Release Tracking** - Monitor upcoming releases
+- 🔍 **Quality Profiles** - Customize quality preferences
+- 📊 **Calendar View** - Visual release calendar
+- 🔄 **Automatic Import** - Auto-import and rename
+- 🎯 **Smart Search** - Find best releases automatically
+- 🔗 **Integration** - Works with Prowlarr and download clients
+- 📱 **Mobile Friendly** - Responsive web interface
+
+## Getting Started
+
+1. **Start the service**:
+   ```bash
+   just up radarr
+   ```
+
+2. **Access the web interface**: http://localhost:7878
+
+3. **Initial Setup**:
+   - Complete initial setup wizard
+   - Add indexers via Prowlarr integration
+   - Configure download client (Transmission)
+   - Set up root folder for movies
+   - Add movies to monitor
+   - Configure quality profiles
+
+## Ports
+
+- **7878** - Web interface
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name radarr
+just up radarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name radarr
+just stop radarr
 ```
 
 View logs:
 ```bash
-just services --action logs --name radarr
+docker compose -f services/radarr/docker-compose.yml logs -f
 ```
 
 ## Configuration
