@@ -5,7 +5,7 @@ applyTo: '**'
 
 **Project**: Self-hosted home lab infrastructure  
 **Runtime**: OrbStack (Docker) on Mac mini M4  
-**Architecture**: Modular service-based (31 independent services)
+**Architecture**: Modular service-based (32 independent services)
 
 ---
 
@@ -21,11 +21,11 @@ Each service lives in `services/<service-name>/` with its own `docker-compose.ym
 
 **Why this matters**: Commands run from service directories, not root. Justfile handles directory navigation. Never manually `cd` into service dirs to run Docker commands—use `just` recipes.
 
-### Service Categories (31 total)
+### Service Categories (32 total)
 
 ```
 Media (5)         → jellyfin, immich, speedtest-tracker, koel, navidrome
-Books (4)         → calibre, calibre-web, audiobookshelf, lazylibrarian
+Books (5)         → calibre, calibre-web, audiobookshelf, lazylibrarian, booklore
 Network (3)       → headscale, pihole, authelia
 Monitoring (5)    → portainer, prometheus, grafana, loki, uptime-kuma
 Proxy (2)         → nginx-proxy-manager, homepage

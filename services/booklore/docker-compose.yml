@@ -1,0 +1,57 @@
+services:
+  booklore:
+    image: booklore/booklore-app:latest
+    container_name: booklore
+    restart: unless-stopped
+    # Load environment variables from root .env file
+    # Relative path used because docker compose is run from service directory via justfile
+    env_file:
+      - ../../.env
+    environment:
+      - USER_ID=${BOOKLORE_UID:-1000}
+      - GROUP_ID=${BOOKLORE_GID:-1000}
+      - TZ=UTC
+      - DATABASE_URL=${BOOKLORE_DATABASE_URL}
+      - DATABASE_USERNAME=${BOOKLORE_DB_USER}
+      - DATABASE_PASSWORD=${BOOKLORE_DB_PASSWORD}
+      - BOOKLORE_PORT=${BOOKLORE_PORT:-6060}
+    depends_on:
+      booklore-mariadb:
+        condition: service_healthy
+    ports:
+      - "${BOOKLORE_PORT:-6060}:${BOOKLORE_PORT:-6060}"
+    volumes:
+      - ../../data/booklore/data:/app/data
+      - ../../data/booklore/books:/books
+      - ../../data/booklore/bookdrop:/bookdrop
+    networks:
+      - homelab
+
+  booklore-mariadb:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: booklore-mariadb
+    restart: unless-stopped
+    env_file:
+      - ../../.env
+    environment:
+      - PUID=${BOOKLORE_DB_UID:-1000}
+      - PGID=${BOOKLORE_DB_GID:-1000}
+      - TZ=UTC
+      - MYSQL_ROOT_PASSWORD=${BOOKLORE_MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${BOOKLORE_MYSQL_DATABASE}
+      - MYSQL_USER=${BOOKLORE_DB_USER}
+      - MYSQL_PASSWORD=${BOOKLORE_DB_PASSWORD}
+    volumes:
+      - ../../data/booklore/mariadb:/config
+    networks:
+      - homelab
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  homelab:
+    external: true
+    name: homelab

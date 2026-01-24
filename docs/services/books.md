@@ -10,6 +10,7 @@ The home lab provides a complete book ecosystem:
 2. **Calibre Web**: Web reader interface
 3. **Audiobookshelf**: Audiobook streaming
 4. **Lazylibrarian**: Automated ebook discovery
+5. **Booklore**: Modern digital library manager
 
 All services share the same book library when configured.
 
@@ -432,4 +433,91 @@ Use OPDS catalog from Calibre Web:
 - Calibre documentation: https://manual.calibre-ebook.com/
 - Calibre Web wiki
 - Audiobookshelf docs
-- Lazylibrarian wiki
+- Lazylibrarian wiki- Booklore documentation: https://booklore.org/docs/
+
+## Booklore - Modern Digital Library
+
+**Port**: 6060  
+**Purpose**: Modern, open-source library management system
+
+### Features
+
+- **Smart Organization**: Shelves, filters, magic shelves, and fast search
+- **Automatic Metadata**: Fetch book details, covers, and reviews automatically
+- **OPDS Support**: Connect reading apps for wireless downloads
+- **Built-in Reader**: Read EPUBs, PDFs, and comics in browser
+- **Multi-User**: Share library with granular permissions
+- **Kobo/KOReader Sync**: Sync reading progress and highlights
+- **Bookdrop**: Automatic import by dropping files into folder
+- **Email Sharing**: Send books to Kindle or any email
+
+### Setup
+
+1. Start Booklore:
+```bash
+just up booklore
+```
+
+2. Access: http://localhost:6060
+
+3. Complete setup wizard:
+   - Create administrator account
+   - Set email and timezone
+   - Configure preferences
+
+4. Create library:
+   - Settings → Libraries → Add Library
+   - Name: "My Library"
+   - Path: `/books`
+   - Enable scanning
+
+### Import Books
+
+**Method 1: Direct Copy**
+```bash
+# Copy books to library
+cp /path/to/books/*.epub data/booklore/books/
+# Trigger scan in Booklore UI
+```
+
+**Method 2: Bookdrop (Recommended)**
+```bash
+# Enable in Settings → Bookdrop
+# Drop files for automatic import
+cp book.epub data/booklore/bookdrop/
+# Booklore processes automatically
+```
+
+**Method 3: Web Upload**
+- Navigate to library
+- Click "Upload Books"
+- Select and upload files
+
+### Magic Shelves
+
+Create dynamic collections that auto-update:
+
+1. Settings → Shelves → Create Magic Shelf
+2. Set rules (e.g., "Rating > 4 stars", "Genre = Sci-Fi")
+3. Books matching rules appear automatically
+
+### Database
+
+Booklore uses its own MariaDB container for data storage:
+- Container: `booklore-mariadb`
+- Automatic initialization on first start
+- Backup `data/booklore/mariadb` regularly
+
+### Integration
+
+**With Calibre:**
+Point Booklore library to Calibre's book directory for shared storage.
+
+**With Download Clients:**
+Use Bookdrop to automatically import downloaded books.
+
+**With OPDS Readers:**
+Get OPDS URL from Settings → OPDS for reading apps.
+
+**With Nginx Proxy Manager:**
+Configure domain: booklore.bop.lat → booklore:6060

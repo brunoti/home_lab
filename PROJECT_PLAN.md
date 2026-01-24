@@ -59,11 +59,12 @@ home_lab/
 4. **Speedtest Tracker** (Port 5000) - Internet speed monitoring
 5. **Immich** (Port 2283) - Photo management
 
-### Books & Reading (4 services)
+### Books & Reading (5 services)
 1. **Calibre** (Port 8080) - Library management
 2. **Calibre Web** (Port 8083) - Web reader interface
 3. **Audiobookshelf** (Port 8000) - Audiobooks
 4. **Lazylibrarian** (Port 8666) - Automated ebook discovery
+5. **Booklore** (Port 6060) - Modern digital library manager
 
 ### Notes & Knowledge (1 service)
 1. **Affine** (Port 3001) - Collaborative notes & wiki

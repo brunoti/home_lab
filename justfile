@@ -24,7 +24,7 @@ up service='all':
                 service_name=$(basename "$service_dir")
                 echo "Starting $service_name..."
                 # Check environment variables before starting
-                if ! ./scripts/check-env-vars.sh "$service_name" 2>&1; then
+                if ! just vars "$service_name" 2>&1; then
                     echo "Skipping $service_name due to missing environment variables"
                     continue
                 fi
@@ -44,8 +44,9 @@ up service='all':
             exit 1
         fi
         echo "Checking environment variables for {{ service }}..."
-        if ! ./scripts/check-env-vars.sh "{{ service }}" 2>&1; then
+        if ! just vars "{{ service }}" 2>&1; then
             echo "Cannot start {{ service }} due to missing environment variables"
+            echo "Run 'just vars {{ service }} fix' to auto-populate missing values"
             exit 1
         fi
         echo "Starting {{ service }}..."
