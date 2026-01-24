@@ -22,8 +22,6 @@ services:
       - ../../data/koel/covers:/var/www/html/public/img/covers
     ports:
       - "13000:80"
-    depends_on:
-      - postgres
     networks:
       - homelab
   
