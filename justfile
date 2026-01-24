@@ -98,35 +98,68 @@ install package="all":
         echo "✓ {{ package }} installed"
     fi
 
-# Setup commands
-setup target="mac" service="all":
+# Setup commands - defaults to Mac
+setup target="mac":
     #!/usr/bin/env bash
     set -euo pipefail
     case "{{ target }}" in
         mac)
             echo "Setting up Mac environment..."
-            # Check for Homebrew
+            
+            # Check for Homebrew, install if missing
             if ! command -v brew &> /dev/null; then
-                echo "Homebrew not found. Please run: just install"
-                exit 1
+                echo "Installing Homebrew..."
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            else
+                echo "✓ Homebrew already installed"
             fi
-            # OrbStack starts automatically after installation
+            
+            # Install OrbStack if not present
+            if ! command -v orbctl &> /dev/null; then
+                echo "Installing OrbStack..."
+                brew install --cask orbstack
+                echo "✓ OrbStack installed. It will start automatically."
+            else
+                echo "✓ OrbStack already installed"
+            fi
+            
             # Verify Docker is available
             if ! docker info &> /dev/null; then
-                echo "Docker not available. Please ensure OrbStack is installed and running."
-                echo "You can install it with: brew install --cask orbstack"
+                echo "⚠ Docker not available. Please ensure OrbStack is running."
+                echo "You can start it from Applications or wait for it to auto-start."
                 exit 1
             fi
-            echo "✓ Mac setup complete"
-            ;;
-        orbstack)
-            echo "Setting up OrbStack..."
-            if ! command -v brew &> /dev/null; then
-                echo "Homebrew not found. Please install it first."
-                exit 1
+            
+            # Create homelab directories
+            mkdir -p ~/homelab/{data,config,cache,logs,backups}
+            echo "✓ Created homelab directories"
+            
+            # Setup .env if needed
+            if [ ! -f .env ]; then
+                echo "Creating .env from .env.example..."
+                cp .env.example .env
+                echo "⚠ Please run 'just password' to generate secure passwords"
+            else
+                echo "✓ .env file exists"
             fi
-            brew install --cask orbstack
-            echo "✓ OrbStack installed. It will start automatically."
+            
+            # Create Docker network
+            if ! docker network inspect homelab &>/dev/null; then
+                echo "Creating homelab network..."
+                docker network create homelab
+            else
+                echo "✓ homelab network exists"
+            fi
+            
+            echo ""
+            echo "===================================================="
+            echo "✅ Mac setup complete!"
+            echo ""
+            echo "Next steps:"
+            echo "  1. Run 'just password' if you haven't already"
+            echo "  2. Run 'just up' to start all services"
+            echo "  3. Visit http://localhost:3000 for Homepage dashboard"
+            echo "===================================================="
             ;;
         config)
             echo "Validating configuration..."
@@ -143,51 +176,9 @@ setup target="mac" service="all":
                 echo "✓ Configuration valid"
             fi
             ;;
-        system)
-            echo "Configuring system preferences..."
-            # Create directories
-            mkdir -p ~/homelab/{data,config,cache,logs,backups}
-            echo "✓ System configured"
-            ;;
-        alerts)
-            echo "Configuring alerts..."
-            echo "Alert configuration requires manual setup in Grafana"
-            echo "Visit: http://localhost:3000"
-            ;;
         *)
             echo "Unknown target: {{ target }}"
-            echo "Valid targets: mac, orbstack, config, system, alerts"
-            exit 1
-            ;;
-    esac
-
-# Service management - works with new modular structure
-services action="status" name="all" category="all" timeout="30" follow="false" lines="100" timestamps="false" detailed="false" force="false":
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    # Ensure network exists
-    if ! docker network inspect homelab &>/dev/null; then
-        echo "Creating homelab network..."
-        docker network create homelab
-    fi
-
-    case "{{ action }}" in
-        status)
-            echo "Checking homelab service status..."
-            docker ps --format "table {{ '{{' }}.Names{{ '}}' }}\t{{ '{{' }}.Status{{ '}}' }}\t{{ '{{' }}.Ports{{ '}}' }}" | grep -E "^NAMES|homelab" || docker ps
-            ;;
-        list)
-            echo "Available services:"
-            for service_dir in services/*/; do
-                if [ -f "${service_dir}docker-compose.yml" ]; then
-                    service_name=$(basename "$service_dir")
-                    echo "  - $service_name"
-                fi
-            done
-            ;;
-        *)
-            echo "Action {{ action }} not yet implemented"
+            echo "Valid targets: mac, config"
             exit 1
             ;;
     esac
@@ -196,22 +187,22 @@ services action="status" name="all" category="all" timeout="30" follow="false" l
 password:
     #!/usr/bin/env bash
     set -euo pipefail
-    
+
     echo "🔐 Generating secure passwords for database services"
     echo "===================================================="
     echo ""
-    
+
     # Check if .env exists
     if [ ! -f .env ]; then
         echo "Creating .env from .env.example..."
         cp .env.example .env
     fi
-    
+
     # Function to generate a strong 64-character password
     generate_password() {
         openssl rand -hex 32
     }
-    
+
     # List of variables that need strong passwords
     # Database passwords
     declare -a PASSWORD_VARS=(
@@ -221,18 +212,26 @@ password:
         "GF_DATABASE_PASSWORD"
         "KOEL_DB_PASSWORD"
         "SPEEDTEST_TRACKER_DB_PASSWORD"
+        "IMMICH_DB_PASSWORD"
+        "NEXTCLOUD_DB_PASSWORD"
+        "AUDIOBOOKSHELF_DB_PASSWORD"
+        "BOOKSTORE_DB_PASSWORD"
     )
-    
+
     # Admin passwords
     declare -a ADMIN_PASSWORD_VARS=(
         "GRAFANA_ADMIN_PASSWORD"
         "GRAFANA_SECURITY_ADMIN_PASSWORD"
         "KOEL_ADMIN_PASSWORD"
         "PIHOLE_WEBPASSWORD"
+        "PIHOLE_ADMIN_PASSWORD"
         "PORTAINER_ADMIN_PASSWORD"
         "TRANSMISSION_RPC_PASSWORD"
+        "NEXTCLOUD_ADMIN_PASSWORD"
+        "NGINX_ADMIN_PASSWORD"
+        "FILEBROWSER_ADMIN_PASSWORD"
     )
-    
+
     # Secrets and keys (JWT, session, app keys)
     declare -a SECRET_VARS=(
         "AFFINE_JWT_SECRET"
@@ -240,14 +239,17 @@ password:
         "AUTHELIA_SESSION_SECRET"
         "KOEL_APP_KEY"
         "SPEEDTEST_TRACKER_APP_KEY"
+        "NEXTCLOUD_SECRET"
+        "IMMICH_JWT_SECRET"
     )
-    
+
     # API keys
     declare -a API_KEY_VARS=(
         "RADARR_API_KEY"
         "SONARR_API_KEY"
+        "PROWLARR_API_KEY"
     )
-    
+
     echo "Generating database passwords..."
     for var in "${PASSWORD_VARS[@]}"; do
         password=$(generate_password)
@@ -265,7 +267,7 @@ password:
             echo "  ✓ ${var}"
         fi
     done
-    
+
     echo ""
     echo "Generating admin passwords..."
     for var in "${ADMIN_PASSWORD_VARS[@]}"; do
@@ -283,7 +285,7 @@ password:
             echo "  ✓ ${var}"
         fi
     done
-    
+
     echo ""
     echo "Generating secrets and keys..."
     for var in "${SECRET_VARS[@]}"; do
@@ -301,7 +303,7 @@ password:
             echo "  ✓ ${var}"
         fi
     done
-    
+
     echo ""
     echo "Generating API keys..."
     for var in "${API_KEY_VARS[@]}"; do
@@ -320,10 +322,10 @@ password:
             echo "  ✓ ${var}"
         fi
     done
-    
+
     # Clean up backup files
     rm -f .env.bak
-    
+
     echo ""
     echo "===================================================="
     echo "✅ Password generation complete!"

@@ -1,26 +1,20 @@
 # Authelia
 
-Category: Network
+**Category**: Network  
+**Repository**: https://github.com/authelia/authelia
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Authentication and authorization server with 2FA support.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name authelia
+just up authelia
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name authelia
-```
-
-View logs:
-```bash
-just services --action logs --name authelia
+just stop authelia
 ```
 
 ## Configuration

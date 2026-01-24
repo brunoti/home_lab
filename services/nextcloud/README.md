@@ -1,26 +1,20 @@
 # Nextcloud
 
-Category: Cloud
+**Category**: Cloud  
+**Repository**: https://github.com/nextcloud/server
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Self-hosted file sync, share, and collaboration platform.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name nextcloud
+just up nextcloud
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name nextcloud
-```
-
-View logs:
-```bash
-just services --action logs --name nextcloud
+just stop nextcloud
 ```
 
 ## Configuration

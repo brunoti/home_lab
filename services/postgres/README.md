@@ -1,10 +1,9 @@
-# Postgres
+# PostgreSQL
 
-Category: Databases
+**Category**: Databases  
+**Repository**: https://www.postgresql.org
 
-## Service Information
-
-This service is part of the Home Lab setup and provides PostgreSQL database functionality for multiple services.
+Shared PostgreSQL database server providing databases for multiple services.
 
 ## Prerequisites
 
@@ -30,17 +29,12 @@ The `.env` file must contain at minimum:
 
 Start this service:
 ```bash
-just services --action start --name postgres
+just up postgres
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name postgres
-```
-
-View logs:
-```bash
-just services --action logs --name postgres
+just stop postgres
 ```
 
 ## Configuration

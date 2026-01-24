@@ -1,26 +1,20 @@
-# Calibre-Web
+# Calibre-web
 
-Category: Books
+**Category**: Books  
+**Repository**: https://github.com/janeczku/calibre-web
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Web interface for browsing and managing Calibre e-book library.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name calibre-web
+just up calibre-web
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name calibre-web
-```
-
-View logs:
-```bash
-just services --action logs --name calibre-web
+just stop calibre-web
 ```
 
 ## Configuration

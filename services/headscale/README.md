@@ -1,26 +1,20 @@
 # Headscale
 
-Category: Network
+**Category**: Network  
+**Repository**: https://github.com/juanfont/headscale
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Open-source Tailscale control server for private mesh VPN.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name headscale
+just up headscale
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name headscale
-```
-
-View logs:
-```bash
-just services --action logs --name headscale
+just stop headscale
 ```
 
 ## Configuration

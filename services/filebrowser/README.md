@@ -1,26 +1,20 @@
 # Filebrowser
 
-Category: Development
+**Category**: Development  
+**Repository**: https://github.com/filebrowser/filebrowser
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Web-based file manager with sharing and upload capabilities.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name filebrowser
+just up filebrowser
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name filebrowser
-```
-
-View logs:
-```bash
-just services --action logs --name filebrowser
+just stop filebrowser
 ```
 
 ## Configuration

@@ -1,26 +1,20 @@
 # Prometheus
 
-Category: Monitoring
+**Category**: Monitoring  
+**Repository**: https://github.com/prometheus/prometheus
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Metrics collection and alerting system for time-series data.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name prometheus
+just up prometheus
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name prometheus
-```
-
-View logs:
-```bash
-just services --action logs --name prometheus
+just stop prometheus
 ```
 
 ## Configuration

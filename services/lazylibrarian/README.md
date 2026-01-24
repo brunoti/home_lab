@@ -1,26 +1,20 @@
 # Lazylibrarian
 
-Category: Books
+**Category**: Books  
+**Repository**: https://github.com/lazylibrarian/LazyLibrarian
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Automated e-book and audiobook library manager.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name lazylibrarian
+just up lazylibrarian
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name lazylibrarian
-```
-
-View logs:
-```bash
-just services --action logs --name lazylibrarian
+just stop lazylibrarian
 ```
 
 ## Configuration

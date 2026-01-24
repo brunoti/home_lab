@@ -1,26 +1,20 @@
 # Bookstore
 
-Category: Books
+**Category**: Books  
+**Repository**: https://github.com/your-bookstore/bookstore
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Book management and cataloging system.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name bookstore
+just up bookstore
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name bookstore
-```
-
-View logs:
-```bash
-just services --action logs --name bookstore
+just stop bookstore
 ```
 
 ## Configuration

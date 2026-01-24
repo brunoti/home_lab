@@ -1,26 +1,20 @@
-# Uptime-Kuma
+# Uptime Kuma
 
-Category: Monitoring
+**Category**: Monitoring  
+**Repository**: https://github.com/louislam/uptime-kuma
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Self-hosted uptime monitoring with notifications.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name uptime-kuma
+just up uptime-kuma
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name uptime-kuma
-```
-
-View logs:
-```bash
-just services --action logs --name uptime-kuma
+just stop uptime-kuma
 ```
 
 ## Configuration

@@ -1,26 +1,20 @@
 # Calibre
 
-Category: Books
+**Category**: Books  
+**Repository**: https://github.com/kovidgoyal/calibre
 
-## Service Information
-
-This service is part of the Home Lab setup.
+E-book library management and conversion tool.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name calibre
+just up calibre
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name calibre
-```
-
-View logs:
-```bash
-just services --action logs --name calibre
+just stop calibre
 ```
 
 ## Configuration

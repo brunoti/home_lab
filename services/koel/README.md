@@ -1,26 +1,20 @@
 # Koel
 
-Category: Music
+**Category**: Music  
+**Repository**: https://github.com/koel/koel
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Personal music streaming service with modern web interface.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name koel
+just up koel
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name koel
-```
-
-View logs:
-```bash
-just services --action logs --name koel
+just stop koel
 ```
 
 ## Configuration

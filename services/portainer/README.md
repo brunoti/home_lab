@@ -1,26 +1,20 @@
 # Portainer
 
-Category: Monitoring
+**Category**: Monitoring  
+**Repository**: https://github.com/portainer/portainer
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Docker management UI for containers, images, and networks.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name portainer
+just up portainer
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name portainer
-```
-
-View logs:
-```bash
-just services --action logs --name portainer
+just stop portainer
 ```
 
 ## Configuration

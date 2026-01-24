@@ -1,26 +1,20 @@
 # Prowlarr
 
-Category: Automation
+**Category**: Automation  
+**Repository**: https://github.com/Prowlarr/Prowlarr
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Indexer manager for Sonarr and Radarr.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name prowlarr
+just up prowlarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name prowlarr
-```
-
-View logs:
-```bash
-just services --action logs --name prowlarr
+just stop prowlarr
 ```
 
 ## Configuration

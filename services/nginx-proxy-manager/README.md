@@ -1,26 +1,20 @@
-# Nginx-Proxy-Manager
+# Nginx Proxy Manager
 
-Category: Proxy
+**Category**: Proxy  
+**Repository**: https://github.com/NginxProxyManager/nginx-proxy-manager
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Reverse proxy manager with SSL/TLS certificate management.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name nginx-proxy-manager
+just up nginx-proxy-manager
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name nginx-proxy-manager
-```
-
-View logs:
-```bash
-just services --action logs --name nginx-proxy-manager
+just stop nginx-proxy-manager
 ```
 
 ## Configuration

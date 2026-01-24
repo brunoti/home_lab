@@ -405,10 +405,10 @@ just test --target disaster-recovery
 git pull origin main
 
 # Update Docker images
-docker-compose pull
+docker compose pull
 
 # Restart services
-just services --action restart
+just stop && just up
 ```
 
 ## 🐛 Troubleshooting
@@ -417,13 +417,13 @@ just services --action restart
 
 ```bash
 # Check logs
-just services --action logs --name <service> --follow
+docker compose -f services/<service>/docker-compose.yml logs -f
 
 # Check status
-just services --action status --detailed
+docker ps | grep <service>
 
 # Restart service
-just services --action restart --name <service> --force
+just stop <service> && just up <service>
 ```
 
 ### High RAM Usage
@@ -436,7 +436,7 @@ just monitor --target ram
 just monitor --target resources
 
 # Restart heavy services
-just services --action restart --name jellyfin
+just stop jellyfin && just up jellyfin
 ```
 
 ### Network Issues

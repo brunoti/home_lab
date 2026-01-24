@@ -1,26 +1,20 @@
 # Grafana
 
-Category: Monitoring
+**Category**: Monitoring  
+**Repository**: https://github.com/grafana/grafana
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Visualization and monitoring platform for metrics and logs.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name grafana
+just up grafana
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name grafana
-```
-
-View logs:
-```bash
-just services --action logs --name grafana
+just stop grafana
 ```
 
 ## Configuration

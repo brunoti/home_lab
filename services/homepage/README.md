@@ -1,26 +1,20 @@
 # Homepage
 
-Category: Proxy
+**Category**: Proxy  
+**Repository**: https://github.com/benphelps/homepage
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Customizable dashboard for accessing all homelab services.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name homepage
+just up homepage
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name homepage
-```
-
-View logs:
-```bash
-just services --action logs --name homepage
+just stop homepage
 ```
 
 ## Configuration

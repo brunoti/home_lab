@@ -1,26 +1,20 @@
-# Pihole
+# Pi-hole
 
-Category: Network
+**Category**: Network  
+**Repository**: https://github.com/pi-hole/pi-hole
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Network-wide ad blocker and DNS sinkhole.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name pihole
+just up pihole
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name pihole
-```
-
-View logs:
-```bash
-just services --action logs --name pihole
+just stop pihole
 ```
 
 ## Configuration

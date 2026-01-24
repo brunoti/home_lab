@@ -1,26 +1,20 @@
 # Affine
 
-Category: Notes
+**Category**: Notes  
+**Repository**: https://github.com/toeverything/affine
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Open-source design tool combining notes, whiteboards, and databases.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name affine
+just up affine
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name affine
-```
-
-View logs:
-```bash
-just services --action logs --name affine
+just stop affine
 ```
 
 ## Configuration

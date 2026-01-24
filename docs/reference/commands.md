@@ -4,9 +4,9 @@ Complete reference for all justfile commands in the home lab.
 
 ## Command Structure
 
-All commands follow this pattern:
+Most commands follow this pattern:
 ```bash
-just <category> --<flag> <value>
+just <action> [service]
 ```
 
 ## Setup Commands
@@ -18,34 +18,25 @@ just <category> --<flag> <value>
 just install
 
 # Install specific dependency
-just install --package orbstack
-just install --package docker
+just install orbstack
+just install docker
 ```
 
 ### Mac Setup
 
 ```bash
-# Complete Mac environment setup (installs OrbStack if needed)
-just setup --target mac
+# Complete Mac environment setup (defaults to Mac)
+just setup
 
-# Setup OrbStack only
-just setup --target orbstack
-
-# Configure system preferences
-just setup --target system
+# Setup Mac environment explicitly
+just setup mac
 ```
 
 ### Configuration Validation
 
 ```bash
 # Validate all configuration
-just setup --target config
-
-# Validate specific service
-just setup --target config --service jellyfin
-
-# Check for missing environment variables
-just setup --target check-env
+just setup config
 ```
 
 ## Service Management
@@ -54,49 +45,33 @@ just setup --target check-env
 
 ```bash
 # Start all services
-just services --action start
+just up
 
 # Start specific service
-just services --action start --name jellyfin
-
-# Start service category
-just services --action start --category media
+just up jellyfin
 ```
 
 ### Stopping Services
 
 ```bash
 # Stop all services
-just services --action stop
+just stop
 
 # Stop specific service
-just services --action stop --name jellyfin
-
-# Stop gracefully with timeout
-just services --action stop --timeout 30
+just stop jellyfin
 ```
 
-### Restarting Services
+### Viewing Service Status
 
 ```bash
-# Restart all services
-just services --action restart
+# View all running services
+docker ps
 
-# Restart specific service
-just services --action restart --name jellyfin
+# View all services (running and stopped)
+docker ps -a
 
-# Force restart
-just services --action restart --force
-```
-
-### Service Status
-
-```bash
-# View all service status
-just services --action status
-
-# Check specific service
-just services --action status --name jellyfin
+# Check specific service logs
+docker compose -f services/jellyfin/docker-compose.yml logs -f
 
 # Detailed status with health checks
 just services --action status --detailed

@@ -170,10 +170,10 @@ docker-compose pull
 
 ```bash
 # Start all services
-just services --action start
+just up
 
-# Monitor startup
-just services --action logs
+# Monitor startup (view logs)
+docker ps
 ```
 
 ### First-Time Startup
@@ -195,7 +195,7 @@ just monitor --target health
 just monitor --target ram
 
 # View service status
-just services --action status
+docker ps
 ```
 
 ## Step 11: Access Services

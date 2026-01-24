@@ -1,26 +1,20 @@
 # Navidrome
 
-Category: Music
+**Category**: Music  
+**Repository**: https://github.com/navidrome/navidrome
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Modern music streaming server compatible with Subsonic clients.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name navidrome
+just up navidrome
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name navidrome
-```
-
-View logs:
-```bash
-just services --action logs --name navidrome
+just stop navidrome
 ```
 
 ## Configuration

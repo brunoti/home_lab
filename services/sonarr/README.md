@@ -1,26 +1,20 @@
 # Sonarr
 
-Category: Automation
+**Category**: Automation  
+**Repository**: https://github.com/Sonarr/Sonarr
 
-## Service Information
-
-This service is part of the Home Lab setup.
+TV series collection manager with automated download handling.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name sonarr
+just up sonarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name sonarr
-```
-
-View logs:
-```bash
-just services --action logs --name sonarr
+just stop sonarr
 ```
 
 ## Configuration

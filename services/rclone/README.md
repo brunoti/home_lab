@@ -1,26 +1,20 @@
 # Rclone
 
-Category: Cloud
+**Category**: Cloud  
+**Repository**: https://github.com/rclone/rclone
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Cloud storage manager with sync and backup capabilities.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name rclone
+just up rclone
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name rclone
-```
-
-View logs:
-```bash
-just services --action logs --name rclone
+just stop rclone
 ```
 
 ## Configuration

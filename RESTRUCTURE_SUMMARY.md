@@ -55,29 +55,29 @@ networks:
 
 **New capabilities:**
 ```bash
-# List all services and their status
-just services --action list
+# List all services
+ls -1 services/ | grep -v network-setup
 
 # Start all services
-just services --action start
+just up
 
 # Start individual service
-just services --action start --name jellyfin
+just up jellyfin
 
 # Stop individual service
-just services --action stop --name jellyfin
+just stop jellyfin
 
 # View logs
-just services --action logs --name jellyfin --follow
+docker compose -f services/jellyfin/docker-compose.yml logs -f
 
 # Check status
-just services --action status --detailed
+docker ps
 ```
 
 **Key features:**
 - Automatic network creation if not exists
 - Support for managing all services or individual services
-- Maintained backward compatibility with existing commands
+- Simple, direct service commands
 - Updated backup commands to include `services/` directory
 
 ### 4. Comprehensive Documentation
@@ -182,8 +182,9 @@ Simply follow the Quick Start guide - the new structure is transparent.
 git clone https://github.com/brunoti/home_lab.git
 cd home_lab
 cp .env.example .env
-just setup --target mac
-just services --action start
+just setup
+just password
+just up
 ```
 
 ### For Existing Users
@@ -200,7 +201,7 @@ just services --action start
 
 3. **Start with new structure:**
    ```bash
-   just services --action start
+   just up
    ```
 
 **Important:** No data migration needed! All existing data in `./data/` and `./config/` remains unchanged.
@@ -254,26 +255,25 @@ The structure is ready for deployment. Recommended testing steps:
 
 2. **Test Starting Core Services:**
    ```bash
-   just services --action start --name postgres
-   just services --action start --name redis
+   just up postgres
+   just up redis
    ```
 
 3. **Test Starting Dependent Services:**
    ```bash
-   just services --action start --name grafana
-   just services --action start --name jellyfin
+   just up grafana
+   just up jellyfin
    ```
 
 4. **Verify Service Connectivity:**
    ```bash
-   just services --action status
    docker ps
    ```
 
 5. **Test Stopping Services:**
    ```bash
-   just services --action stop --name jellyfin
-   just services --action stop
+   just stop jellyfin
+   just stop
    ```
 
 ## Troubleshooting Resources

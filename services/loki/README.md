@@ -1,26 +1,20 @@
 # Loki
 
-Category: Monitoring
+**Category**: Monitoring  
+**Repository**: https://github.com/grafana/loki
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Log aggregation system designed for Grafana integration.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name loki
+just up loki
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name loki
-```
-
-View logs:
-```bash
-just services --action logs --name loki
+just stop loki
 ```
 
 ## Configuration

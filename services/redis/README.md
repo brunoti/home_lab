@@ -1,26 +1,20 @@
 # Redis
 
-Category: Databases
+**Category**: Databases  
+**Repository**: https://github.com/redis/redis
 
-## Service Information
-
-This service is part of the Home Lab setup.
+In-memory data store used for caching and session management.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name redis
+just up redis
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name redis
-```
-
-View logs:
-```bash
-just services --action logs --name redis
+just stop redis
 ```
 
 ## Configuration

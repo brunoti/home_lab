@@ -1,26 +1,20 @@
 # Transmission
 
-Category: Download
+**Category**: Download  
+**Repository**: https://github.com/transmission/transmission
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Lightweight BitTorrent client with web interface.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name transmission
+just up transmission
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name transmission
-```
-
-View logs:
-```bash
-just services --action logs --name transmission
+just stop transmission
 ```
 
 ## Configuration

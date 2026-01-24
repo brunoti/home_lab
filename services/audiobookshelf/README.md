@@ -1,26 +1,20 @@
 # Audiobookshelf
 
-Category: Books
+**Category**: Books  
+**Repository**: https://github.com/advplyr/audiobookshelf
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Audiobook and podcast server with mobile app support.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name audiobookshelf
+just up audiobookshelf
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name audiobookshelf
-```
-
-View logs:
-```bash
-just services --action logs --name audiobookshelf
+just stop audiobookshelf
 ```
 
 ## Configuration

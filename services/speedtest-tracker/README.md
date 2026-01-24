@@ -1,26 +1,20 @@
-# Speedtest-Tracker
+# Speedtest Tracker
 
-Category: Media
+**Category**: Media  
+**Repository**: https://github.com/henrywhitaker3/Speedtest-Tracker
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Internet speed monitoring with historical data and charts.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name speedtest-tracker
+just up speedtest-tracker
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name speedtest-tracker
-```
-
-View logs:
-```bash
-just services --action logs --name speedtest-tracker
+just stop speedtest-tracker
 ```
 
 ## Configuration

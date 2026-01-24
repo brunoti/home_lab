@@ -1,26 +1,20 @@
 # Immich
 
-Category: Media
+**Category**: Media  
+**Repository**: https://github.com/immich-app/immich
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Self-hosted photo and video backup solution with mobile apps.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name immich
+just up immich
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name immich
-```
-
-View logs:
-```bash
-just services --action logs --name immich
+just stop immich
 ```
 
 ## Configuration

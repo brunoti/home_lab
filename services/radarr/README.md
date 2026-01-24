@@ -1,26 +1,20 @@
 # Radarr
 
-Category: Automation
+**Category**: Automation  
+**Repository**: https://github.com/Radarr/Radarr
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Movie collection manager with automated download handling.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name radarr
+just up radarr
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name radarr
-```
-
-View logs:
-```bash
-just services --action logs --name radarr
+just stop radarr
 ```
 
 ## Configuration

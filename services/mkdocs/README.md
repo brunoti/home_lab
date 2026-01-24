@@ -1,26 +1,20 @@
-# Mkdocs
+# MkDocs
 
-Category: Development
+**Category**: Development  
+**Repository**: https://github.com/mkdocs/mkdocs
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Project documentation site generator with live preview.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name mkdocs
+just up mkdocs
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name mkdocs
-```
-
-View logs:
-```bash
-just services --action logs --name mkdocs
+just stop mkdocs
 ```
 
 ## Configuration

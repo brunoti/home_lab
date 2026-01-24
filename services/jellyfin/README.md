@@ -1,26 +1,20 @@
 # Jellyfin
 
-Category: Media
+**Category**: Media  
+**Repository**: https://github.com/jellyfin/jellyfin
 
-## Service Information
-
-This service is part of the Home Lab setup.
+Free media server for movies, TV shows, music, and photos.
 
 ## Usage
 
 Start this service:
 ```bash
-just services --action start --name jellyfin
+just up jellyfin
 ```
 
 Stop this service:
 ```bash
-just services --action stop --name jellyfin
-```
-
-View logs:
-```bash
-just services --action logs --name jellyfin
+just stop jellyfin
 ```
 
 ## Configuration
