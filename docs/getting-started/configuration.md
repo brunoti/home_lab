@@ -376,6 +376,97 @@ docker-compose ps
    just backup --target gdrive --config-only
    ```
 
+## Domain Configuration (bop.lat)
+
+### Overview
+
+The home lab supports custom domain access via `bop.lat` with subdomain routing (e.g., `jellyfin.bop.lat`, `nginx.bop.lat`). This setup uses Nginx Proxy Manager as a reverse proxy.
+
+### Domain Variables
+
+Add to your `.env` file:
+
+```bash
+# Base domain for all services
+BASE_DOMAIN=bop.lat
+
+# Service-specific subdomains
+JELLYFIN_HOST=jellyfin.bop.lat
+NGINX_PROXY_MANAGER_HOST=nginx.bop.lat
+
+# Future service hosts (placeholder)
+# BOOKLORE_HOST=booklore.bop.lat
+```
+
+### DNS Setup
+
+Configure local DNS resolution on your **router** or **Pi-hole**:
+
+#### Option 1: Router DNS (if supported)
+
+Add DNS entries in your router's local DNS/hosts file:
+
+```
+jellyfin.bop.lat    → <Mac mini IP>
+nginx.bop.lat       → <Mac mini IP>
+```
+
+#### Option 2: Pi-hole Local DNS
+
+1. Access Pi-hole admin: http://localhost:80/admin
+2. Go to **Local DNS** → **DNS Records**
+3. Add entries:
+   - **Domain**: `jellyfin.bop.lat` → **IP**: `<Mac mini IP>` (e.g., `192.168.1.100`)
+   - **Domain**: `nginx.bop.lat` → **IP**: `<Mac mini IP>`
+
+### Nginx Proxy Manager Setup
+
+After DNS configuration, set up proxy hosts in Nginx Proxy Manager:
+
+1. **Access NPM UI**: http://localhost:81
+2. **First login** (change immediately):
+   - Email: `admin@example.com`
+   - Password: `changeme`
+3. **Create Proxy Hosts** (see [Nginx Proxy Manager README](../../services/nginx-proxy-manager/README.md))
+
+#### Example: Jellyfin Proxy Host
+
+- **Domain**: `jellyfin.bop.lat`
+- **Forward Hostname/IP**: `jellyfin` (Docker service name)
+- **Forward Port**: `8096`
+- **Block Common Exploits**: ✓
+- **Websockets Support**: ✓
+
+### Testing Domain Access
+
+```bash
+# Test DNS resolution
+nslookup jellyfin.bop.lat
+
+# Test HTTP proxy
+curl -I http://jellyfin.bop.lat
+
+# Browser test
+open http://jellyfin.bop.lat
+```
+
+### Local Network Only
+
+**Security**: Keep all services accessible only on your local network:
+
+- **Do NOT forward ports 80/443** on your router
+- DNS records point to **private IP** (192.168.x.x or 10.x.x.x)
+- For remote access, use **Headscale VPN** (see [Headscale service](../../services/headscale/README.md))
+
+### Adding New Services
+
+When adding new services with domain access:
+
+1. Add `SERVICE_HOST=service.bop.lat` to `.env.example` and `.env`
+2. Add DNS record for `service.bop.lat` → Mac mini IP
+3. Create proxy host in Nginx Proxy Manager
+4. Document in service README
+
 ## Next Steps
 
 After configuration:

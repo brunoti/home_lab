@@ -30,7 +30,7 @@ Created comprehensive documentation structure:
 **Services:**
 - Media Services (Jellyfin, Immich, Speedtest Tracker)
 - Music Services (Koel, Navidrome)
-- Book Services (Calibre, Calibre Web, Audiobookshelf, Lazylibrarian, BookStack)
+- Book Services (Calibre, Calibre Web, Audiobookshelf, Lazylibrarian)
 - Monitoring (Portainer, Prometheus, Grafana, Loki, Uptime Kuma)
 
 **Operations:**
@@ -101,7 +101,7 @@ just restore --source gdrive
 **By Category:**
 
 1. **Media & Entertainment (5):** Jellyfin, Immich, Speedtest Tracker, Koel, Navidrome
-2. **Books & Reading (5):** Calibre, Calibre Web, Audiobookshelf, Lazylibrarian, BookStack
+2. **Books & Reading (4):** Calibre, Calibre Web, Audiobookshelf, Lazylibrarian
 3. **Notes & Knowledge (1):** Affine
 4. **Network & Security (3):** Headscale, PiHole, Authelia
 5. **Monitoring (5):** Portainer, Prometheus, Grafana, Loki, Uptime Kuma

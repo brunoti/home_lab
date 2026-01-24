@@ -24,9 +24,6 @@ BEGIN
     IF NOT EXISTS (SELECT FROM pg_database WHERE datname = 'grafana') THEN
         CREATE DATABASE grafana;
     END IF;
-    IF NOT EXISTS (SELECT FROM pg_database WHERE datname = 'bookstack') THEN
-        CREATE DATABASE bookstack;
-    END IF;
     IF NOT EXISTS (SELECT FROM pg_database WHERE datname = 'nextcloud') THEN
         CREATE DATABASE nextcloud;
     END IF;

@@ -120,10 +120,9 @@ Each service is self-contained with its own `docker-compose.yml` file, making it
 - **Speedtest Tracker** (Port 5000) - Internet speed monitoring
 - **Immich** (Port 2283) - Photo management
 
-### Books & Reading (5)
+### Books & Reading (4)
 - **Calibre** (Port 8080) - Library management
 - **Calibre Web** (Port 8083) - Web reader interface
-- **Bookstore** (Port 3000) - Book discovery
 - **Audiobookshelf** (Port 8000) - Audiobooks
 - **Lazylibrarian** (Port 8666) - Automated ebook discovery
 

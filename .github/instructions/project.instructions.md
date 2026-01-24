@@ -25,7 +25,7 @@ Each service lives in `services/<service-name>/` with its own `docker-compose.ym
 
 ```
 Media (5)         → jellyfin, immich, speedtest-tracker, koel, navidrome
-Books (5)         → calibre, calibre-web, audiobookshelf, lazylibrarian, bookstore
+Books (4)         → calibre, calibre-web, audiobookshelf, lazylibrarian
 Network (3)       → headscale, pihole, authelia
 Monitoring (5)    → portainer, prometheus, grafana, loki, uptime-kuma
 Proxy (2)         → nginx-proxy-manager, homepage
@@ -72,7 +72,7 @@ just password  # Auto-generates secure passwords for all services
 
 ### Database Initialization
 
-PostgreSQL service runs [scripts/init-databases.sql](scripts/init-databases.sql) on first start. Creates databases: `koel`, `speedtest`, `immich`, `affine`, `authelia`, `grafana`, `bookstack`, `nextcloud`, `nginx_proxy`.
+PostgreSQL service runs [scripts/init-databases.sql](scripts/init-databases.sql) on first start. Creates databases: `koel`, `speedtest`, `immich`, `affine`, `authelia`, `grafana`, `nextcloud`, `nginx_proxy`.
 
 **When adding services**: If service needs PostgreSQL, add `CREATE DATABASE` block to init script using DO/IF NOT EXISTS pattern.
 

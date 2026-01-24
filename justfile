@@ -23,6 +23,11 @@ up service='all':
             if [ -f "${service_dir}docker-compose.yml" ]; then
                 service_name=$(basename "$service_dir")
                 echo "Starting $service_name..."
+                # Check environment variables before starting
+                if ! ./scripts/check-env-vars.sh "$service_name" 2>&1; then
+                    echo "Skipping $service_name due to missing environment variables"
+                    continue
+                fi
                 (cd "$service_dir" && docker compose --env-file ../../.env up -d)
             fi
         done
@@ -36,6 +41,11 @@ up service='all':
         fi
         if [ ! -f "${service_dir}/docker-compose.yml" ]; then
             echo "ERROR: docker-compose.yml not found for service '{{ service }}'"
+            exit 1
+        fi
+        echo "Checking environment variables for {{ service }}..."
+        if ! ./scripts/check-env-vars.sh "{{ service }}" 2>&1; then
+            echo "Cannot start {{ service }} due to missing environment variables"
             exit 1
         fi
         echo "Starting {{ service }}..."
@@ -215,7 +225,6 @@ password:
         "IMMICH_DB_PASSWORD"
         "NEXTCLOUD_DB_PASSWORD"
         "AUDIOBOOKSHELF_DB_PASSWORD"
-        "BOOKSTORE_DB_PASSWORD"
     )
 
     # Admin passwords
