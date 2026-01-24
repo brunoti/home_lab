@@ -88,6 +88,17 @@ stop service='all':
 help:
     @just --list
 
+# Manage environment variables for services
+vars service action='':
+    #!/usr/bin/env bash
+    set -euo pipefail
+    
+    if [ -z "{{ action }}" ]; then
+        ./scripts/vars.sh check "{{ service }}"
+    else
+        ./scripts/vars.sh "{{ action }}" "{{ service }}"
+    fi
+
 # Install dependencies
 install package="all":
     #!/usr/bin/env bash
